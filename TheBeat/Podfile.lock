@@ -1,0 +1,66 @@
+PODS:
+  - Bolts (1.2.1):
+    - Bolts/AppLinks (= 1.2.1)
+    - Bolts/Tasks (= 1.2.1)
+  - Bolts/AppLinks (1.2.1):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.2.1)
+  - FBSDKCoreKit (4.5.1):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc (= 4.5.1)
+    - FBSDKCoreKit/no-arc (= 4.5.1)
+  - FBSDKCoreKit/arc (4.5.1):
+    - Bolts (~> 1.1)
+  - FBSDKCoreKit/no-arc (4.5.1):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc
+  - FBSDKLoginKit (4.5.1):
+    - FBSDKCoreKit
+  - React (0.10.1):
+    - React/Core (= 0.10.1)
+  - react-native-fbsdkcore (0.0.5):
+    - FBSDKCoreKit
+    - React
+  - react-native-fbsdklogin (0.0.5):
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - React
+  - React/Core (0.10.1)
+  - React/RCTImage (0.10.1):
+    - React/Core
+    - React/RCTNetwork
+  - React/RCTNetwork (0.10.1):
+    - React/Core
+  - React/RCTText (0.10.1):
+    - React/Core
+  - React/RCTWebSocket (0.10.1):
+    - React/Core
+
+DEPENDENCIES:
+  - FBSDKCoreKit
+  - FBSDKLoginKit
+  - react-native-fbsdkcore (from `node_modules/react-native-fbsdkcore`)
+  - react-native-fbsdklogin (from `node_modules/react-native-fbsdklogin`)
+  - React/Core (from `node_modules/react-native`)
+  - React/RCTImage (from `node_modules/react-native`)
+  - React/RCTNetwork (from `node_modules/react-native`)
+  - React/RCTText (from `node_modules/react-native`)
+  - React/RCTWebSocket (from `node_modules/react-native`)
+
+EXTERNAL SOURCES:
+  React:
+    :path: node_modules/react-native
+  react-native-fbsdkcore:
+    :path: node_modules/react-native-fbsdkcore
+  react-native-fbsdklogin:
+    :path: node_modules/react-native-fbsdklogin
+
+SPEC CHECKSUMS:
+  Bolts: 7686a5cb204d1ac54cee26f12d9b7622db3f80d1
+  FBSDKCoreKit: f335eaf6865e1e1597dee1debfb533045500da47
+  FBSDKLoginKit: 225cc9a388a92916ee3f3bb14422017b6e44b65b
+  React: 74426eb4f769f8d2c25623e97c4e40d3f409844e
+  react-native-fbsdkcore: 7359d5c96dd349159d5f6b004703edacd4940222
+  react-native-fbsdklogin: 7e255c6b0e546d5d337ae91a4d4188fa395f03fa
+
+COCOAPODS: 0.38.2
