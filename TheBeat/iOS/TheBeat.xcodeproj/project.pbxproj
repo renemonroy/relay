@@ -13,6 +13,12 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		BDEE0B8C1B9CA3B5005EB0A9 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDEE0B8B1B9CA3B5005EB0A9 /* libReact.a */; };
+		BDEE0B8F1B9CA410005EB0A9 /* libFBSDKCoreKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDEE0B8D1B9CA410005EB0A9 /* libFBSDKCoreKit.a */; };
+		BDEE0B901B9CA410005EB0A9 /* libFBSDKLoginKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDEE0B8E1B9CA410005EB0A9 /* libFBSDKLoginKit.a */; };
+		BDEE0B931B9CA416005EB0A9 /* libreact-native-fbsdkcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDEE0B911B9CA416005EB0A9 /* libreact-native-fbsdkcore.a */; };
+		BDEE0B941B9CA416005EB0A9 /* libreact-native-fbsdklogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDEE0B921B9CA416005EB0A9 /* libreact-native-fbsdklogin.a */; };
+		BDEE0B961B9CA41B005EB0A9 /* libBolts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDEE0B951B9CA41B005EB0A9 /* libBolts.a */; };
 		EFBA9F0F3D8DE88CB13DACC2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11445FA50C82900711C99C41 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +47,12 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BDEE0B8B1B9CA3B5005EB0A9 /* libReact.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libReact.a; path = "/Users/mishaponizil/Workspaces/Ship/the-beat/TheBeat/Pods/../build/Debug-iphoneos/libReact.a"; sourceTree = "<absolute>"; };
+		BDEE0B8D1B9CA410005EB0A9 /* libFBSDKCoreKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFBSDKCoreKit.a; path = "/Users/mishaponizil/Workspaces/Ship/the-beat/TheBeat/Pods/../build/Debug-iphoneos/libFBSDKCoreKit.a"; sourceTree = "<absolute>"; };
+		BDEE0B8E1B9CA410005EB0A9 /* libFBSDKLoginKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFBSDKLoginKit.a; path = "/Users/mishaponizil/Workspaces/Ship/the-beat/TheBeat/Pods/../build/Debug-iphoneos/libFBSDKLoginKit.a"; sourceTree = "<absolute>"; };
+		BDEE0B911B9CA416005EB0A9 /* libreact-native-fbsdkcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libreact-native-fbsdkcore.a"; path = "/Users/mishaponizil/Workspaces/Ship/the-beat/TheBeat/Pods/../build/Debug-iphoneos/libreact-native-fbsdkcore.a"; sourceTree = "<absolute>"; };
+		BDEE0B921B9CA416005EB0A9 /* libreact-native-fbsdklogin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libreact-native-fbsdklogin.a"; path = "/Users/mishaponizil/Workspaces/Ship/the-beat/TheBeat/Pods/../build/Debug-iphoneos/libreact-native-fbsdklogin.a"; sourceTree = "<absolute>"; };
+		BDEE0B951B9CA41B005EB0A9 /* libBolts.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBolts.a; path = "/Users/mishaponizil/Workspaces/Ship/the-beat/TheBeat/Pods/../build/Debug-iphoneos/libBolts.a"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +67,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDEE0B961B9CA41B005EB0A9 /* libBolts.a in Frameworks */,
+				BDEE0B8F1B9CA410005EB0A9 /* libFBSDKCoreKit.a in Frameworks */,
+				BDEE0B901B9CA410005EB0A9 /* libFBSDKLoginKit.a in Frameworks */,
+				BDEE0B931B9CA416005EB0A9 /* libreact-native-fbsdkcore.a in Frameworks */,
+				BDEE0B941B9CA416005EB0A9 /* libreact-native-fbsdklogin.a in Frameworks */,
+				BDEE0B8C1B9CA3B5005EB0A9 /* libReact.a in Frameworks */,
 				EFBA9F0F3D8DE88CB13DACC2 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,6 +114,12 @@
 		6CFDA4EAD3A5B96E8B7F5156 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BDEE0B951B9CA41B005EB0A9 /* libBolts.a */,
+				BDEE0B911B9CA416005EB0A9 /* libreact-native-fbsdkcore.a */,
+				BDEE0B921B9CA416005EB0A9 /* libreact-native-fbsdklogin.a */,
+				BDEE0B8D1B9CA410005EB0A9 /* libFBSDKCoreKit.a */,
+				BDEE0B8E1B9CA410005EB0A9 /* libFBSDKLoginKit.a */,
+				BDEE0B8B1B9CA3B5005EB0A9 /* libReact.a */,
 				11445FA50C82900711C99C41 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -359,6 +383,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/TheBeat/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/mishaponizil/Workspaces/Ship/the-beat/TheBeat/Pods/../build/Debug-iphoneos",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = TheBeat;
 			};
@@ -379,6 +407,10 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/TheBeat/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/mishaponizil/Workspaces/Ship/the-beat/TheBeat/Pods/../build/Debug-iphoneos",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = TheBeat;
 			};

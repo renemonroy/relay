@@ -37,6 +37,12 @@ var TheBeat = React.createClass({
     });
   },
 
+  handleLogOut: function() {
+    this.setState({
+      screen: 'login'
+    });
+  },
+
   render: function() {
     return (
       <View style={styles.container}>
@@ -48,7 +54,7 @@ var TheBeat = React.createClass({
               );
             case 'welcome':
               return (
-                <Welcome />
+                <Welcome onLogOut={this.handleLogOut} />
               );
           }
         })()}

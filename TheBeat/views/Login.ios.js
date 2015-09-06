@@ -27,15 +27,11 @@ var styles = StyleSheet.create({
 var Login = React.createClass({
 
   componentDidMount: function() {
-    if (FBSDKAccessToken.currentAccessToken) {
-      this.props.onLogin();
-    } else {
-      FBSDKLoginManager.logInWithReadPermissions(['user_friends'], (error, result) => {
-        if (!error) {
-          this.props.onLogin();
-        }
-      });
-    }
+    FBSDKAccessToken.getCurrentAccessToken((accessToken) => {
+      if (accessToken) {
+        this.props.onLogin();
+      }
+    });
   },
 
   handleLogin: function(error, result) {
