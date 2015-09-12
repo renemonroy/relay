@@ -71,24 +71,24 @@ module.exports.getCurrentUser = () => {
         console.log('Parse currentUser exists, update from BookFace')
         currentUser.save(fbUser).then(() => {
           dispatch(receiveCurrentUser(currentUser));
-        }, function(error) {
+        }, (error) => {
           handleParseError(dispatch, error);
         });
       } else {
         console.log('no Parse currentUser, query for user with facebookId', fbUser.facebookId);
         var query = new Parse.Query(Parse.User);
         query.equalTo('facebookId', fbUser.facebookId);
-        query.first().then(function(currentUser) {
+        query.first().then((currentUser) => {
           if (currentUser) {
-            console.log('found Parse user, update with fb data', currentUser, fbUser);
+            console.log('found Parse user, issue session');
             Parse.Cloud.run('fbAuth', {
               facebookId: fbUser.facebookId,
               accessToken: fbUser.accessToken
-            }).then(function(sessionToken) {
+            }).then((sessionToken) => {
               console.log('fbAuth success', sessionToken)
               return Parse.User.become(sessionToken);
-            }).then(function() {
-              console.log('user become sessionToken success');
+            }).then(() => {
+              console.log('user become sessionToken success, update with fb data', currentUser, fbUser);
               return currentUser.save(fbUser).then((currentUser) => {
                 dispatch(receiveCurrentUser(currentUser));
               });
@@ -99,7 +99,7 @@ module.exports.getCurrentUser = () => {
               dispatch(receiveCurrentUser(currentUser));
             });
           }
-        }, function(error) {
+        }, (error) => {
           console.warn('getCurrentUser error', error);
         });
       }
