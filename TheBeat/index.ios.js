@@ -7,58 +7,30 @@
 var React = require('react-native');
 var {
   AppRegistry,
-  StyleSheet,
-  View,
 } = React;
 
-var Login = require('./views/Login');
-var Welcome = require('./views/Welcome');
+var {
+  Provider
+} = require('react-redux/native');
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});
+var Parse = require('parse').Parse;
+Parse.initialize(
+  'snBWRAcBlIYPwBfZaYgXrHHxyJF3TgbUwmwDTCAK',
+  'tAGZvZdZSwUlfWLNJeogYMsbQPtHZVob3hUG2JUU'
+);
+
+var configureStore = require('./App/store/configureStore');
+var store = configureStore();
+
+var App = require('./App/containers/App');
 
 var TheBeat = React.createClass({
 
-  getInitialState: function() {
-    return {
-      screen: 'login'
-    }
-  },
-
-  handleLogin: function() {
-    this.setState({
-      screen: 'welcome'
-    });
-  },
-
-  handleLogOut: function() {
-    this.setState({
-      screen: 'login'
-    });
-  },
-
   render: function() {
     return (
-      <View style={styles.container}>
-        {(() => {
-          switch (this.state.screen) {
-            case 'login':
-              return (
-                <Login onLogin={this.handleLogin} />
-              );
-            case 'welcome':
-              return (
-                <Welcome onLogOut={this.handleLogOut} />
-              );
-          }
-        })()}
-      </View>
+      <Provider store={store}>
+        {() => <App />}
+      </Provider>
     );
   }
 

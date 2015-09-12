@@ -5,15 +5,9 @@ var {
   View,
 } = React;
 
-var FBSDKCore = require('react-native-fbsdkcore');
-var {
-  FBSDKAccessToken,
-} = FBSDKCore;
-
 var FBSDKLogin = require('react-native-fbsdklogin');
 var {
-  FBSDKLoginButton,
-  FBSDKLoginManager,
+  FBSDKLoginButton
 } = FBSDKLogin;
 
 var styles = StyleSheet.create({
@@ -26,21 +20,16 @@ var styles = StyleSheet.create({
 
 var Login = React.createClass({
 
-  componentDidMount: function() {
-    FBSDKAccessToken.getCurrentAccessToken((accessToken) => {
-      if (accessToken) {
-        this.props.onLogin();
-      }
-    });
-  },
-
-  handleLogin: function(error, result) {
-    console.log('logged in', result);
-    this.props.onLogin();
+  handleLogin: function(error, response) {
+    console.log('logged in', response);
+    if (!error) {
+      this.props.onLogin(response);
+    }
   },
 
   handleLogout: function() {
     console.log('logged out');
+    this.props.onLogOut();
   },
 
   render: function() {

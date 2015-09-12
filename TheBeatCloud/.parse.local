@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "The Beat": {
+      "applicationId": "snBWRAcBlIYPwBfZaYgXrHHxyJF3TgbUwmwDTCAK"
+    },
+    "_default": {
+      "link": "The Beat"
+    }
+  }
+}
