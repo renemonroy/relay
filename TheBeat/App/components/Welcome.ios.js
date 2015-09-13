@@ -8,45 +8,112 @@ var {
 } = React;
 
 var styles = StyleSheet.create({
+  button: {
+    padding: 5,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#de8340',
+    borderRadius: 3
+  },
+  header: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#000',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  headerText: {
+    fontSize: 28
+  },
+  body: {
+    flex: 1,
+    paddingVertical: 20
+  },
   welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    marginBottom: 20,
+    paddingHorizontal: 20
+  },
+  info: {
+    flex: 2,
+    marginLeft: 10
+  },
+  myEvents: {
+    alignItems: 'stretch',
+  },
+  event: {
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#de8340',
+    paddingVertical: 5,
+    paddingHorizontal: 20
+  },
+  media: {
+    flexDirection: 'row'
+  },
+  eventInfo: {
+    marginLeft: 10
+  },
+  eventTitle: {
+    fontSize: 18
+  },
+  eventDescription: {
+    fontSize: 12
   }
 });
 
 var Welcome = React.createClass({
 
+  componentWillMount: function() {
+    this.props.getMyEvents();
+    this.props.getMutualFriends('153965088277351');
+  },
+
   render: function() {
     return (
       <View>
-        <View>
-          <Image
-            source={{uri: this.props.currentUser.picture}}
-            style={{width: 200, height: 200}}
-          />
-          <Text>{this.props.currentUser.fullName}</Text>
-        </View>
-        <Text style={styles.welcome}>
-          Welcome!
-        </Text>
-        <View>
-          <TouchableHighlight onPress={this.props.onLogOut}>
+        <View style={styles.header}>
+          <TouchableHighlight onPress={this.props.onLogOut} style={[styles.button, styles.actions]} underlayColor='#f1c9ac'>
             <Text>Log out</Text>
           </TouchableHighlight>
+          <Text style={styles.headerText}>The Beat</Text>
+          <TouchableHighlight onPress={this.props.onPostEvent} style={[styles.button, styles.actions]} underlayColor='#f1c9ac'>
+            <Text>+ Post Event</Text>
+          </TouchableHighlight>
         </View>
-        <View>
-          {this.props.mutualFriends.map((friend) => {
-            return (
-              <View key={friend.id}>
-                <Image
-                  source={{uri: friend.picture.data.url}}
-                  style={{width: 200, height: 200}}
-                />
-                <Text>{friend.name}</Text>
-              </View>
-            );
-          })}
+        <View style={styles.body}>
+          <View style={styles.welcome}>
+            <Image
+              source={{uri: this.props.currentUser.get('picture')}}
+              style={{width: 100, height: 100}}
+            />
+            <Text style={styles.info}>
+              Welcome back, {this.props.currentUser.fullName()}
+            </Text>
+          </View>
+          <View style={styles.myEvents}>
+            {this.props.myEvents.map((event) => {
+              return (
+                <TouchableHighlight style={styles.event} key={event.id} underlayColor='#f1c9ac'>
+                  <View style={styles.media}>
+                    <Image
+                      source={{uri: event.get('picture')}}
+                      style={{width: 50, height: 50}}
+                    />
+                    <View style={styles.eventInfo}>
+                      <Text style={styles.eventTitle}>{event.get('title')}</Text>
+                      <Text style={styles.eventDescription}>{event.get('description')}</Text>
+                    </View>
+                  </View>
+                </TouchableHighlight>
+              );
+            })}
+          </View>
         </View>
       </View>
     );

@@ -6,40 +6,62 @@ var {
 
 var { connect } = require('react-redux/native');
 
-var { fbAuthSuccess, getCurrentUser, getMutualFriends, logOut } = require('../actions');
+var { fbAuthSuccess, getCurrentUser, getMyEvents, getMutualFriends, logOut, postEvent } = require('../actions');
 
 var Login = require('../components/Login');
 var Welcome = require('../components/Welcome');
+var PostEvent = require('../components/PostEvent');
 
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
     backgroundColor: '#F5FCFF',
-  },
+    paddingTop: 20
+  }
 });
 
 var App = React.createClass({
+
+  getInitialState: function() {
+    return {
+      screen: 'welcome'
+    };
+  },
 
   componentWillMount: function() {
     this.props.getCurrentUser();
   },
 
-  componentWillReceiveProps: function (nextProps) {
-    if (nextProps.currentUser) {
-      this.props.getMutualFriends('153965088277351');
-    }
+  handlePostEvent: function(eventData) {
+    this.props.postEvent(eventData);
+    this.setState({ screen: 'welcome' });
   },
 
   render: function() {
     var screen;
     if (this.props.currentUser) {
-      screen = <Welcome
-        currentUser={this.props.currentUser}
-        mutualFriends={this.props.mutualFriends}
-        onLogOut={this.props.logOut}
-      />
+      switch (this.state.screen) {
+      case 'welcome':
+        screen = <Welcome
+          currentUser={this.props.currentUser}
+          myEvents={this.props.myEvents}
+          getMyEvents={this.props.getMyEvents}
+          getMutualFriends={this.props.getMutualFriends}
+          mutualFriends={this.props.mutualFriends}
+          onLogOut={this.props.logOut}
+          onPostEvent={() => { console.log('setState'); this.setState({ screen: 'post-event' })}}
+        />;
+        break;
+      case 'post-event':
+        screen = <PostEvent
+          currentUser={this.props.currentUser}
+          onBack={() => { this.setState({ screen: 'welcome' })}}
+          onPostEvent={this.handlePostEvent}
+        />;
+        break;
+      }
     } else {
       screen = <Login
         onLogin={this.props.getCurrentUser}
@@ -59,11 +81,12 @@ var App = React.createClass({
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
+    myEvents: state.userEvents,
     mutualFriends: state.eventSubscription.mutualFriends
   };
 }
 
 module.exports = connect(
   mapStateToProps,
-  { fbAuthSuccess, getCurrentUser, getMutualFriends, logOut }
+  { fbAuthSuccess, getCurrentUser, getMyEvents, getMutualFriends, logOut, postEvent }
 )(App);
