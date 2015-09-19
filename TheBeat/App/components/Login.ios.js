@@ -40,8 +40,8 @@ class Login extends React.Component {
         </Text>
         <FBSDKLoginButton
           readPermissions={['user_friends']}
-          onLoginFinished={this.handleLogin}
-          onLogoutFinished={this.handleLogout}
+          onLoginFinished={this.handleLogin.bind(this)}
+          onLogoutFinished={this.handleLogout.bind(this)}
         />
       </View>
     );
