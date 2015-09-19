@@ -21,11 +21,11 @@ class Welcome extends React.Component {
     return (
       <View>
         <View style={styles.header}>
-          <TouchableHighlight onPress={this.props.onLogOut} style={[styles.button, styles.actions]} underlayColor={colors.lightBlue}>
+          <TouchableHighlight onPress={this.props.onLogout} style={[styles.button, styles.actions]} underlayColor={colors.lightBlue}>
             <Text>Log out</Text>
           </TouchableHighlight>
           <Text style={styles.headerText}>The Beat</Text>
-          <TouchableHighlight onPress={this.props.onPostEvent} style={[styles.button, styles.actions]} underlayColor={colors.lightBlue}>
+          <TouchableHighlight onPress={this.props.onTapPostEvent} style={[styles.button, styles.actions]} underlayColor={colors.lightBlue}>
             <Text>+ Post Event</Text>
           </TouchableHighlight>
         </View>

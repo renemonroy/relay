@@ -33,7 +33,7 @@ function receiveCurrentUser(currentUser) {
     currentUser: currentUser
   };
 }
-function logOut() {
+function logout() {
   return {
     type: LOG_OUT
   }
@@ -84,7 +84,7 @@ function handleParseError(dispatch, error) {
   switch (error.code) {
   case Parse.Error.INVALID_SESSION_TOKEN:
     Parse.User.logOut();
-    dispatch(logOut());
+    dispatch(logout());
   }
 }
 
@@ -139,11 +139,11 @@ module.exports.getCurrentUser = () => {
   };
 }
 
-module.exports.logOut = () => {
+module.exports.logout = () => {
   return dispatch => {
-    BookFace.logOut();
+    BookFace.logout();
     Parse.User.logOut();
-    dispatch(logOut());
+    dispatch(logout());
   }
 }
 

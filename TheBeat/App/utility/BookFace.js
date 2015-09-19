@@ -69,7 +69,7 @@ module.exports = {
     });
   },
 
-  logOut: function() {
+  logout: function() {
     FBSDKLoginManager.logOut();
   },
 

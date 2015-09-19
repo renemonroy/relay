@@ -21,7 +21,7 @@ class Login extends React.Component {
 
   handleLogout() {
     console.log('logged out');
-    this.props.onLogOut();
+    this.props.onLogout();
   }
 
   render() {
