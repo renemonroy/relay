@@ -14,9 +14,12 @@ var {
 } = require('react-redux/native');
 
 var Parse = require('parse').Parse;
+
+var config = require('./config');
+
 Parse.initialize(
-  'snBWRAcBlIYPwBfZaYgXrHHxyJF3TgbUwmwDTCAK',
-  'tAGZvZdZSwUlfWLNJeogYMsbQPtHZVob3hUG2JUU'
+  config.PARSE_APPLICATION_ID,
+  config.PARSE_JAVASCRIPT_KEY
 );
 
 var configureStore = require('./App/store/configureStore');

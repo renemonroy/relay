@@ -30,3 +30,7 @@ npm-debug.log
 # Pods
 #
 Pods
+
+# Local only
+#
+config.js
