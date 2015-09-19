@@ -10,11 +10,78 @@ var {
 var colors = require('../styles/colors');
 var globalStyles = require('../styles/global');
 
+class MyFeed extends React.Component {
+
+  render() {
+    return (
+      <View>
+        <Text>My Feed</Text>
+        <View style={styles.myFeed}>
+          {this.props.myFeed.map((event) => {
+            return (
+              <TouchableHighlight style={styles.event} key={event.id} underlayColor={colors.lightBlue}>
+                <View style={styles.media}>
+                  <Image
+                    source={{uri: event.get('picture')}}
+                    style={{width: 50, height: 50}}
+                  />
+                  <View style={styles.eventInfo}>
+                    <Text style={styles.eventTitle}>{event.get('title')}</Text>
+                    <Text style={styles.eventDescription}>{event.get('description')}</Text>
+                    <Text>Host: {event.get('host').get('firstName')}</Text>
+                    <Text>Mutual friends:</Text>
+                    <View>
+                      {event.get('mutual_friends').map((friend) => {
+                        return (<Text key={friend.id}>{friend.name}</Text>);
+                      })}
+                    </View>
+                  </View>
+                </View>
+              </TouchableHighlight>
+            );
+          })}
+        </View>
+      </View>
+    );
+  }
+
+}
+
+class MyEvents extends React.Component {
+
+  render() {
+    return (
+      <View>
+        <Text>My Events</Text>
+        <View style={styles.myEvents}>
+          {this.props.myEvents.map((event) => {
+            return (
+              <TouchableHighlight style={styles.event} key={event.id} underlayColor={colors.lightBlue}>
+                <View style={styles.media}>
+                  <Image
+                    source={{uri: event.get('picture')}}
+                    style={{width: 50, height: 50}}
+                  />
+                  <View style={styles.eventInfo}>
+                    <Text style={styles.eventTitle}>{event.get('title')}</Text>
+                    <Text style={styles.eventDescription}>{event.get('description')}</Text>
+                  </View>
+                </View>
+              </TouchableHighlight>
+            );
+          })}
+        </View>
+      </View>
+    );
+  }
+
+}
+
 class Welcome extends React.Component {
 
   componentWillMount() {
+    this.props.getMyFeed();
     this.props.getMyEvents();
-    this.props.getMutualFriends('153965088277351');
   }
 
   render() {
@@ -39,24 +106,8 @@ class Welcome extends React.Component {
               Welcome back, {this.props.currentUser.fullName()}
             </Text>
           </View>
-          <View style={styles.myEvents}>
-            {this.props.myEvents.map((event) => {
-              return (
-                <TouchableHighlight style={styles.event} key={event.id} underlayColor={colors.lightBlue}>
-                  <View style={styles.media}>
-                    <Image
-                      source={{uri: event.get('picture')}}
-                      style={{width: 50, height: 50}}
-                    />
-                    <View style={styles.eventInfo}>
-                      <Text style={styles.eventTitle}>{event.get('title')}</Text>
-                      <Text style={styles.eventDescription}>{event.get('description')}</Text>
-                    </View>
-                  </View>
-                </TouchableHighlight>
-              );
-            })}
-          </View>
+          <MyFeed myFeed={this.props.myFeed} />
+          <MyEvents myEvents={this.props.myEvents} />
         </View>
       </View>
     );
@@ -93,6 +144,9 @@ var styles = StyleSheet.create({
   info: {
     flex: 2,
     marginLeft: 10
+  },
+  myFeed: {
+    alignItems: 'stretch',
   },
   myEvents: {
     alignItems: 'stretch',

@@ -5,6 +5,7 @@ var { connect } = require('react-redux/native');
 var {
   getCurrentUser,
   logout,
+  getMyFeed,
   getMyEvents,
   getMutualFriends,
   postEvent,
@@ -82,6 +83,8 @@ class App extends React.Component {
     return (
       <Welcome
         currentUser={this.props.currentUser}
+        getMyFeed={this.props.getMyFeed}
+        myFeed={this.props.myFeed}
         getMyEvents={this.props.getMyEvents}
         myEvents={this.props.myEvents}
         getMutualFriends={this.props.getMutualFriends}
@@ -96,12 +99,19 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    myEvents: state.userEvents,
+    myFeed: state.myFeed,
+    myEvents: state.myEvents,
     mutualFriends: state.eventSubscription.mutualFriends
   };
 }
 
-App = connect(mapStateToProps, { logout, getMyEvents, getMutualFriends, postEvent })(App);
+App = connect(mapStateToProps, {
+  logout,
+  getMyFeed,
+  getMyEvents,
+  getMutualFriends,
+  postEvent
+})(App);
 
 module.exports = {
   Auth,

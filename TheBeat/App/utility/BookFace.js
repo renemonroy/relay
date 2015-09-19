@@ -42,7 +42,7 @@ function getCurrentUser(callback) {
 
 function getMutualFriends(otherUserId, callback) {
   var getMutualFriendsRequest = new FBSDKGraphRequest((error, response) => {
-    console.log('getMutualFriendsRequest', error, response);
+    console.log('getMutualFriendsRequest', otherUserId, error, response);
     if (!error) {
       callback(null, response.context.all_mutual_friends.data);
     }

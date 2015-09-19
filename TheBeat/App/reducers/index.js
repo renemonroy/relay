@@ -1,6 +1,13 @@
 var { combineReducers } = require('redux');
 
-var { RECEIVE_CURRENT_USER, LOG_OUT, RECEIVE_MY_EVENTS, RECEIVE_MUTUAL_FRIENDS, POST_EVENT_SUCCESS } = require('../actions');
+var {
+  RECEIVE_CURRENT_USER,
+  LOG_OUT,
+  RECEIVE_MY_FEED,
+  RECEIVE_MY_EVENTS,
+  RECEIVE_MUTUAL_FRIENDS,
+  POST_EVENT_SUCCESS,
+} = require('../actions');
 
 function currentUser(state=null, action) {
   switch (action.type) {
@@ -13,7 +20,17 @@ function currentUser(state=null, action) {
   }
 }
 
-function userEvents(state=[], action) {
+function myFeed(state=[], action) {
+  switch (action.type) {
+  case RECEIVE_MY_FEED:
+    console.log('received my feed', action.events);
+    return action.events.slice(0);
+  default:
+    return state;
+  }
+}
+
+function myEvents(state=[], action) {
   switch (action.type) {
   case POST_EVENT_SUCCESS:
     console.log('post event success', action);
@@ -39,7 +56,8 @@ function eventSubscription(state={ mutualFriends: [] }, action) {
 
 var rootReducer = combineReducers({
   currentUser: currentUser,
-  userEvents: userEvents,
+  myFeed: myFeed,
+  myEvents: myEvents,
   eventSubscription: eventSubscription
 });
 

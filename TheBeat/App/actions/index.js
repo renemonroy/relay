@@ -6,6 +6,9 @@ var RECEIVE_CURRENT_USER = module.exports.RECEIVE_CURRENT_USER = 'RECEIVE_CURREN
 
 var LOG_OUT = module.exports.LOG_OUT = 'LOG_OUT';
 
+var REQUEST_MY_FEED = module.exports.REQUEST_MY_FEED = 'REQUEST_MY_FEED';
+var RECEIVE_MY_FEED = module.exports.RECEIVE_MY_FEED = 'RECEIVE_MY_FEED';
+
 var REQUEST_MY_EVENTS = module.exports.REQUEST_MY_EVENTS = 'REQUEST_MY_EVENTS';
 var RECEIVE_MY_EVENTS = module.exports.RECEIVE_MY_EVENTS = 'RECEIVE_MY_EVENTS';
 
@@ -37,6 +40,17 @@ function logout() {
   return {
     type: LOG_OUT
   }
+}
+function requestMyFeed() {
+  return {
+    type: REQUEST_MY_FEED
+  };
+}
+function receiveMyFeed(events) {
+  return {
+    type: RECEIVE_MY_FEED,
+    events: events
+  };
 }
 function getMyEvents() {
   return {
@@ -165,7 +179,7 @@ module.exports.getMyEvents = () => {
       console.log('got my events', events)
       dispatch(receiveMyEvents(events));
     }, (error) => {
-      console.log('error', error)
+      console.log('getMyEvents error', error)
     })
   }
 }
@@ -178,5 +192,36 @@ module.exports.getMutualFriends = (otherUserId) => {
       }
     });
     dispatch(requestMutualFriends());
+  }
+}
+
+module.exports.getMyFeed = () => {
+  return dispatch => {
+    var query = new Parse.Query('Event');
+    query.include('host');
+    query.notEqualTo('host', Parse.User.current());
+    query.find().then((events) => {
+      console.log('got all events', events);
+      var myFeed = [];
+      var promises = events.map((event, i) => {
+        var promise = new Parse.Promise();
+        var otherUserId = event.get('host').get('facebookId');
+        console.log('getting mutual friends for', otherUserId);
+        BookFace.getMutualFriends(otherUserId, (error, mutualFriends) => {
+          if (mutualFriends.length) {
+            event.set('mutual_friends', mutualFriends);
+            myFeed.push(event);
+          }
+          promise.resolve(event);
+        });
+        return promise;
+      });
+      Parse.Promise.when(promises).then(() => {
+        console.log('myFeed', myFeed);
+        dispatch(receiveMyFeed(myFeed));
+      })
+    }, (error) => {
+      console.log('get all events error', error)
+    });
   }
 }
