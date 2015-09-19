@@ -8,14 +8,10 @@ var {
   TextInput
 } = React;
 
+var colors = require('../styles/colors');
+var globalStyles = require('../styles/global');
 var styles = StyleSheet.create({
-  button: {
-    padding: 5,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#de8340',
-    borderRadius: 3
-  },
+  ...globalStyles,
   header: {
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -48,16 +44,17 @@ var styles = StyleSheet.create({
   }
 });
 
-var PostEvent = React.createClass({
+class PostEvent extends React.Component {
 
-  getInitialState: function() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       title: "",
       description: ""
-    };
-  },
+    }
+  }
 
-  handleSubmit: function() {
+  handleSubmit() {
     if (!this.state.title) {
       return;
     }
@@ -70,13 +67,14 @@ var PostEvent = React.createClass({
       title: this.state.title,
       description: this.state.description
     });
-  },
+  }
 
-  render: function() {
+  render() {
+    console.log(this.state);
     return (
       <View>
         <View style={styles.header}>
-          <TouchableHighlight onPress={this.props.onBack} style={styles.button} underlayColor='#f1c9ac'>
+          <TouchableHighlight onPress={this.props.onBack} style={styles.button} underlayColor={colors.lightBlue}>
             <Text>&lt; Back</Text>
           </TouchableHighlight>
           <Text style={styles.headerText}>Post Event</Text>
@@ -101,7 +99,7 @@ var PostEvent = React.createClass({
             />
           </View>
           <View>
-            <TouchableHighlight onPress={this.handleSubmit} style={styles.button} underlayColor='#f1c9ac'>
+            <TouchableHighlight onPress={this.handleSubmit.bind(this)} style={styles.button} underlayColor={colors.lightBlue}>
               <Text>Post Event</Text>
             </TouchableHighlight>
           </View>
@@ -110,6 +108,6 @@ var PostEvent = React.createClass({
     );
   }
 
-});
+}
 
 module.exports = PostEvent;

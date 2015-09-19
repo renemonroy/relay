@@ -18,21 +18,21 @@ var styles = StyleSheet.create({
   }
 });
 
-var Login = React.createClass({
+class Login extends React.Component {
 
-  handleLogin: function(error, response) {
+  handleLogin(error, response) {
     console.log('logged in', response);
     if (!error) {
       this.props.onLogin(response);
     }
-  },
+  }
 
-  handleLogout: function() {
+  handleLogout() {
     console.log('logged out');
     this.props.onLogOut();
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <View>
         <Text style={styles.welcome}>
@@ -47,6 +47,6 @@ var Login = React.createClass({
     );
   }
 
-});
+}
 
 module.exports = Login;

@@ -7,14 +7,10 @@ var {
   TouchableHighlight,
 } = React;
 
+var colors = require('../styles/colors');
+var globalStyles = require('../styles/global');
 var styles = StyleSheet.create({
-  button: {
-    padding: 5,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#de8340',
-    borderRadius: 3
-  },
+  ...globalStyles,
   header: {
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -49,7 +45,7 @@ var styles = StyleSheet.create({
   event: {
     borderBottomWidth: 1,
     borderStyle: 'solid',
-    borderColor: '#de8340',
+    borderColor: colors.blue,
     paddingVertical: 5,
     paddingHorizontal: 20
   },
@@ -67,22 +63,22 @@ var styles = StyleSheet.create({
   }
 });
 
-var Welcome = React.createClass({
+class Welcome extends React.Component {
 
-  componentWillMount: function() {
+  componentWillMount() {
     this.props.getMyEvents();
     this.props.getMutualFriends('153965088277351');
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <View>
         <View style={styles.header}>
-          <TouchableHighlight onPress={this.props.onLogOut} style={[styles.button, styles.actions]} underlayColor='#f1c9ac'>
+          <TouchableHighlight onPress={this.props.onLogOut} style={[styles.button, styles.actions]} underlayColor={colors.lightBlue}>
             <Text>Log out</Text>
           </TouchableHighlight>
           <Text style={styles.headerText}>The Beat</Text>
-          <TouchableHighlight onPress={this.props.onPostEvent} style={[styles.button, styles.actions]} underlayColor='#f1c9ac'>
+          <TouchableHighlight onPress={this.props.onPostEvent} style={[styles.button, styles.actions]} underlayColor={colors.lightBlue}>
             <Text>+ Post Event</Text>
           </TouchableHighlight>
         </View>
@@ -99,7 +95,7 @@ var Welcome = React.createClass({
           <View style={styles.myEvents}>
             {this.props.myEvents.map((event) => {
               return (
-                <TouchableHighlight style={styles.event} key={event.id} underlayColor='#f1c9ac'>
+                <TouchableHighlight style={styles.event} key={event.id} underlayColor={colors.lightBlue}>
                   <View style={styles.media}>
                     <Image
                       source={{uri: event.get('picture')}}
@@ -119,6 +115,6 @@ var Welcome = React.createClass({
     );
   }
 
-});
+}
 
 module.exports = Welcome;
