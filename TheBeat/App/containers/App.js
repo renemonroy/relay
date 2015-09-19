@@ -12,34 +12,25 @@ var Login = require('../components/Login');
 var Welcome = require('../components/Welcome');
 var PostEvent = require('../components/PostEvent');
 
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'stretch',
-    backgroundColor: '#ffffff',
-    paddingTop: 20
-  }
-});
+class App extends React.Component {
 
-var App = React.createClass({
-
-  getInitialState: function() {
-    return {
+  constructor() {
+    super();
+    this.state = {
       screen: 'welcome'
     };
-  },
+  }
 
-  componentWillMount: function() {
+  componentWillMount() {
     this.props.getCurrentUser();
-  },
+  }
 
-  handlePostEvent: function(eventData) {
+  handlePostEvent(eventData) {
     this.props.postEvent(eventData);
     this.setState({ screen: 'welcome' });
-  },
+  }
 
-  render: function() {
+  render() {
     var screen;
     if (this.props.currentUser) {
       switch (this.state.screen) {
@@ -58,7 +49,7 @@ var App = React.createClass({
         screen = <PostEvent
           currentUser={this.props.currentUser}
           onBack={() => { this.setState({ screen: 'welcome' })}}
-          onPostEvent={this.handlePostEvent}
+          onPostEvent={this.handlePostEvent.bind(this)}
         />;
         break;
       }
@@ -76,6 +67,16 @@ var App = React.createClass({
     );
   }
 
+}
+
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    backgroundColor: '#ffffff',
+    paddingTop: 20
+  }
 });
 
 function mapStateToProps(state) {

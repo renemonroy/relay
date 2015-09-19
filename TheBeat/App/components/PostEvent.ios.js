@@ -10,44 +10,11 @@ var {
 
 var colors = require('../styles/colors');
 var globalStyles = require('../styles/global');
-var styles = StyleSheet.create({
-  ...globalStyles,
-  header: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderStyle: 'solid',
-    borderBottomWidth: 1,
-    borderBottomColor: '#000',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  headerText: {
-    fontSize: 28
-  },
-  postEvent: {
-    paddingHorizontal: 30,
-    paddingVertical: 20
-  },
-  input: {
-    height: 48,
-    borderWidth: 0.5,
-    borderColor: '#0f0f0f',
-    flex: 1,
-    fontSize: 18,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-    borderRadius: 3
-  },
-  inputDescription: {
-    height: 144
-  }
-});
 
 class PostEvent extends React.Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       title: "",
       description: ""
@@ -109,5 +76,39 @@ class PostEvent extends React.Component {
   }
 
 }
+
+var styles = StyleSheet.create({
+  ...globalStyles,
+  header: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderStyle: 'solid',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  headerText: {
+    fontSize: 28
+  },
+  postEvent: {
+    paddingHorizontal: 30,
+    paddingVertical: 20
+  },
+  input: {
+    height: 48,
+    borderWidth: 0.5,
+    borderColor: '#0f0f0f',
+    flex: 1,
+    fontSize: 18,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    borderRadius: 3
+  },
+  inputDescription: {
+    height: 144
+  }
+});
 
 module.exports = PostEvent;

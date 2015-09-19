@@ -10,14 +10,6 @@ var {
   FBSDKLoginButton
 } = FBSDKLogin;
 
-var styles = StyleSheet.create({
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  }
-});
-
 class Login extends React.Component {
 
   handleLogin(error, response) {
@@ -48,5 +40,13 @@ class Login extends React.Component {
   }
 
 }
+
+var styles = StyleSheet.create({
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  }
+});
 
 module.exports = Login;

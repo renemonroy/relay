@@ -9,59 +9,6 @@ var {
 
 var colors = require('../styles/colors');
 var globalStyles = require('../styles/global');
-var styles = StyleSheet.create({
-  ...globalStyles,
-  header: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#000',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  headerText: {
-    fontSize: 28
-  },
-  body: {
-    flex: 1,
-    paddingVertical: 20
-  },
-  welcome: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'stretch',
-    marginBottom: 20,
-    paddingHorizontal: 20
-  },
-  info: {
-    flex: 2,
-    marginLeft: 10
-  },
-  myEvents: {
-    alignItems: 'stretch',
-  },
-  event: {
-    borderBottomWidth: 1,
-    borderStyle: 'solid',
-    borderColor: colors.blue,
-    paddingVertical: 5,
-    paddingHorizontal: 20
-  },
-  media: {
-    flexDirection: 'row'
-  },
-  eventInfo: {
-    marginLeft: 10
-  },
-  eventTitle: {
-    fontSize: 18
-  },
-  eventDescription: {
-    fontSize: 12
-  }
-});
 
 class Welcome extends React.Component {
 
@@ -116,5 +63,59 @@ class Welcome extends React.Component {
   }
 
 }
+
+var styles = StyleSheet.create({
+  ...globalStyles,
+  header: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    borderColor: '#000',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  headerText: {
+    fontSize: 28
+  },
+  body: {
+    flex: 1,
+    paddingVertical: 20
+  },
+  welcome: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+    marginBottom: 20,
+    paddingHorizontal: 20
+  },
+  info: {
+    flex: 2,
+    marginLeft: 10
+  },
+  myEvents: {
+    alignItems: 'stretch',
+  },
+  event: {
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    borderColor: colors.blue,
+    paddingVertical: 5,
+    paddingHorizontal: 20
+  },
+  media: {
+    flexDirection: 'row'
+  },
+  eventInfo: {
+    marginLeft: 10
+  },
+  eventTitle: {
+    fontSize: 18
+  },
+  eventDescription: {
+    fontSize: 12
+  }
+});
 
 module.exports = Welcome;
