@@ -1,3 +1,4 @@
+var _ = require('underscore');
 var React = require('react-native');
 var {
   StyleSheet,
@@ -32,7 +33,9 @@ class MyFeed extends React.Component {
                     <Text>Mutual friends:</Text>
                     <View>
                       {event.get('mutual_friends').map((friend) => {
-                        return (<Text key={friend.id}>{friend.name}</Text>);
+                        // Seems FB will omit ID for friends that haven't auth'd our app
+                        var key = friend.id || _.uniqueId(friend.name.replace(/\s/g, '-'));
+                        return (<Text key={key}>{friend.name}</Text>);
                       })}
                     </View>
                   </View>
