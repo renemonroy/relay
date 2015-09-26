@@ -25,13 +25,14 @@ function getCurrentUser(callback) {
           facebookId: response.id,
           firstName: response.first_name,
           lastName: response.last_name,
-          picture: response.picture.data.url
+          picture: response.picture.data.url,
+          friends: response.friends.data
         });
       });
     }
   }, '/me', {
     'fields': {
-      string: 'first_name,last_name,picture.type(large)'
+      string: 'first_name,last_name,picture.type(large),friends'
     }
   });
 

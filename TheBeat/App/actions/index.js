@@ -1,6 +1,11 @@
 var Parse = require('parse').Parse;
 var BookFace = require('../utility/BookFace');
 
+var {
+  User,
+  Event,
+} = require('../models');
+
 var REQUEST_CURRENT_USER = module.exports.REQUEST_CURRENT_USER = 'REQUEST_CURRENT_USER';
 var RECEIVE_CURRENT_USER = module.exports.RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 
@@ -17,13 +22,6 @@ var RECEIVE_MUTUAL_FRIENDS = module.exports.RECEIVE_MUTUAL_FRIENDS = 'RECEIVE_MU
 
 var REQUEST_POST_EVENT = module.exports.REQUEST_POST_EVENT = 'REQUEST_POST_EVENT';
 var POST_EVENT_SUCCESS = module.exports.POST_EVENT_SUCCESS = 'POST_EVENT_SUCCESS';
-
-var Event = Parse.Object.extend('Event');
-var User = Parse.User.extend({
-  fullName: function() {
-    return this.get('firstName') + ' ' + this.get('lastName');
-  }
-});
 
 function requestCurrentUser() {
   return {
@@ -197,18 +195,21 @@ module.exports.getMutualFriends = (otherUserId) => {
 
 module.exports.getMyFeed = () => {
   return dispatch => {
+    var user = Parse.User.current();
     var query = new Parse.Query('Event');
     query.include('host');
-    query.notEqualTo('host', Parse.User.current());
+    query.notEqualTo('host', user);
     query.find().then((events) => {
       console.log('got all events', events);
       var myFeed = [];
+
+      // Get all events where user is friends with or has mutual friends with host
       var promises = events.map((event, i) => {
         var promise = new Parse.Promise();
         var otherUserId = event.get('host').get('facebookId');
         console.log('getting mutual friends for', otherUserId);
         BookFace.getMutualFriends(otherUserId, (error, mutualFriends) => {
-          if (mutualFriends.length) {
+          if (user.isFriendsWith(otherUserId) || mutualFriends.length) {
             event.set('mutual_friends', mutualFriends);
             myFeed.push(event);
           }
@@ -216,6 +217,7 @@ module.exports.getMyFeed = () => {
         });
         return promise;
       });
+
       Parse.Promise.when(promises).then(() => {
         console.log('myFeed', myFeed);
         dispatch(receiveMyFeed(myFeed));
