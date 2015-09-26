@@ -95,7 +95,7 @@ function signUp(fbUser) {
 function handleParseError(dispatch, error) {
   switch (error.code) {
   case Parse.Error.INVALID_SESSION_TOKEN:
-    Parse.User.logOut();
+    User.logOut();
     dispatch(logout());
   }
 }
@@ -109,7 +109,7 @@ module.exports.getCurrentUser = () => {
         return;
       }
 
-      var currentUser = Parse.User.current();
+      var currentUser = User.current();
       if (currentUser) {
         console.log('Parse currentUser exists, update from BookFace')
         currentUser.save(fbUser).then(() => {
@@ -119,7 +119,7 @@ module.exports.getCurrentUser = () => {
         });
       } else {
         console.log('no Parse currentUser, query for user with facebookId', fbUser.facebookId);
-        var query = new Parse.Query(Parse.User);
+        var query = new Parse.Query(User);
         query.equalTo('facebookId', fbUser.facebookId);
         query.first().then((currentUser) => {
           if (currentUser) {
@@ -129,7 +129,7 @@ module.exports.getCurrentUser = () => {
               accessToken: fbUser.accessToken
             }).then((sessionToken) => {
               console.log('fbAuth success', sessionToken)
-              return Parse.User.become(sessionToken);
+              return User.become(sessionToken);
             }).then(() => {
               console.log('user become sessionToken success, update with fb data', currentUser, fbUser);
               return currentUser.save(fbUser).then((currentUser) => {
@@ -154,7 +154,7 @@ module.exports.getCurrentUser = () => {
 module.exports.logout = () => {
   return dispatch => {
     BookFace.logout();
-    Parse.User.logOut();
+    User.logOut();
     dispatch(logout());
   }
 }
@@ -172,7 +172,7 @@ module.exports.postEvent = (eventData) => {
 module.exports.getMyEvents = () => {
   return dispatch => {
     var query = new Parse.Query('Event');
-    query.equalTo('host', Parse.User.current());
+    query.equalTo('host', User.current());
     query.find().then((events) => {
       console.log('got my events', events)
       dispatch(receiveMyEvents(events));
@@ -195,7 +195,7 @@ module.exports.getMutualFriends = (otherUserId) => {
 
 module.exports.getMyFeed = () => {
   return dispatch => {
-    var user = Parse.User.current();
+    var user = User.current();
     var query = new Parse.Query('Event');
     query.include('host');
     query.notEqualTo('host', user);
