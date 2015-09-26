@@ -8,10 +8,24 @@ var {
   TouchableHighlight,
 } = React;
 
+var ViewEvent = require('./ViewEvent');
+
 var colors = require('../styles/colors');
 var globalStyles = require('../styles/global');
 
 class MyFeed extends React.Component {
+
+  handleTapEvent(event) {
+    return () => {
+      this.props.navigator.push({
+        component: ViewEvent,
+        passProps: {
+          currentUser: this.props.currentUser,
+          event: event
+        }
+      });
+    }
+  }
 
   render() {
     return (
@@ -20,7 +34,7 @@ class MyFeed extends React.Component {
         <View style={styles.myFeed}>
           {this.props.myFeed.map((event) => {
             return (
-              <TouchableHighlight style={styles.event} key={event.id} underlayColor={colors.lightBlue}>
+              <TouchableHighlight style={styles.event} key={event.id} underlayColor={colors.lightBlue} onPress={this.handleTapEvent(event)}>
                 <View style={styles.media}>
                   <Image
                     source={{uri: event.get('picture')}}
@@ -52,6 +66,18 @@ class MyFeed extends React.Component {
 
 class MyEvents extends React.Component {
 
+  handleTapEvent(event) {
+    return () => {
+      this.props.navigator.push({
+        component: ViewEvent,
+        passProps: {
+          currentUser: this.props.currentUser,
+          event: event
+        }
+      });
+    }
+  }
+
   render() {
     return (
       <View>
@@ -59,7 +85,7 @@ class MyEvents extends React.Component {
         <View style={styles.myEvents}>
           {this.props.myEvents.map((event) => {
             return (
-              <TouchableHighlight style={styles.event} key={event.id} underlayColor={colors.lightBlue}>
+              <TouchableHighlight style={styles.event} key={event.id} underlayColor={colors.lightBlue} onPress={this.handleTapEvent(event)}>
                 <View style={styles.media}>
                   <Image
                     source={{uri: event.get('picture')}}
@@ -109,8 +135,8 @@ class Welcome extends React.Component {
               Welcome back, {this.props.currentUser.fullName()}
             </Text>
           </View>
-          <MyFeed myFeed={this.props.myFeed} />
-          <MyEvents myEvents={this.props.myEvents} />
+          <MyFeed navigator={this.props.navigator} myFeed={this.props.myFeed} />
+          <MyEvents navigator={this.props.navigator} myEvents={this.props.myEvents} />
         </View>
       </View>
     );

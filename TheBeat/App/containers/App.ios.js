@@ -20,9 +20,9 @@ class App extends React.Component {
     var Component = route.component;
     return (
       <Component
-        currentUser={this.props.currentUser}
         navigator={navigator}
         route={route}
+        currentUser={this.props.currentUser}
         {...route.passProps}
       />
     );

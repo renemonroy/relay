@@ -73,7 +73,6 @@ class App extends React.Component {
     this.props.navigator.push({
       component: PostEvent,
       passProps: {
-        currentUser: this.props.currentUser,
         onSubmit: this.handlePostEvent.bind(this)
       }
     });
@@ -82,6 +81,8 @@ class App extends React.Component {
   render() {
     return (
       <Welcome
+        navigator={this.props.navigator}
+        route={this.props.route}
         currentUser={this.props.currentUser}
         getMyFeed={this.props.getMyFeed}
         myFeed={this.props.myFeed}

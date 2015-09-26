@@ -21,10 +21,6 @@ class PostEvent extends React.Component {
     }
   }
 
-  handleBack() {
-    this.props.navigator.pop();
-  }
-
   handleSubmit() {
     if (!this.state.title) {
       return;
@@ -44,11 +40,10 @@ class PostEvent extends React.Component {
     return (
       <View>
         <View style={styles.header}>
-          <TouchableHighlight onPress={this.handleBack.bind(this)} style={styles.button} underlayColor={colors.lightBlue}>
+          <TouchableHighlight onPress={this.props.navigator.pop} style={styles.button} underlayColor={colors.lightBlue}>
             <Text>&lt; Back</Text>
           </TouchableHighlight>
           <Text style={styles.headerText}>Post Event</Text>
-          <Text> </Text>
         </View>
         <View style={styles.postEvent}>
           <View>
