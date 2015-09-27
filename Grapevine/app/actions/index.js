@@ -4,6 +4,7 @@ var BookFace = require('../utility/BookFace');
 var {
   User,
   Event,
+  EventSubscription,
 } = require('../models');
 
 var REQUEST_CURRENT_USER = module.exports.REQUEST_CURRENT_USER = 'REQUEST_CURRENT_USER';
@@ -22,6 +23,9 @@ var RECEIVE_MUTUAL_FRIENDS = module.exports.RECEIVE_MUTUAL_FRIENDS = 'RECEIVE_MU
 
 var REQUEST_POST_EVENT = module.exports.REQUEST_POST_EVENT = 'REQUEST_POST_EVENT';
 var POST_EVENT_SUCCESS = module.exports.POST_EVENT_SUCCESS = 'POST_EVENT_SUCCESS';
+
+var REQUEST_ATTENDANCE = module.exports.REQUEST_ATTENDANCE = 'REQUEST_ATTENDANCE';
+var REQUEST_ATTENDANCE_SUCCESS = module.exports.REQUEST_ATTENDANCE_SUCCESS = 'REQUEST_ATTENDANCE_SUCCESS';
 
 function requestCurrentUser() {
   return {
@@ -82,6 +86,18 @@ function postEventSuccess(event) {
   return {
     type: POST_EVENT_SUCCESS,
     event: event
+  };
+}
+function requestAttendance(subscription) {
+  return {
+    type: REQUEST_ATTENDANCE,
+    subscription: subscription
+  }
+}
+function requestAttendanceSuccess(subscription) {
+  return {
+    type: REQUEST_ATTENDANCE_SUCCESS,
+    subscription: subscription
   };
 }
 
@@ -167,6 +183,22 @@ module.exports.postEvent = (eventData) => {
     });
   }
   dispatch(requestPostEvent());
+}
+
+module.exports.requestAttendance = (subscription) => {
+  console.log('requestAttendance', subscription);
+  return dispatch => {
+    var eventSubscription = new EventSubscription({
+      event: subscription.event,
+      subscriber: subscription.subscriber,
+      status: 'applied',
+      pitch: subscription.pitch
+    });
+    eventSubscription.save().then((eventSubscription) => {
+      dispatch(requestAttendanceSuccess(eventSubscription));
+    });
+    dispatch(requestAttendance());
+  }
 }
 
 module.exports.getMyEvents = () => {

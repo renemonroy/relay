@@ -4,6 +4,8 @@ module.exports = {
 
   Event: Parse.Object.extend('Event'),
 
+  EventSubscription: Parse.Object.extend('EventSubscription'),
+
   User: Parse.User.extend({
     isFriendsWith: function(otherUserId) {
       return this.get('friends').find((friend) => {

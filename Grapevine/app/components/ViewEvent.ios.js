@@ -8,16 +8,54 @@ var {
   TextInput
 } = React;
 
+var { connect } = require('react-redux/native');
+
+var { requestAttendance } = require('../actions');
+
 var colors = require('../styles/colors');
 var globalStyles = require('../styles/global');
 
 class ViewEvent extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      applied: false,
+      pitch: ""
+    }
+  }
+
   handleApply() {
-    console.log('apply!');
+    this.props.requestAttendance({
+      event: this.props.event,
+      subscriber: this.props.currentUser,
+      pitch: this.state.pitch
+    });
+    this.setState({
+      applied: true
+    });
   }
 
   render() {
+    var application;
+    if (this.state.applied) {
+      application = <Text>Your application is pending!</Text>
+    } else {
+      application = (
+        <View>
+          <TextInput
+            placeholder="Why should you attend?"
+            onChangeText={(text) => this.setState({ pitch: text })}
+            value={this.state.pitch}
+            multiline={true}
+            style={styles.input}
+          />
+          <TouchableHighlight onPress={this.handleApply.bind(this)} style={styles.button} underlayColor={colors.lightBlue}>
+            <Text>Apply</Text>
+          </TouchableHighlight>
+        </View>
+      );
+    }
     return (
       <View>
         <View style={styles.header}>
@@ -33,11 +71,7 @@ class ViewEvent extends React.Component {
           <Text style={styles.description}>
             {this.props.event.get('description')}
           </Text>
-          <View>
-            <TouchableHighlight onPress={this.handleApply.bind(this)} style={styles.button} underlayColor={colors.lightBlue}>
-              <Text>Apply</Text>
-            </TouchableHighlight>
-          </View>
+          {application}
         </View>
       </View>
     );
@@ -69,8 +103,11 @@ var styles = StyleSheet.create({
     textAlign: 'center'
   },
   description: {
-    fontSize: 14
+    fontSize: 14,
+    marginBottom: 10
   }
 });
 
-module.exports = ViewEvent;
+module.exports = connect(null, {
+  requestAttendance
+})(ViewEvent);

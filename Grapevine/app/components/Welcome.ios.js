@@ -20,7 +20,6 @@ class MyFeed extends React.Component {
       this.props.navigator.push({
         component: ViewEvent,
         passProps: {
-          currentUser: this.props.currentUser,
           event: event
         }
       });
@@ -71,7 +70,6 @@ class MyEvents extends React.Component {
       this.props.navigator.push({
         component: ViewEvent,
         passProps: {
-          currentUser: this.props.currentUser,
           event: event
         }
       });

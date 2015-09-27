@@ -94,16 +94,6 @@ var styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 20
   },
-  input: {
-    height: 48,
-    borderWidth: 0.5,
-    borderColor: '#0f0f0f',
-    flex: 1,
-    fontSize: 18,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-    borderRadius: 3
-  },
   inputDescription: {
     height: 144
   }
