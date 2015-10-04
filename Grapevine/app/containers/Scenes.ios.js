@@ -7,7 +7,6 @@ var {
   logout,
   getMyFeed,
   getMyEvents,
-  getMutualFriends,
   postEvent,
 } = require('../actions');
 
@@ -88,7 +87,6 @@ class App extends React.Component {
         myFeed={this.props.myFeed}
         getMyEvents={this.props.getMyEvents}
         myEvents={this.props.myEvents}
-        getMutualFriends={this.props.getMutualFriends}
         mutualFriends={this.props.mutualFriends}
         onLogout={this.handleLogout.bind(this)}
         onTapPostEvent={this.handleTapPostEvent.bind(this)}
@@ -110,7 +108,6 @@ App = connect(mapStateToProps, {
   logout,
   getMyFeed,
   getMyEvents,
-  getMutualFriends,
   postEvent
 })(App);
 

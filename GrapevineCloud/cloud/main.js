@@ -1,5 +1,6 @@
 var Buffer = require('buffer').Buffer;
 var _ = require('underscore');
+var crypto = require('crypto');
 
 Parse.Cloud.define('fbAuth', function(request, response) {
   var facebookId = request.params.facebookId;
@@ -30,5 +31,34 @@ Parse.Cloud.define('fbAuth', function(request, response) {
     return response.success(user.getSessionToken());
   }, function(error) {
     return response.error(error);
+  });
+});
+
+Parse.Cloud.define('mutualFriends', function(request, response) {
+  Parse.Config.get().then(function(config) {
+
+    var otherUserId = request.params.user_id;
+    var accessToken = request.user.get('accessToken');
+
+    var hmac = crypto.createHmac('sha256', config.get('fbAppSecret'));
+    hmac.update(accessToken);
+    var appSecretProof = hmac.digest('hex');
+
+    Parse.Cloud.httpRequest({
+      url: 'https://graph.facebook.com/v2.4/' + otherUserId + '?fields=context.fields(all_mutual_friends{name,picture.type(large)})&access_token=' + accessToken + '&appsecret_proof=' + appSecretProof,
+      success: function(httpResponse) {
+        console.log('mutualFriends ' + JSON.stringify(httpResponse.data));
+        if (httpResponse.data.context.all_mutual_friends) {
+          response.success(httpResponse.data.context.all_mutual_friends.data);
+        } else {
+          response.success([]);
+        }
+      },
+      error: function(httpResponse) {
+        console.log('mutualFriends error ' + httpResponse);
+        response.error('mutualFriends error');
+      }
+    });
+
   });
 });

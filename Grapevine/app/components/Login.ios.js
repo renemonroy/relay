@@ -13,7 +13,7 @@ var {
 class Login extends React.Component {
 
   handleLogin(error, response) {
-    console.log('logged in', response);
+    console.log('logged in', error, response);
     if (!error) {
       this.props.onLogin(response);
     }

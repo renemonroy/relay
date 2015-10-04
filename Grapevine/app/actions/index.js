@@ -215,17 +215,6 @@ exports.getMyEvents = () => {
   }
 }
 
-exports.getMutualFriends = (otherUserId) => {
-  return dispatch => {
-    BookFace.getMutualFriends(otherUserId, (error, mutualFriends) => {
-      if (!error) {
-        dispatch(receiveMutualFriends(mutualFriends));
-      }
-    });
-    dispatch(requestMutualFriends());
-  }
-}
-
 exports.getMyFeed = () => {
   return dispatch => {
     var user = User.current();
@@ -240,13 +229,23 @@ exports.getMyFeed = () => {
       var promises = events.map((event, i) => {
         var promise = new Parse.Promise();
         var otherUserId = event.get('host').get('facebookId');
+
         console.log('getting mutual friends for', otherUserId);
-        BookFace.getMutualFriends(otherUserId, (error, mutualFriends) => {
-          if (user.isFriendsWith(otherUserId) || mutualFriends.length) {
-            event.set('mutual_friends', mutualFriends);
-            myFeed.push(event);
+        Parse.Cloud.run('mutualFriends', {
+          user_id: otherUserId
+        }, {
+          success: function(mutualFriends) {
+            console.log('got mutualFriends for', otherUserId, mutualFriends);
+            if (user.isFriendsWith(otherUserId) || mutualFriends.length) {
+              event.set('mutual_friends', mutualFriends);
+              myFeed.push(event);
+            }
+            promise.resolve(event);
+          },
+          error: function(error) {
+            console.log('mutualFriends error', error);
+            promise.resolve(event);
           }
-          promise.resolve(event);
         });
         return promise;
       });

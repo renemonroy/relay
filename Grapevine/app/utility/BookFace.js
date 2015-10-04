@@ -41,23 +41,6 @@ function getCurrentUser(callback) {
   FBSDKGraphRequestManager.batchRequests([getUser], function() {}, 60);
 }
 
-function getMutualFriends(otherUserId, callback) {
-  var getMutualFriendsRequest = new FBSDKGraphRequest((error, response) => {
-    console.log('getMutualFriendsRequest', otherUserId, error, response);
-    if (!error) {
-      callback(null, response.context.all_mutual_friends.data);
-    }
-  }, '/' + otherUserId, {
-    'fields': {
-      string: 'context.fields(all_mutual_friends{name,picture.type(large)})'
-    }
-  });
-
-  // https://github.com/facebook/react-native-fbsdk/issues/20
-  // getMutualFriendsRequest.start();
-  FBSDKGraphRequestManager.batchRequests([getMutualFriendsRequest], function() {}, 60);
-}
-
 module.exports = {
 
   getCurrentUser: function(callback) {
@@ -72,10 +55,6 @@ module.exports = {
 
   logout: function() {
     FBSDKLoginManager.logOut();
-  },
-
-  getMutualFriends: function(otherUserId, callback) {
-    getMutualFriends(otherUserId, callback);
   }
 
 }
