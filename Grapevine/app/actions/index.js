@@ -7,25 +7,25 @@ var {
   EventSubscription,
 } = require('../models');
 
-var REQUEST_CURRENT_USER = module.exports.REQUEST_CURRENT_USER = 'REQUEST_CURRENT_USER';
-var RECEIVE_CURRENT_USER = module.exports.RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
+var REQUEST_CURRENT_USER = exports.REQUEST_CURRENT_USER = 'REQUEST_CURRENT_USER';
+var RECEIVE_CURRENT_USER = exports.RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
 
-var LOG_OUT = module.exports.LOG_OUT = 'LOG_OUT';
+var LOG_OUT = exports.LOG_OUT = 'LOG_OUT';
 
-var REQUEST_MY_FEED = module.exports.REQUEST_MY_FEED = 'REQUEST_MY_FEED';
-var RECEIVE_MY_FEED = module.exports.RECEIVE_MY_FEED = 'RECEIVE_MY_FEED';
+var REQUEST_MY_FEED = exports.REQUEST_MY_FEED = 'REQUEST_MY_FEED';
+var RECEIVE_MY_FEED = exports.RECEIVE_MY_FEED = 'RECEIVE_MY_FEED';
 
-var REQUEST_MY_EVENTS = module.exports.REQUEST_MY_EVENTS = 'REQUEST_MY_EVENTS';
-var RECEIVE_MY_EVENTS = module.exports.RECEIVE_MY_EVENTS = 'RECEIVE_MY_EVENTS';
+var REQUEST_MY_EVENTS = exports.REQUEST_MY_EVENTS = 'REQUEST_MY_EVENTS';
+var RECEIVE_MY_EVENTS = exports.RECEIVE_MY_EVENTS = 'RECEIVE_MY_EVENTS';
 
-var REQUEST_MUTUAL_FRIENDS = module.exports.REQUEST_MUTUAL_FRIENDS = 'REQUEST_MUTUAL_FRIENDS';
-var RECEIVE_MUTUAL_FRIENDS = module.exports.RECEIVE_MUTUAL_FRIENDS = 'RECEIVE_MUTUAL_FRIENDS';
+var REQUEST_MUTUAL_FRIENDS = exports.REQUEST_MUTUAL_FRIENDS = 'REQUEST_MUTUAL_FRIENDS';
+var RECEIVE_MUTUAL_FRIENDS = exports.RECEIVE_MUTUAL_FRIENDS = 'RECEIVE_MUTUAL_FRIENDS';
 
-var REQUEST_POST_EVENT = module.exports.REQUEST_POST_EVENT = 'REQUEST_POST_EVENT';
-var POST_EVENT_SUCCESS = module.exports.POST_EVENT_SUCCESS = 'POST_EVENT_SUCCESS';
+var REQUEST_POST_EVENT = exports.REQUEST_POST_EVENT = 'REQUEST_POST_EVENT';
+var POST_EVENT_SUCCESS = exports.POST_EVENT_SUCCESS = 'POST_EVENT_SUCCESS';
 
-var REQUEST_ATTENDANCE = module.exports.REQUEST_ATTENDANCE = 'REQUEST_ATTENDANCE';
-var REQUEST_ATTENDANCE_SUCCESS = module.exports.REQUEST_ATTENDANCE_SUCCESS = 'REQUEST_ATTENDANCE_SUCCESS';
+var REQUEST_ATTENDANCE = exports.REQUEST_ATTENDANCE = 'REQUEST_ATTENDANCE';
+var REQUEST_ATTENDANCE_SUCCESS = exports.REQUEST_ATTENDANCE_SUCCESS = 'REQUEST_ATTENDANCE_SUCCESS';
 
 function requestCurrentUser() {
   return {
@@ -116,7 +116,7 @@ function handleParseError(dispatch, error) {
   }
 }
 
-module.exports.getCurrentUser = () => {
+exports.getCurrentUser = () => {
   return dispatch => {
     console.log('getCurrentUser, query BookFace');
     BookFace.getCurrentUser((error, fbUser) => {
@@ -167,7 +167,7 @@ module.exports.getCurrentUser = () => {
   };
 }
 
-module.exports.logout = () => {
+exports.logout = () => {
   return dispatch => {
     BookFace.logout();
     User.logOut();
@@ -175,7 +175,7 @@ module.exports.logout = () => {
   }
 }
 
-module.exports.postEvent = (eventData) => {
+exports.postEvent = (eventData) => {
   return dispatch => {
     var event = new Event();
     event.save(eventData).then((event) => {
@@ -185,7 +185,7 @@ module.exports.postEvent = (eventData) => {
   dispatch(requestPostEvent());
 }
 
-module.exports.requestAttendance = (subscription) => {
+exports.requestAttendance = (subscription) => {
   console.log('requestAttendance', subscription);
   return dispatch => {
     var eventSubscription = new EventSubscription({
@@ -201,7 +201,7 @@ module.exports.requestAttendance = (subscription) => {
   }
 }
 
-module.exports.getMyEvents = () => {
+exports.getMyEvents = () => {
   return dispatch => {
     var query = new Parse.Query('Event');
     query.equalTo('host', User.current());
@@ -214,7 +214,7 @@ module.exports.getMyEvents = () => {
   }
 }
 
-module.exports.getMutualFriends = (otherUserId) => {
+exports.getMutualFriends = (otherUserId) => {
   return dispatch => {
     BookFace.getMutualFriends(otherUserId, (error, mutualFriends) => {
       if (!error) {
@@ -225,7 +225,7 @@ module.exports.getMutualFriends = (otherUserId) => {
   }
 }
 
-module.exports.getMyFeed = () => {
+exports.getMyFeed = () => {
   return dispatch => {
     var user = User.current();
     var query = new Parse.Query('Event');
