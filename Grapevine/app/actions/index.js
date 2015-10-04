@@ -122,6 +122,7 @@ exports.getCurrentUser = () => {
     BookFace.getCurrentUser((error, fbUser) => {
       if (!fbUser) {
         console.log('no fbUser');
+        User.logOut();
         return;
       }
 
