@@ -161,6 +161,7 @@ exports.getCurrentUser = () => {
           }
         }, (error) => {
           console.warn('getCurrentUser error', error);
+          handleParseError(dispatch, error);
         });
       }
     });
