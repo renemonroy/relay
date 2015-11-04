@@ -1,9 +1,13 @@
 var { createStore, applyMiddleware } = require('redux');
-var thunkMiddleware = require('redux-thunk');
+var thunk = require('redux-thunk');
+var createLogger = require('redux-logger');
 var rootReducer = require('../reducers');
 
+var logger = createLogger();
+
 var createStoreWithMiddleware = applyMiddleware(
-  thunkMiddleware
+  thunk,
+  logger
 )(createStore);
 
 module.exports = function configureStore(initialState) {

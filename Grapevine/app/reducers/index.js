@@ -23,7 +23,6 @@ function currentUser(state=null, action) {
 function myFeed(state=[], action) {
   switch (action.type) {
   case RECEIVE_MY_FEED:
-    console.log('received my feed', action.events);
     return action.events.slice(0);
   default:
     return state;
@@ -33,10 +32,8 @@ function myFeed(state=[], action) {
 function myEvents(state=[], action) {
   switch (action.type) {
   case POST_EVENT_SUCCESS:
-    console.log('post event success', action);
     return state.concat(action.event);
   case RECEIVE_MY_EVENTS:
-    console.log('received my events', action.events);
     return action.events.slice(0);
   default:
     return state;

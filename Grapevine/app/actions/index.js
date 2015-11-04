@@ -160,7 +160,6 @@ exports.getCurrentUser = () => {
             });
           }
         }, (error) => {
-          console.warn('getCurrentUser error', error);
           handleParseError(dispatch, error);
         });
       }
@@ -188,7 +187,6 @@ exports.postEvent = (eventData) => {
 }
 
 exports.requestAttendance = (subscription) => {
-  console.log('requestAttendance', subscription);
   return dispatch => {
     var eventSubscription = new EventSubscription({
       event: subscription.event,
@@ -208,10 +206,9 @@ exports.getMyEvents = () => {
     var query = new Parse.Query('Event');
     query.equalTo('host', User.current());
     query.find().then((events) => {
-      console.log('got my events', events)
       dispatch(receiveMyEvents(events));
     }, (error) => {
-      console.log('getMyEvents error', error)
+      console.log('getMyEvents error', error);
     })
   }
 }
@@ -252,7 +249,6 @@ exports.getMyFeed = () => {
       });
 
       Parse.Promise.when(promises).then(() => {
-        console.log('myFeed', myFeed);
         dispatch(receiveMyFeed(myFeed));
       })
     }, (error) => {
