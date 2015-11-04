@@ -1,0 +1,90 @@
+{ "results": [
+	{
+        "accessToken": "CAAQlJdGPEeEBAFlDjIC1Ek6FWciOpM0fiZA4P7t3IlVG0ZBtFjjapUcIGGneV94zPO9YodlMsVfWlJ0jRijowZCdzAXGR5yjUZBmttMWeUXQ9GfNsD9L1W4sdItwI4CU9RcZCoE6FZBu647ZCAp6mkSCWjzDfFuUL8bZCM6T82YSe65ZBLMdySabspJj6qDvV6XANMxsvb9VOs8hI4pdFbEBRZANdCq4uy76cZD",
+        "bcryptPassword": "$2a$10$Z.s04ftSHwu/9wZWeG5OKO/ZgRXTW7b6DZ7iyVf5pYBY3LqHL7XMO",
+        "createdAt": "2015-10-04T05:46:11.098Z",
+        "facebookId": "140019963015065",
+        "firstName": "Dick",
+        "friends": [
+            {
+                "id": "153965088277351",
+                "name": "Dorothy Amiiaehbhchh Zamorestein"
+            },
+            {
+                "id": "138179019861541",
+                "name": "Elizabeth Alakhccachk McDonaldsky"
+            }
+        ],
+        "lastName": "Warmansen",
+        "objectId": "Un2OiNa64y",
+        "picture": "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfp1/v/t1.0-1/s200x200/10354686_10150004552801856_220367501106153455_n.jpg?oh=295fb593caac181f8bf03ed7a216d7b2\u0026oe=56994C50\u0026__gda__=1452648006_5c4e12134d5903aba6c188eb919b93ab",
+        "sessionToken": "VPCN9flVvOYJMfTYgQ8mcOIsS",
+        "updatedAt": "2015-10-04T05:46:11.098Z",
+        "username": "DickWarmansen63"
+    },
+	{
+        "accessToken": "CAAQlJdGPEeEBAJRsV4GQ9NvROhAD3xp7k2ZATjdRMLGby0LKzahECoemJbFJFA5S9xAq0J7GCNljTNuaZAEjt4bkd62a8X6NJEcomaKgZA3ZCWNbVW6dzbrGrZBKxMyv4oJ1BAxRmewaX3rpMryO3r7rLrg4JkXofb1jTeQ5ptu8xAIsm6JdvOUR0MQo3ZCkmZAW1XNZCMZAKMBzmSLH0SBbbCr9U8G6XVV9FJIP9ZAw4MbQZDZD",
+        "bcryptPassword": "$2a$10$CaIERiQ8ugYny1w99Xg9COObhA2eqpJva4wq2Ra2AW3Ios9t.vIs2",
+        "createdAt": "2015-10-04T01:47:11.316Z",
+        "facebookId": "153965088277351",
+        "firstName": "Dorothy",
+        "friends": [
+            {
+                "id": "151534308520863",
+                "name": "Helen Amiibhhdghfh Yangsen"
+            },
+            {
+                "id": "138179019861541",
+                "name": "Elizabeth Alakhccachk McDonaldsky"
+            },
+            {
+                "id": "140019963015065",
+                "name": "Dick Alajbaahfgjic Warmansen"
+            }
+        ],
+        "lastName": "Zamorestein",
+        "objectId": "XK9jeBvnmk",
+        "picture": "https://scontent.xx.fbcdn.net/hprofile-xpf1/v/t1.0-1/p200x200/11781650_153986991608494_5213335674207876842_n.jpg?oh=838f62b7be0013e3d5f50ff4436ff37c\u0026oe=56BD67EB",
+        "sessionToken": "ZUZaV1VCXTedlBZUQg15BADFg",
+        "updatedAt": "2015-11-04T18:52:03.667Z",
+        "username": "HelenYangsen24"
+    },
+	{
+        "accessToken": "CAAQlJdGPEeEBAFummXtcOnfDYGZCd0pWCqMpn9a6QgItZAVqFmBlcyie1QianUdC9vmKTJp0GpNaZC1S6nJFc6rneUv7Y5bOGkZAEg3qJnAkcfZBf1yOHcLGEoBWTxiEaEvz20ciPr9W3jmv5aTQlXffV7TZClmkS07A93Gwq1ELkfCqTyD4SC5LkO6FGDDzWXVRaBv4g9cMg3ZBFAL1HIUirUFPcncVlAZD",
+        "bcryptPassword": "$2a$10$eTqiyvwz76MxJQIRNmbWwOtFmHc0xhkYOpA70JnL5m4ISlZjJI4ou",
+        "createdAt": "2015-10-04T01:57:36.470Z",
+        "facebookId": "138179019861541",
+        "firstName": "Elizabeth",
+        "friends": [
+            {
+                "id": "153965088277351",
+                "name": "Dorothy Amiiaehbhchh Zamorestein"
+            }
+        ],
+        "lastName": "McDonaldsky",
+        "objectId": "qujS8gHrDC",
+        "picture": "https://scontent.xx.fbcdn.net/hprofile-xat1/v/t1.0-1/p200x200/11998978_138209126525197_26882492610918044_n.jpg?oh=c9bdbbefe1da332e88eb9a752ec41c81\u0026oe=56A8BD22",
+        "sessionToken": "rJxutMj1NuUYDEtve3eQXX2XD",
+        "updatedAt": "2015-10-04T01:57:36.470Z",
+        "username": "ElizabethMcDonaldsky6"
+    },
+	{
+        "accessToken": "CAAQlJdGPEeEBAG6VPTyKCTo7J7eBu9sPXt5zwBJleteg8qyVbxZCjfQuZC7XKiW2ZCiAHrlkDGKjMq0s2fHewB1KZB31xVr9Nid22XWpSoDb0ZBm5qAicKPjhEZCs1oYMVsjgE5Pi50YLdo06veaoh5szCOnxvfzZBZBqipA572eeRvUZAE1NHU6FwHVZCguk3R6ZCaUR2ecDb9fyYC9JZB3ZCxH3NuzsaAwEolIZD",
+        "bcryptPassword": "$2a$10$2soYDawpW9McIn2BqPGHIuBnvbQZi61PVsub3oPk5jwmuyND5vL3q",
+        "createdAt": "2015-10-04T01:58:59.038Z",
+        "facebookId": "151534308520863",
+        "firstName": "Helen",
+        "friends": [
+            {
+                "id": "153965088277351",
+                "name": "Dorothy Amiiaehbhchh Zamorestein"
+            }
+        ],
+        "lastName": "Yangsen",
+        "objectId": "wD7wHthPjA",
+        "picture": "https://scontent.xx.fbcdn.net/hprofile-xlf1/v/t1.0-1/11951970_151551891852438_5169252226116875220_n.jpg?oh=75a580d2eff8f2a83a13931126552094\u0026oe=56BF5592",
+        "sessionToken": "0QakjuMPMle2laql7HC8cR7a1",
+        "updatedAt": "2015-10-25T18:41:34.831Z",
+        "username": "HelenYangsen97"
+    }
+] }

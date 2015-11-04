@@ -1,0 +1,19 @@
+{ "results": [
+	{
+        "createdAt": "2015-10-25T18:42:24.486Z",
+        "event": {
+            "__type": "Pointer",
+            "className": "Event",
+            "objectId": "OA4nr38hiw"
+        },
+        "objectId": "2nMiddXSJc",
+        "pitch": "",
+        "status": "applied",
+        "subscriber": {
+            "__type": "Pointer",
+            "className": "_User",
+            "objectId": "wD7wHthPjA"
+        },
+        "updatedAt": "2015-10-25T18:42:24.486Z"
+    }
+] }
