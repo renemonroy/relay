@@ -8,19 +8,20 @@ var {
   TouchableHighlight,
 } = React;
 
-var ViewEvent = require('./ViewEvent');
+var CreateGathering = require('./CreateGathering');
+var ViewGathering = require('./ViewGathering');
 
 var colors = require('../styles/colors');
 var globalStyles = require('../styles/global');
 
 class MyFeed extends React.Component {
 
-  handleTapEvent(event) {
+  handleSelectGathering(gathering) {
     return () => {
       this.props.navigator.push({
-        component: ViewEvent,
+        component: ViewGathering,
         passProps: {
-          event: event
+          gathering: gathering
         }
       });
     }
@@ -31,67 +32,18 @@ class MyFeed extends React.Component {
       <View>
         <Text>My Feed</Text>
         <View style={styles.myFeed}>
-          {this.props.myFeed.map((event) => {
+          {this.props.myFeed.map((gathering) => {
             return (
-              <TouchableHighlight style={styles.event} key={event.id} underlayColor={colors.lightBlue} onPress={this.handleTapEvent(event)}>
+              <TouchableHighlight style={styles.gathering} key={gathering.cid} underlayColor={colors.lightBlue} onPress={this.handleSelectGathering(gathering)}>
                 <View style={styles.media}>
                   <Image
-                    source={{uri: event.get('picture')}}
+                    source={{uri: gathering.get('picture')}}
                     style={{width: 50, height: 50}}
                   />
-                  <View style={styles.eventInfo}>
-                    <Text style={styles.eventTitle}>{event.get('title')}</Text>
-                    <Text style={styles.eventDescription}>{event.get('description')}</Text>
-                    <Text>Host: {event.get('host').get('firstName')}</Text>
-                    <Text>Mutual friends:</Text>
-                    <View>
-                      {event.get('mutual_friends').map((friend) => {
-                        // Seems FB will omit ID for friends that haven't auth'd our app
-                        var key = friend.id || _.uniqueId(friend.name.replace(/\s/g, '-'));
-                        return (<Text key={key}>{friend.name}</Text>);
-                      })}
-                    </View>
-                  </View>
-                </View>
-              </TouchableHighlight>
-            );
-          })}
-        </View>
-      </View>
-    );
-  }
-
-}
-
-class MyEvents extends React.Component {
-
-  handleTapEvent(event) {
-    return () => {
-      this.props.navigator.push({
-        component: ViewEvent,
-        passProps: {
-          event: event
-        }
-      });
-    }
-  }
-
-  render() {
-    return (
-      <View>
-        <Text>My Events</Text>
-        <View style={styles.myEvents}>
-          {this.props.myEvents.map((event) => {
-            return (
-              <TouchableHighlight style={styles.event} key={event.id} underlayColor={colors.lightBlue} onPress={this.handleTapEvent(event)}>
-                <View style={styles.media}>
-                  <Image
-                    source={{uri: event.get('picture')}}
-                    style={{width: 50, height: 50}}
-                  />
-                  <View style={styles.eventInfo}>
-                    <Text style={styles.eventTitle}>{event.get('title')}</Text>
-                    <Text style={styles.eventDescription}>{event.get('description')}</Text>
+                  <View style={styles.gatheringInfo}>
+                    <Text style={styles.gatheringTitle}>{gathering.get('title')}</Text>
+                    <Text style={styles.gatheringDescription}>{gathering.get('description')}</Text>
+                    <Text>Host: {gathering.get('host').get('firstName')}</Text>
                   </View>
                 </View>
               </TouchableHighlight>
@@ -107,8 +59,13 @@ class MyEvents extends React.Component {
 class Welcome extends React.Component {
 
   componentWillMount() {
-    this.props.getMyFeed();
-    this.props.getMyEvents();
+    this.props.requestMyFeed();
+  }
+
+  handleTapNewGathering() {
+    this.props.navigator.push({
+      component: CreateGathering
+    });
   }
 
   render() {
@@ -118,9 +75,9 @@ class Welcome extends React.Component {
           <TouchableHighlight onPress={this.props.onLogout} style={[styles.button, styles.actions]} underlayColor={colors.lightBlue}>
             <Text>Log out</Text>
           </TouchableHighlight>
-          <Text style={styles.headerText}>Grapevine</Text>
-          <TouchableHighlight onPress={this.props.onTapPostEvent} style={[styles.button, styles.actions]} underlayColor={colors.lightBlue}>
-            <Text>+ Post Event</Text>
+          <Text style={styles.headerText}>Planet</Text>
+          <TouchableHighlight onPress={this.handleTapNewGathering.bind(this)} style={[styles.button, styles.actions]} underlayColor={colors.lightBlue}>
+            <Text>+ New Gathering</Text>
           </TouchableHighlight>
         </View>
         <View style={styles.body}>
@@ -134,7 +91,6 @@ class Welcome extends React.Component {
             </Text>
           </View>
           <MyFeed navigator={this.props.navigator} myFeed={this.props.myFeed} />
-          <MyEvents navigator={this.props.navigator} myEvents={this.props.myEvents} />
         </View>
       </View>
     );
@@ -178,7 +134,7 @@ var styles = StyleSheet.create({
   myEvents: {
     alignItems: 'stretch',
   },
-  event: {
+  gathering: {
     borderBottomWidth: 1,
     borderStyle: 'solid',
     borderColor: colors.blue,
@@ -188,13 +144,13 @@ var styles = StyleSheet.create({
   media: {
     flexDirection: 'row'
   },
-  eventInfo: {
+  gatheringInfo: {
     marginLeft: 10
   },
-  eventTitle: {
+  gatheringTitle: {
     fontSize: 18
   },
-  eventDescription: {
+  gatheringDescription: {
     fontSize: 12
   }
 });

@@ -28,7 +28,7 @@ class Login extends React.Component {
     return (
       <View>
         <Text style={styles.welcome}>
-          Grapevine
+          Planet
         </Text>
         <FBSDKLoginButton
           readPermissions={['user_friends']}

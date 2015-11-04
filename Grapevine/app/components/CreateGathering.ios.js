@@ -8,10 +8,16 @@ var {
   TextInput
 } = React;
 
+var { connect } = require('react-redux/native');
+
+var {
+  postGathering
+} = require('../actions');
+
 var colors = require('../styles/colors');
 var globalStyles = require('../styles/global');
 
-class PostEvent extends React.Component {
+class CreateGathering extends React.Component {
 
   constructor() {
     super();
@@ -29,11 +35,14 @@ class PostEvent extends React.Component {
       return;
     }
 
-    this.props.onSubmit({
+    this.props.postGathering({
       host: this.props.currentUser,
       title: this.state.title,
       description: this.state.description
     });
+    // [todo] navigate to created gathering on CREATE_GATHERING_SUCCESS
+    // https://gist.github.com/mschipperheyn/4f5158fe4de48ea6b8d5
+    this.props.navigator.pop();
   }
 
   render() {
@@ -43,7 +52,7 @@ class PostEvent extends React.Component {
           <TouchableHighlight onPress={this.props.navigator.pop} style={styles.button} underlayColor={colors.lightBlue}>
             <Text>&lt; Back</Text>
           </TouchableHighlight>
-          <Text style={styles.headerText}>Post Event</Text>
+          <Text style={styles.headerText}>Post a Gathering</Text>
         </View>
         <View style={styles.postEvent}>
           <View>
@@ -65,7 +74,7 @@ class PostEvent extends React.Component {
           </View>
           <View>
             <TouchableHighlight onPress={this.handleSubmit.bind(this)} style={styles.button} underlayColor={colors.lightBlue}>
-              <Text>Post Event</Text>
+              <Text>Blast off!</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -99,4 +108,6 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = PostEvent;
+module.exports = connect(null, {
+  postGathering
+})(CreateGathering);

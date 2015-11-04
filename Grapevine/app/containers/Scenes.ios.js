@@ -5,14 +5,11 @@ var { connect } = require('react-redux/native');
 var {
   getCurrentUser,
   logout,
-  getMyFeed,
-  getMyEvents,
-  postEvent,
+  requestMyFeed,
 } = require('../actions');
 
 var Login = require('../components/Login');
 var Welcome = require('../components/Welcome');
-var PostEvent = require('../components/PostEvent');
 
 class Auth extends React.Component {
 
@@ -63,33 +60,15 @@ class App extends React.Component {
     });
   }
 
-  handlePostEvent(eventData) {
-    this.props.postEvent(eventData);
-    this.props.navigator.popToTop();
-  }
-
-  handleTapPostEvent() {
-    this.props.navigator.push({
-      component: PostEvent,
-      passProps: {
-        onSubmit: this.handlePostEvent.bind(this)
-      }
-    });
-  }
-
   render() {
     return (
       <Welcome
         navigator={this.props.navigator}
         route={this.props.route}
         currentUser={this.props.currentUser}
-        getMyFeed={this.props.getMyFeed}
+        requestMyFeed={this.props.requestMyFeed}
         myFeed={this.props.myFeed}
-        getMyEvents={this.props.getMyEvents}
-        myEvents={this.props.myEvents}
-        mutualFriends={this.props.mutualFriends}
         onLogout={this.handleLogout.bind(this)}
-        onTapPostEvent={this.handleTapPostEvent.bind(this)}
       />
     );
   }
@@ -99,16 +78,12 @@ class App extends React.Component {
 function mapStateToProps(state) {
   return {
     myFeed: state.myFeed,
-    myEvents: state.myEvents,
-    mutualFriends: state.eventSubscription.mutualFriends
   };
 }
 
 App = connect(mapStateToProps, {
   logout,
-  getMyFeed,
-  getMyEvents,
-  postEvent
+  requestMyFeed,
 })(App);
 
 module.exports = {

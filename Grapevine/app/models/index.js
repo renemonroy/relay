@@ -2,9 +2,7 @@ var Parse = require('parse').Parse;
 
 module.exports = {
 
-  Event: Parse.Object.extend('Event'),
-
-  EventSubscription: Parse.Object.extend('EventSubscription'),
+  Gathering: Parse.Object.extend('Gathering'),
 
   User: Parse.User.extend({
     isFriendsWith: function(otherUserId) {

@@ -3,9 +3,8 @@ var BookFace = require('../utility/BookFace');
 
 var {
   User,
-  Event,
-  EventSubscription,
-} = require('../models/index');
+  Gathering,
+} = require('../models');
 
 var REQUEST_CURRENT_USER = exports.REQUEST_CURRENT_USER = 'REQUEST_CURRENT_USER';
 var RECEIVE_CURRENT_USER = exports.RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
@@ -15,17 +14,8 @@ var LOG_OUT = exports.LOG_OUT = 'LOG_OUT';
 var REQUEST_MY_FEED = exports.REQUEST_MY_FEED = 'REQUEST_MY_FEED';
 var RECEIVE_MY_FEED = exports.RECEIVE_MY_FEED = 'RECEIVE_MY_FEED';
 
-var REQUEST_MY_EVENTS = exports.REQUEST_MY_EVENTS = 'REQUEST_MY_EVENTS';
-var RECEIVE_MY_EVENTS = exports.RECEIVE_MY_EVENTS = 'RECEIVE_MY_EVENTS';
-
-var REQUEST_MUTUAL_FRIENDS = exports.REQUEST_MUTUAL_FRIENDS = 'REQUEST_MUTUAL_FRIENDS';
-var RECEIVE_MUTUAL_FRIENDS = exports.RECEIVE_MUTUAL_FRIENDS = 'RECEIVE_MUTUAL_FRIENDS';
-
-var REQUEST_POST_EVENT = exports.REQUEST_POST_EVENT = 'REQUEST_POST_EVENT';
-var POST_EVENT_SUCCESS = exports.POST_EVENT_SUCCESS = 'POST_EVENT_SUCCESS';
-
-var REQUEST_ATTENDANCE = exports.REQUEST_ATTENDANCE = 'REQUEST_ATTENDANCE';
-var REQUEST_ATTENDANCE_SUCCESS = exports.REQUEST_ATTENDANCE_SUCCESS = 'REQUEST_ATTENDANCE_SUCCESS';
+var POST_GATHERING = exports.POST_GATHERING = 'POST_GATHERING';
+var POST_GATHERING_SUCCESS = exports.POST_GATHERING_SUCCESS = 'POST_GATHERING_SUCCESS';
 
 function requestCurrentUser() {
   return {
@@ -41,63 +31,29 @@ function receiveCurrentUser(currentUser) {
 function logout() {
   return {
     type: LOG_OUT
-  }
+  };
 }
 function requestMyFeed() {
   return {
     type: REQUEST_MY_FEED
   };
 }
-function receiveMyFeed(events) {
+function receiveMyFeed(gatherings) {
   return {
     type: RECEIVE_MY_FEED,
-    events: events
+    gatherings: gatherings
   };
 }
-function getMyEvents() {
+function postGathering(data) {
   return {
-    type: REQUEST_MY_EVENTS
-  }
-}
-function receiveMyEvents(events) {
-  return {
-    type: RECEIVE_MY_EVENTS,
-    events: events
-  }
-}
-function requestMutualFriends() {
-  return {
-    type: REQUEST_MUTUAL_FRIENDS
+    type: POST_GATHERING,
+    data: data
   };
 }
-function receiveMutualFriends(mutualFriends) {
+function postGatheringSuccess(gathering) {
   return {
-    type: RECEIVE_MUTUAL_FRIENDS,
-    mutualFriends: mutualFriends
-  };
-}
-function requestPostEvent(eventData) {
-  return {
-    type: REQUEST_POST_EVENT,
-    eventData: eventData
-  };
-}
-function postEventSuccess(event) {
-  return {
-    type: POST_EVENT_SUCCESS,
-    event: event
-  };
-}
-function requestAttendance(subscription) {
-  return {
-    type: REQUEST_ATTENDANCE,
-    subscription: subscription
-  }
-}
-function requestAttendanceSuccess(subscription) {
-  return {
-    type: REQUEST_ATTENDANCE_SUCCESS,
-    subscription: subscription
+    type: POST_GATHERING_SUCCESS,
+    gathering: gathering
   };
 }
 
@@ -176,83 +132,20 @@ exports.logout = () => {
   }
 }
 
-exports.postEvent = (eventData) => {
+exports.postGathering = (data) => {
   return dispatch => {
-    var event = new Event();
-    event.save(eventData).then((event) => {
-      dispatch(postEventSuccess(event));
-    });
-  }
-  dispatch(requestPostEvent());
-}
-
-exports.requestAttendance = (subscription) => {
-  return dispatch => {
-    var eventSubscription = new EventSubscription({
-      event: subscription.event,
-      subscriber: subscription.subscriber,
-      status: 'applied',
-      pitch: subscription.pitch
-    });
-    eventSubscription.save().then((eventSubscription) => {
-      dispatch(requestAttendanceSuccess(eventSubscription));
-    });
-    dispatch(requestAttendance());
+    dispatch(postGathering(data));
+    setTimeout(function() {
+      dispatch(postGatheringSuccess(new Gathering(data)));
+    }, 100);
   }
 }
 
-exports.getMyEvents = () => {
+exports.requestMyFeed = () => {
   return dispatch => {
-    var query = new Parse.Query('Event');
-    query.equalTo('host', User.current());
-    query.find().then((events) => {
-      dispatch(receiveMyEvents(events));
-    }, (error) => {
-      console.log('getMyEvents error', error);
-    })
-  }
-}
-
-exports.getMyFeed = () => {
-  return dispatch => {
-    var user = User.current();
-    var query = new Parse.Query('Event');
-    query.include('host');
-    query.notEqualTo('host', user);
-    query.find().then((events) => {
-      console.log('got all events', events);
-      var myFeed = [];
-
-      // Get all events where user is friends with or has mutual friends with host
-      var promises = events.map((event, i) => {
-        var promise = new Parse.Promise();
-        var otherUserId = event.get('host').get('facebookId');
-
-        console.log('getting mutual friends for', otherUserId);
-        Parse.Cloud.run('mutualFriends', {
-          user_id: otherUserId
-        }, {
-          success: function(mutualFriends) {
-            console.log('got mutualFriends for', otherUserId, mutualFriends);
-            if (user.isFriendsWith(otherUserId) || mutualFriends.length) {
-              event.set('mutual_friends', mutualFriends);
-              myFeed.push(event);
-            }
-            promise.resolve(event);
-          },
-          error: function(error) {
-            console.log('mutualFriends error', error);
-            promise.resolve(event);
-          }
-        });
-        return promise;
-      });
-
-      Parse.Promise.when(promises).then(() => {
-        dispatch(receiveMyFeed(myFeed));
-      })
-    }, (error) => {
-      console.log('get all events error', error)
-    });
+    dispatch(requestMyFeed());
+    setTimeout(function() {
+      dispatch(receiveMyFeed([]));
+    }, 1000);
   }
 }
