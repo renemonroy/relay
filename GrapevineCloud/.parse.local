@@ -1,10 +1,10 @@
 {
   "applications": {
-    "Grapevine": {
+    "Planet": {
       "applicationId": "snBWRAcBlIYPwBfZaYgXrHHxyJF3TgbUwmwDTCAK"
     },
     "_default": {
-      "link": "Grapevine"
+      "link": "Planet"
     }
   }
 }

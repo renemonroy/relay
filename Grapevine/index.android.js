@@ -12,7 +12,7 @@ var {
   View,
 } = React;
 
-var Grapevine = React.createClass({
+var Planet = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
@@ -49,4 +49,4 @@ var styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('Grapevine', () => Grapevine);
+AppRegistry.registerComponent('Grapevine', () => Planet);

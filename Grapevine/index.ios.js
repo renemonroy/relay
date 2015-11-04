@@ -27,7 +27,7 @@ var store = configureStore();
 
 var App = require('./app/containers/App');
 
-var Grapevine = React.createClass({
+var Planet = React.createClass({
 
   render: function() {
     return (
@@ -39,4 +39,4 @@ var Grapevine = React.createClass({
 
 });
 
-AppRegistry.registerComponent('Grapevine', () => Grapevine);
+AppRegistry.registerComponent('Grapevine', () => Planet);

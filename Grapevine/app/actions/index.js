@@ -5,7 +5,7 @@ var {
   User,
   Event,
   EventSubscription,
-} = require('../models');
+} = require('../models/index');
 
 var REQUEST_CURRENT_USER = exports.REQUEST_CURRENT_USER = 'REQUEST_CURRENT_USER';
 var RECEIVE_CURRENT_USER = exports.RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER';
