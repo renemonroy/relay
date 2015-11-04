@@ -36,7 +36,7 @@ class CreateGathering extends React.Component {
     }
 
     this.props.postGathering({
-      host: this.props.currentUser,
+      initiator: this.props.currentUser,
       title: this.state.title,
       description: this.state.description
     });

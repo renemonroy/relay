@@ -1,6 +1,8 @@
 var Parse = require('parse').Parse;
 var BookFace = require('../utility/BookFace');
 
+var fixtures = require('../fixtures');
+
 var {
   User,
   Gathering,
@@ -145,7 +147,7 @@ exports.requestMyFeed = () => {
   return dispatch => {
     dispatch(requestMyFeed());
     setTimeout(function() {
-      dispatch(receiveMyFeed([]));
+      dispatch(receiveMyFeed(fixtures.myFeed));
     }, 1000);
   }
 }

@@ -37,13 +37,13 @@ class MyFeed extends React.Component {
               <TouchableHighlight style={styles.gathering} key={gathering.cid} underlayColor={colors.lightBlue} onPress={this.handleSelectGathering(gathering)}>
                 <View style={styles.media}>
                   <Image
-                    source={{uri: gathering.get('picture')}}
+                    source={{uri: gathering.get('image')}}
                     style={{width: 50, height: 50}}
                   />
                   <View style={styles.gatheringInfo}>
                     <Text style={styles.gatheringTitle}>{gathering.get('title')}</Text>
                     <Text style={styles.gatheringDescription}>{gathering.get('description')}</Text>
-                    <Text>Host: {gathering.get('host').get('firstName')}</Text>
+                    <Text>Initiator: {gathering.get('initiator').get('firstName')}</Text>
                   </View>
                 </View>
               </TouchableHighlight>
