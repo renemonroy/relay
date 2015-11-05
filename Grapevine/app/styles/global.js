@@ -30,18 +30,20 @@ var styles = {
     color: '#C7C7C7'
   },
   button: {
-    padding: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     borderBottomWidth: 3,
     borderStyle: 'solid',
-    borderColor: colors.darkBlue
+    backgroundColor: colors.lightGray,
+    borderColor: colors.gray
   },
   buttonAlternate: {
-    backgroundColor: colors.blue,
-    borderColor: colors.darkBlue
+    backgroundColor: colors.lightBlue,
+    borderColor: colors.blue
   },
   buttonPrimary: {
-    backgroundColor: colors.green,
-    borderColor: colors.darkGreen
+    backgroundColor: colors.lightGreen,
+    borderColor: colors.green
   },
   input: {
     height: 36,

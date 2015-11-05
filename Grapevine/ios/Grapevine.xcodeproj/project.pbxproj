@@ -15,13 +15,14 @@
 		9A3EB19EB758EFF1AC3FB636 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 035CB1B86B90C50DD41993C2 /* libPods.a */; };
 		BD3C92CB1BEBB0C3009C3099 /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD3C92CA1BEBB0AC009C3099 /* libReactNativeIcons.a */; };
 		BD3C92DF1BEBB21E009C3099 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = BD3C92D91BEBB10D009C3099 /* FontAwesome.otf */; };
+		BD3C92FB1BEBC929009C3099 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BD3C92F91BEBC920009C3099 /* main.jsbundle */; };
+		BD3C93021BEBEE53009C3099 /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD3C93011BEBEE42009C3099 /* libRCTContacts.a */; };
 		BDAA62B51BB78CC400A44503 /* libBolts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDAA62AF1BB78CC400A44503 /* libBolts.a */; };
 		BDAA62B61BB78CC400A44503 /* libFBSDKCoreKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDAA62B01BB78CC400A44503 /* libFBSDKCoreKit.a */; };
 		BDAA62B71BB78CC400A44503 /* libFBSDKLoginKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDAA62B11BB78CC400A44503 /* libFBSDKLoginKit.a */; };
 		BDAA62B81BB78CC400A44503 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDAA62B21BB78CC400A44503 /* libReact.a */; };
 		BDAA62B91BB78CC400A44503 /* libreact-native-fbsdkcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDAA62B31BB78CC400A44503 /* libreact-native-fbsdkcore.a */; };
 		BDAA62BA1BB78CC400A44503 /* libreact-native-fbsdklogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BDAA62B41BB78CC400A44503 /* libreact-native-fbsdklogin.a */; };
-		BDDC175A1BC0F2E500C155A3 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = BDDC17591BC0F2E500C155A3 /* main.jsbundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 2F5A3EB81ACDBF8000439386;
 			remoteInfo = ReactNativeIcons;
+		};
+		BD3C93001BEBEE42009C3099 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD3C92FC1BEBEE42009C3099 /* RCTContacts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1441618E1BD0A79300FA4F59;
+			remoteInfo = RCTContacts;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -74,13 +82,14 @@
 		BD3C92DC1BEBB10D009C3099 /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
 		BD3C92DD1BEBB10D009C3099 /* Material-Design-Iconic-Font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Material-Design-Iconic-Font.ttf"; sourceTree = "<group>"; };
 		BD3C92DE1BEBB10D009C3099 /* zocial-regular-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "zocial-regular-webfont.ttf"; sourceTree = "<group>"; };
+		BD3C92F91BEBC920009C3099 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		BD3C92FC1BEBEE42009C3099 /* RCTContacts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTContacts.xcodeproj; path = "../node_modules/react-native-contacts/ios/RCTContacts.xcodeproj"; sourceTree = "<group>"; };
 		BDAA62AF1BB78CC400A44503 /* libBolts.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBolts.a; path = "/Users/mishaponizil/Workspaces/Ship/grapevine/Grapevine/Pods/../build/Debug-iphoneos/libBolts.a"; sourceTree = "<absolute>"; };
 		BDAA62B01BB78CC400A44503 /* libFBSDKCoreKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFBSDKCoreKit.a; path = "/Users/mishaponizil/Workspaces/Ship/grapevine/Grapevine/Pods/../build/Debug-iphoneos/libFBSDKCoreKit.a"; sourceTree = "<absolute>"; };
 		BDAA62B11BB78CC400A44503 /* libFBSDKLoginKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFBSDKLoginKit.a; path = "/Users/mishaponizil/Workspaces/Ship/grapevine/Grapevine/Pods/../build/Debug-iphoneos/libFBSDKLoginKit.a"; sourceTree = "<absolute>"; };
 		BDAA62B21BB78CC400A44503 /* libReact.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libReact.a; path = "/Users/mishaponizil/Workspaces/Ship/grapevine/Grapevine/Pods/../build/Debug-iphoneos/libReact.a"; sourceTree = "<absolute>"; };
 		BDAA62B31BB78CC400A44503 /* libreact-native-fbsdkcore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libreact-native-fbsdkcore.a"; path = "/Users/mishaponizil/Workspaces/Ship/grapevine/Grapevine/Pods/../build/Debug-iphoneos/libreact-native-fbsdkcore.a"; sourceTree = "<absolute>"; };
 		BDAA62B41BB78CC400A44503 /* libreact-native-fbsdklogin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libreact-native-fbsdklogin.a"; path = "/Users/mishaponizil/Workspaces/Ship/grapevine/Grapevine/Pods/../build/Debug-iphoneos/libreact-native-fbsdklogin.a"; sourceTree = "<absolute>"; };
-		BDDC17591BC0F2E500C155A3 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +112,7 @@
 				BDAA62B91BB78CC400A44503 /* libreact-native-fbsdkcore.a in Frameworks */,
 				BDAA62BA1BB78CC400A44503 /* libreact-native-fbsdklogin.a in Frameworks */,
 				BD3C92CB1BEBB0C3009C3099 /* libReactNativeIcons.a in Frameworks */,
+				BD3C93021BEBEE53009C3099 /* libRCTContacts.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,7 +139,7 @@
 		13B07FAE1A68108700A75B9A /* Grapevine */ = {
 			isa = PBXGroup;
 			children = (
-				BDDC17591BC0F2E500C155A3 /* main.jsbundle */,
+				BD3C92F91BEBC920009C3099 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -160,6 +170,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				BD3C92FC1BEBEE42009C3099 /* RCTContacts.xcodeproj */,
 				BD3C92CC1BEBB10D009C3099 /* FontAwesomeKit */,
 				13B07FAE1A68108700A75B9A /* Grapevine */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -213,6 +224,14 @@
 			);
 			name = FontAwesomeKit;
 			path = "../node_modules/react-native-icons/ios/ReactNativeIcons/Libraries/FontAwesomeKit";
+			sourceTree = "<group>";
+		};
+		BD3C92FD1BEBEE42009C3099 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BD3C93011BEBEE42009C3099 /* libRCTContacts.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		FA502AA15D8E797573346D1E /* Frameworks */ = {
@@ -297,6 +316,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = BD3C92FD1BEBEE42009C3099 /* Products */;
+					ProjectRef = BD3C92FC1BEBEE42009C3099 /* RCTContacts.xcodeproj */;
+				},
+				{
 					ProductGroup = BD3C92C61BEBB0AC009C3099 /* Products */;
 					ProjectRef = BD3C92C51BEBB0AC009C3099 /* ReactNativeIcons.xcodeproj */;
 				},
@@ -317,6 +340,13 @@
 			remoteRef = BD3C92C91BEBB0AC009C3099 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		BD3C93011BEBEE42009C3099 /* libRCTContacts.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTContacts.a;
+			remoteRef = BD3C93001BEBEE42009C3099 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -332,9 +362,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BD3C92DF1BEBB21E009C3099 /* FontAwesome.otf in Resources */,
-				BDDC175A1BC0F2E500C155A3 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				BD3C92FB1BEBC929009C3099 /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

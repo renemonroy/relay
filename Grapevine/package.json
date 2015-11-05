@@ -8,6 +8,7 @@
   "dependencies": {
     "parse": "1.5.0",
     "react-native": "^0.11.2",
+    "react-native-contacts": "^0.1.5",
     "react-native-fbsdkcore": "0.0.5",
     "react-native-fbsdklogin": "0.0.5",
     "react-native-icons": "^0.4.0",

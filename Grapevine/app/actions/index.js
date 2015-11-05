@@ -1,4 +1,5 @@
 var Parse = require('parse').Parse;
+var Contacts = require('react-native-contacts');
 var BookFace = require('../utility/BookFace');
 
 var fixtures = require('../fixtures');
@@ -15,6 +16,9 @@ var LOG_OUT = exports.LOG_OUT = 'LOG_OUT';
 
 var REQUEST_MY_FEED = exports.REQUEST_MY_FEED = 'REQUEST_MY_FEED';
 var RECEIVE_MY_FEED = exports.RECEIVE_MY_FEED = 'RECEIVE_MY_FEED';
+
+var REQUEST_CONTACTS = exports.REQUEST_CONTACTS = 'REQUEST_CONTACTS';
+var RECEIVE_CONTACTS = exports.RECEIVE_CONTACTS = 'RECEIVE_CONTACTS';
 
 var POST_GATHERING = exports.POST_GATHERING = 'POST_GATHERING';
 var POST_GATHERING_SUCCESS = exports.POST_GATHERING_SUCCESS = 'POST_GATHERING_SUCCESS';
@@ -44,6 +48,17 @@ function receiveMyFeed(gatherings) {
   return {
     type: RECEIVE_MY_FEED,
     gatherings: gatherings
+  };
+}
+function requestContacts() {
+  return {
+    type: REQUEST_CONTACTS
+  };
+}
+function receiveContacts(contacts) {
+  return {
+    type: RECEIVE_CONTACTS,
+    contacts: contacts
   };
 }
 function postGathering(data) {
@@ -134,20 +149,33 @@ exports.logout = () => {
   }
 }
 
-exports.postGathering = (data) => {
-  return dispatch => {
-    dispatch(postGathering(data));
-    setTimeout(function() {
-      dispatch(postGatheringSuccess(new Gathering(data)));
-    }, 100);
-  }
-}
-
 exports.requestMyFeed = () => {
   return dispatch => {
     dispatch(requestMyFeed());
     setTimeout(function() {
       dispatch(receiveMyFeed(fixtures.myFeed));
     }, 1000);
+  }
+}
+
+exports.requestContacts = () => {
+  return dispatch => {
+    dispatch(requestContacts());
+    Contacts.getAll((error, contacts) => {
+      if (error) {
+        console.log('requestContacts error', error);
+      } else {
+        dispatch(receiveContacts(contacts));
+      }
+    })
+  }
+}
+
+exports.postGathering = (data) => {
+  return dispatch => {
+    dispatch(postGathering(data));
+    setTimeout(function() {
+      dispatch(postGatheringSuccess(new Gathering(data)));
+    }, 100);
   }
 }

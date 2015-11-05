@@ -37,6 +37,12 @@ class PostGathering extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.setState({
+      showPeopleChooser: true
+    });
+  }
+
   handleTapAddPeople() {
     this.setState({
       showPeopleChooser: true
