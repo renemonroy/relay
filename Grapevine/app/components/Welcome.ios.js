@@ -8,7 +8,7 @@ var {
   TouchableHighlight,
 } = React;
 
-var CreateGathering = require('./CreateGathering');
+var PostGathering = require('./PostGathering');
 var ViewGathering = require('./ViewGathering');
 
 var colors = require('../styles/colors');
@@ -64,7 +64,7 @@ class Welcome extends React.Component {
 
   handleTapNewGathering() {
     this.props.navigator.push({
-      component: CreateGathering
+      component: PostGathering
     });
   }
 
@@ -75,7 +75,7 @@ class Welcome extends React.Component {
           <TouchableHighlight onPress={this.props.onLogout} style={[styles.button, styles.actions]} underlayColor={colors.lightBlue}>
             <Text>Log out</Text>
           </TouchableHighlight>
-          <Text style={styles.headerText}>Planet</Text>
+          <Text style={styles.heading1}>Planet</Text>
           <TouchableHighlight onPress={this.handleTapNewGathering.bind(this)} style={[styles.button, styles.actions]} underlayColor={colors.lightBlue}>
             <Text>+ New Gathering</Text>
           </TouchableHighlight>
@@ -109,9 +109,6 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
-  },
-  headerText: {
-    fontSize: 28
   },
   body: {
     flex: 1,

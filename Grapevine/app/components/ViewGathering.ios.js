@@ -20,7 +20,7 @@ class ViewGathering extends React.Component {
           <TouchableHighlight onPress={this.props.navigator.pop} style={styles.button} underlayColor={colors.lightBlue}>
             <Text>&lt; Back</Text>
           </TouchableHighlight>
-          <Text style={styles.headerText}>{this.props.gathering.get('title')}</Text>
+          <Text style={styles.heading1}>{this.props.gathering.get('title')}</Text>
         </View>
         <View style={styles.viewGathering}>
           <Text style={styles.description}>
@@ -44,9 +44,6 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
-  },
-  headerText: {
-    fontSize: 28
   },
   viewGathering: {
     paddingHorizontal: 30,
