@@ -4,7 +4,7 @@ var {
   Text,
   View,
   Image,
-  TouchableHighlight,
+  TouchableOpacity,
   TextInput
 } = React;
 
@@ -17,9 +17,9 @@ class ViewGathering extends React.Component {
     return (
       <View>
         <View style={styles.header}>
-          <TouchableHighlight onPress={this.props.navigator.pop} style={styles.button} underlayColor={colors.lightBlue}>
+          <TouchableOpacity onPress={this.props.navigator.pop} style={styles.button}>
             <Text>&lt; Back</Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
           <Text style={styles.heading1}>{this.props.gathering.get('name')}</Text>
         </View>
         <View style={styles.viewGathering}>

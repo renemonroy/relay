@@ -4,10 +4,11 @@ var {
   Text,
   View,
   Image,
-  TouchableHighlight,
+  TouchableOpacity,
   TextInput,
   ListView,
-  ScrollView
+  ScrollView,
+  Modal
 } = React;
 
 var { connect } = require('react-redux/native');
@@ -19,6 +20,8 @@ var {
 var colors = require('../styles/colors');
 var globalStyles = require('../styles/global');
 
+var PeopleChooser = require('./PeopleChooser');
+
 class PostGathering extends React.Component {
 
   constructor() {
@@ -29,8 +32,27 @@ class PostGathering extends React.Component {
     this.state = {
       name: "",
       description: "",
-      inviteList: inviteList.cloneWithRows([])
+      inviteList: inviteList.cloneWithRows([]),
+      showPeopleChooser: false
     }
+  }
+
+  handleTapAddPeople() {
+    this.setState({
+      showPeopleChooser: true
+    });
+  }
+
+  handlePeopleChooserCancel() {
+    this.setState({
+      showPeopleChooser: false
+    });
+  }
+
+  handlePeopleChooserDone() {
+    this.setState({
+      showPeopleChooser: false
+    });
   }
 
   handleSubmit() {
@@ -63,17 +85,28 @@ class PostGathering extends React.Component {
       );
     } else {
       inviteList = (
-        <View style={styles.input}>
+        <View style={[styles.input, styles.inviteList]}>
           <Text style={styles.placeholder}>Invite list</Text>
         </View>
       );
     }
     return (
       <View style={styles.screen}>
+
+        <Modal
+          animated={true}
+          visible={this.state.showPeopleChooser}
+        >
+          <PeopleChooser
+            onCancel={this.handlePeopleChooserCancel.bind(this)}
+            onDone={this.handlePeopleChooserDone.bind(this)}
+          />
+        </Modal>
+
         <View style={styles.header}>
-          <TouchableHighlight onPress={this.props.navigator.pop} style={styles.button} underlayColor={colors.lightBlue}>
+          <TouchableOpacity onPress={this.props.navigator.pop} style={styles.button}>
             <Text>&lt; Back</Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
           <Text style={styles.heading1}>Post a Gathering</Text>
         </View>
         <ScrollView
@@ -89,7 +122,7 @@ class PostGathering extends React.Component {
               placeholder="Name"
               onChangeText={(text) => this.setState({ name: text })}
               value={this.state.name}
-              style={styles.input}
+              style={styles.textInput}
             />
             <Text style={styles.subtext}>
               Just a simple way to refer to the gathering
@@ -101,7 +134,7 @@ class PostGathering extends React.Component {
               onChangeText={(text) => this.setState({ description: text })}
               value={this.state.description}
               multiline={true}
-              style={[styles.input, styles.inputDescription]}
+              style={[styles.textInput, styles.inputDescription]}
             />
             <Text style={styles.subtext}>
               This will appear as the first message from you in the gathering's message stream, and will be included in any invite notifications (if you choose to send them)
@@ -112,16 +145,16 @@ class PostGathering extends React.Component {
           </Text>
           <View style={styles.formGroup}>
             {inviteList}
-            <TouchableHighlight underlayColor={colors.lightBlue} style={[styles.button, styles.center, { marginBottom: 5 }]}>
-              <Text>+ Add</Text>
-            </TouchableHighlight>
+            <TouchableOpacity onPress={this.handleTapAddPeople.bind(this)} style={[styles.button, styles.buttonAlternate, styles.center, { marginBottom: 5 }]}>
+              <Text>+ Add people</Text>
+            </TouchableOpacity>
             <Text style={styles.subtext}>
               Who should know about it?
             </Text>
           </View>
           <Text style={styles.heading2}>Time and place</Text>
           <View style={[styles.formGroup, styles.where]}>
-            <TouchableHighlight style={styles.button} underlayColor={colors.lightBlue}>
+            <TouchableOpacity style={styles.button}>
               <View style={styles.center}>
                 <Image
                   source={{uri: 'https://i.imgur.com/q9Rjhks.png'}}
@@ -129,9 +162,9 @@ class PostGathering extends React.Component {
                 />
                 <Text style={styles.subtext}>Where?</Text>
               </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
             <Text>OR</Text>
-            <TouchableHighlight style={styles.button} underlayColor={colors.lightBlue}>
+            <TouchableOpacity style={styles.button}>
               <View style={styles.center}>
                 <Image
                   source={{uri: 'https://i.imgur.com/4KeW3Il.png'}}
@@ -139,10 +172,10 @@ class PostGathering extends React.Component {
                 />
                 <Text style={styles.subtext}>Survey</Text>
               </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
           <View style={[styles.formGroup, styles.when]}>
-            <TouchableHighlight style={styles.button} underlayColor={colors.lightBlue}>
+            <TouchableOpacity style={styles.button}>
               <View style={styles.center}>
                 <Image
                   source={{uri: 'https://i.imgur.com/Qd76nxw.png'}}
@@ -150,9 +183,9 @@ class PostGathering extends React.Component {
                 />
                 <Text style={styles.subtext}>When?</Text>
               </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
             <Text>OR</Text>
-            <TouchableHighlight style={styles.button} underlayColor={colors.lightBlue}>
+            <TouchableOpacity style={styles.button}>
               <View style={styles.center}>
                 <Image
                   source={{uri: 'https://i.imgur.com/4KeW3Il.png'}}
@@ -160,14 +193,15 @@ class PostGathering extends React.Component {
                 />
                 <Text style={styles.subtext}>Survey</Text>
               </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
           <View>
-            <TouchableHighlight onPress={this.handleSubmit.bind(this)} style={styles.button} underlayColor={colors.lightBlue}>
+            <TouchableOpacity onPress={this.handleSubmit.bind(this)} style={[styles.button, styles.buttonPrimary]}>
               <Text>Blast off!</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </ScrollView>
+
       </View>
     );
   }
@@ -199,6 +233,9 @@ var styles = StyleSheet.create({
   },
   inputDescription: {
     height: 60
+  },
+  inviteList: {
+    justifyContent: 'center'
   },
   where: {
     flexDirection: 'row',

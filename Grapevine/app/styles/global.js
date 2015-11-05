@@ -1,6 +1,6 @@
 var colors = require('./colors');
 
-module.exports = {
+var styles = {
   container: {
     flex: 1
   },
@@ -31,10 +31,17 @@ module.exports = {
   },
   button: {
     padding: 5,
-    backgroundColor: colors.lightGray,
-    borderWidth: 1,
+    borderBottomWidth: 3,
     borderStyle: 'solid',
-    borderColor: colors.blue
+    borderColor: colors.darkBlue
+  },
+  buttonAlternate: {
+    backgroundColor: colors.blue,
+    borderColor: colors.darkBlue
+  },
+  buttonPrimary: {
+    backgroundColor: colors.green,
+    borderColor: colors.darkGreen
   },
   input: {
     height: 36,
@@ -42,10 +49,16 @@ module.exports = {
     borderWidth: 0.5,
     borderColor: colors.offBlack,
     padding: 5,
-    marginBottom: 5,
-    fontSize: 14
+    marginBottom: 5
   },
   center: {
     alignItems: 'center'
   }
 };
+
+styles.textInput = {
+  ...styles.input,
+  fontSize: 14
+}
+
+module.exports = styles;
