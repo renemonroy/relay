@@ -20,11 +20,15 @@ class ViewGathering extends React.Component {
           <TouchableHighlight onPress={this.props.navigator.pop} style={styles.button} underlayColor={colors.lightBlue}>
             <Text>&lt; Back</Text>
           </TouchableHighlight>
-          <Text style={styles.heading1}>{this.props.gathering.get('title')}</Text>
+          <Text style={styles.heading1}>{this.props.gathering.get('name')}</Text>
         </View>
         <View style={styles.viewGathering}>
+          <Image
+            source={{uri: this.props.gathering.get('image')}}
+            style={{width: 150, height: 150}}
+          />
           <Text style={styles.description}>
-            {this.props.gathering.get('description')}
+            {this.props.gathering.get('messages')[0].get('content')}
           </Text>
         </View>
       </View>

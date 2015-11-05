@@ -68,9 +68,9 @@ function signUp(fbUser) {
 
 function handleParseError(dispatch, error) {
   switch (error.code) {
-  case Parse.Error.INVALID_SESSION_TOKEN:
-    User.logOut();
-    dispatch(logout());
+    case Parse.Error.INVALID_SESSION_TOKEN:
+      User.logOut();
+      dispatch(logout());
   }
 }
 

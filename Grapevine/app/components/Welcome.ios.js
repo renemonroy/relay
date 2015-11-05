@@ -1,12 +1,16 @@
 var _ = require('underscore');
 var React = require('react-native');
 var {
+  ActivityIndicatorIOS,
   StyleSheet,
   Text,
   View,
   Image,
-  TouchableHighlight,
+  TouchableOpacity,
 } = React;
+var {
+  Icon
+} = require('react-native-icons');
 
 var PostGathering = require('./PostGathering');
 var ViewGathering = require('./ViewGathering');
@@ -29,27 +33,23 @@ class MyFeed extends React.Component {
 
   render() {
     return (
-      <View>
-        <Text>My Feed</Text>
-        <View style={styles.myFeed}>
-          {this.props.myFeed.map((gathering) => {
-            return (
-              <TouchableHighlight style={styles.gathering} key={gathering.cid} underlayColor={colors.lightBlue} onPress={this.handleSelectGathering(gathering)}>
-                <View style={styles.media}>
-                  <Image
-                    source={{uri: gathering.get('image')}}
-                    style={{width: 50, height: 50}}
-                  />
-                  <View style={styles.gatheringInfo}>
-                    <Text style={styles.gatheringTitle}>{gathering.get('title')}</Text>
-                    <Text style={styles.gatheringDescription}>{gathering.get('description')}</Text>
-                    <Text>Initiator: {gathering.get('initiator').get('firstName')}</Text>
-                  </View>
+      <View style={styles.myFeed}>
+        {this.props.myFeed.map((gathering) => {
+          return (
+            <TouchableOpacity style={styles.gathering} key={gathering.cid} onPress={this.handleSelectGathering(gathering)}>
+              <View style={styles.media}>
+                <Image
+                  source={{uri: gathering.get('image')}}
+                  style={{width: 50, height: 50}}
+                />
+                <View style={styles.gatheringInfo}>
+                  <Text style={styles.gatheringTitle}>{gathering.get('name')}</Text>
+                  <Text>Initiator: {gathering.get('initiator').get('firstName')}</Text>
                 </View>
-              </TouchableHighlight>
-            );
-          })}
-        </View>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </View>
     );
   }
@@ -69,28 +69,39 @@ class Welcome extends React.Component {
   }
 
   render() {
+    var body;
+    if (this.props.myFeed.isFetching) {
+      body = (
+        <View style={styles.welcome}>
+          <Image
+            source={{uri: this.props.currentUser.get('picture')}}
+            style={{width: 100, height: 100, marginBottom: 10}}
+          />
+          <Text style={styles.info}>
+            Welcome back, {this.props.currentUser.fullName()}
+          </Text>
+          <ActivityIndicatorIOS size='large' />
+        </View>
+      );
+    } else {
+      body = (
+        <MyFeed navigator={this.props.navigator} myFeed={this.props.myFeed.items} />
+      );
+    }
+
     return (
       <View>
         <View style={styles.header}>
-          <TouchableHighlight onPress={this.props.onLogout} style={[styles.button, styles.actions]} underlayColor={colors.lightBlue}>
-            <Text>Log out</Text>
-          </TouchableHighlight>
+          <TouchableOpacity>
+            <Icon name='fontawesome|bars' size={20} color={colors.offBlack} style={styles.icon} />
+          </TouchableOpacity>
           <Text style={styles.heading1}>Planet</Text>
-          <TouchableHighlight onPress={this.handleTapNewGathering.bind(this)} style={[styles.button, styles.actions]} underlayColor={colors.lightBlue}>
-            <Text>+ New Gathering</Text>
-          </TouchableHighlight>
+          <TouchableOpacity onPress={this.handleTapNewGathering.bind(this)}>
+            <Icon name='fontawesome|plus' size={20} color={colors.offBlack} style={styles.icon} />
+          </TouchableOpacity>
         </View>
         <View style={styles.body}>
-          <View style={styles.welcome}>
-            <Image
-              source={{uri: this.props.currentUser.get('picture')}}
-              style={{width: 100, height: 100}}
-            />
-            <Text style={styles.info}>
-              Welcome back, {this.props.currentUser.fullName()}
-            </Text>
-          </View>
-          <MyFeed navigator={this.props.navigator} myFeed={this.props.myFeed} />
+          {body}
         </View>
       </View>
     );
@@ -115,20 +126,15 @@ var styles = StyleSheet.create({
     paddingVertical: 20
   },
   welcome: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'stretch',
-    marginBottom: 20,
-    paddingHorizontal: 20
+    ...globalStyles.element,
+    flex: 0,
+    alignItems: 'center',
+    alignSelf: 'center'
   },
   info: {
-    flex: 2,
-    marginLeft: 10
+    marginBottom: 10
   },
   myFeed: {
-    alignItems: 'stretch',
-  },
-  myEvents: {
     alignItems: 'stretch',
   },
   gathering: {

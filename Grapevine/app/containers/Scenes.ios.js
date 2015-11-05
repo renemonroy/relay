@@ -49,7 +49,10 @@ class Auth extends React.Component {
 
 }
 
-Auth = connect(null, { getCurrentUser, logout })(Auth);
+Auth = connect(null, {
+  getCurrentUser,
+  logout
+})(Auth);
 
 class App extends React.Component {
 

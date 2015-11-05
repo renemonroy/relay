@@ -4,6 +4,16 @@ module.exports = {
   container: {
     flex: 1
   },
+  element: {
+    borderWidth: 0.5,
+    borderColor: colors.offBlack,
+    padding: 5,
+    marginBottom: 5
+  },
+  icon: {
+    width: 20,
+    height: 20
+  },
   heading1: {
     fontSize: 28
   },
@@ -21,16 +31,16 @@ module.exports = {
   },
   button: {
     padding: 5,
-    backgroundColor: '#f1f1f1',
+    backgroundColor: colors.lightGray,
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: colors.blue
   },
   input: {
     height: 36,
-    backgroundColor: '#f1f1f1',
+    backgroundColor: colors.lightGray,
     borderWidth: 0.5,
-    borderColor: '#0f0f0f',
+    borderColor: colors.offBlack,
     padding: 5,
     marginBottom: 5,
     fontSize: 14
@@ -38,4 +48,4 @@ module.exports = {
   center: {
     alignItems: 'center'
   }
-}
+};
