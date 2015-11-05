@@ -37,12 +37,6 @@ class PostGathering extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.setState({
-      showPeopleChooser: true
-    });
-  }
-
   handleTapAddPeople() {
     this.setState({
       showPeopleChooser: true
@@ -151,7 +145,7 @@ class PostGathering extends React.Component {
           </Text>
           <View style={styles.formGroup}>
             {inviteList}
-            <TouchableOpacity onPress={this.handleTapAddPeople.bind(this)} style={[styles.button, styles.buttonAlternate, styles.center, { marginBottom: 5 }]}>
+            <TouchableOpacity onPress={this.handleTapAddPeople.bind(this)} style={[styles.button, styles.center, { marginBottom: 5 }]}>
               <Text>+ Add people</Text>
             </TouchableOpacity>
             <Text style={styles.subtext}>
@@ -202,7 +196,7 @@ class PostGathering extends React.Component {
             </TouchableOpacity>
           </View>
           <View>
-            <TouchableOpacity onPress={this.handleSubmit.bind(this)} style={[styles.button, styles.buttonPrimary]}>
+            <TouchableOpacity onPress={this.handleSubmit.bind(this)} style={styles.buttonPrimary}>
               <Text>Blast off!</Text>
             </TouchableOpacity>
           </View>

@@ -34,22 +34,15 @@ var styles = {
     paddingHorizontal: 10,
     borderBottomWidth: 3,
     borderStyle: 'solid',
-    backgroundColor: colors.lightGray,
-    borderColor: colors.gray
-  },
-  buttonAlternate: {
-    backgroundColor: colors.lightBlue,
+    backgroundColor: '#ffffff',
     borderColor: colors.blue
-  },
-  buttonPrimary: {
-    backgroundColor: colors.lightGreen,
-    borderColor: colors.green
   },
   input: {
     height: 36,
-    backgroundColor: colors.lightGray,
-    borderWidth: 0.5,
-    borderColor: colors.offBlack,
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: colors.gray,
+    borderRadius: 2,
     padding: 5,
     marginBottom: 5
   },
@@ -58,9 +51,25 @@ var styles = {
   }
 };
 
-styles.textInput = {
-  ...styles.input,
-  fontSize: 14
-}
+Object.assign(styles, {
+  buttonAlternate: {
+    ...styles.button,
+    borderColor: colors.darkBlue
+  },
+  buttonDisabled: {
+    ...styles.button,
+    backgroundColor: colors.lightGray,
+    borderColor: colors.gray
+  },
+  buttonPrimary: {
+    ...styles.button,
+    backgroundColor: colors.lightGreen,
+    borderColor: colors.green
+  },
+  textInput: {
+    ...styles.input,
+    fontSize: 14
+  }
+});
 
 module.exports = styles;

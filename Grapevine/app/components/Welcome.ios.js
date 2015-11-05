@@ -58,10 +58,6 @@ class MyFeed extends React.Component {
 
 class Welcome extends React.Component {
 
-  componentDidMount() {
-    this.handleTapNewGathering();
-  }
-
   componentWillMount() {
     this.props.requestMyFeed();
   }
