@@ -20,16 +20,16 @@ var colors = require('../styles/colors');
 var globalStyles = require('../styles/global');
 
 function isPhoneNumber(str) {
-  var clean = str.replace(/[-\.\s]+/, '');
-  return /^(1)?[\d]{10}$/.test(clean);
+  var clean = str.replace(/[-\.\s]+/g, '');
+  return /^[\d]{10}$/.test(clean);
 }
 
-function isAllNumbers(str) {
-  return /^\d+$/.test(str);
+function isLikePhoneNumber(str) {
+  return /^[-\.\s\d]+$/.test(str);
 }
 
 function formatPhoneNumber(str) {
-  var clean = str.replace(/[-\.\s]+/, '');
+  var clean = str.replace(/[-\.\s]+/g, '');
   return clean.substr(0, 3) + '-' + clean.substr(3, 3) + '-' + clean.substr(6, 4);
 }
 
@@ -141,7 +141,7 @@ class PeopleChooser extends React.Component {
 
     var promptAddCustom, buttonStyle;
 
-    if (isAllNumbers(this.state.search)) {
+    if (isLikePhoneNumber(this.state.search)) {
       buttonStyle = isPhoneNumber(this.state.search) ? styles.button : styles.buttonDisabled;
       promptAddCustom = (
         <TouchableOpacity onPress={this.handleAddCustom.bind(this)} style={buttonStyle}>
