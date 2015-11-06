@@ -58,20 +58,30 @@ class PeopleChooser extends React.Component {
   }
 
   componentWillMount() {
+    this.setState({
+      chosenPeople: [...this.props.initialChosenPeople]
+    });
     this.props.requestContacts();
   }
 
   handleAddCustom() {
     var contact;
     if (isPhoneNumber(this.state.search)) {
+      var phone = formatPhoneNumber(this.state.search);
       contact = {
-        label: formatPhoneNumber(this.state.search),
-        phone: formatPhoneNumber(this.state.search)
+        label: phone,
+        phoneNumbers: [{
+          label: 'mobile',
+          number: phone
+        }]
       };
     } else {
       contact = {
         label: this.state.search,
-        email: this.state.search
+        emailAddresses: [{
+          label: 'home',
+          email: this.state.search
+        }]
       };
     }
     this.setState({
@@ -81,20 +91,24 @@ class PeopleChooser extends React.Component {
   }
 
   handlePressContact(contact) {
-    var label = [];
+    var names = [];
     if (contact.givenName) {
-      label.push(contact.givenName);
+      names.push(contact.givenName);
     }
     if (contact.familyName) {
-      label.push(contact.familyName);
+      names.push(contact.familyName);
     }
     this.setState({
       chosenPeople: [...this.state.chosenPeople, {
         ...contact,
-        label: label.join(' ')
+        label: names.join(' ')
       }],
       search: ''
     });
+  }
+
+  handlePressDone() {
+    this.props.onDone(this.state.chosenPeople);
   }
 
   contactMatchesSearch(contact) {
@@ -112,6 +126,7 @@ class PeopleChooser extends React.Component {
   }
 
   renderContactRow(contact) {
+    console.log(contact);
     return (
       <TouchableOpacity onPress={() => this.handlePressContact(contact)} style={styles.contact}>
         <Text>{contact.givenName} {contact.familyName}</Text>
@@ -197,7 +212,7 @@ class PeopleChooser extends React.Component {
               style={[styles.actionButton, styles.buttonAlternate]}>
               <Text>Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.props.onDone} style={styles.actionButton}>
+            <TouchableOpacity onPress={this.handlePressDone.bind(this)} style={styles.actionButton}>
               <Text>
                 Add {this.state.chosenPeople.length} {peopleString}
               </Text>

@@ -26,20 +26,20 @@ class PostGathering extends React.Component {
 
   constructor() {
     super();
-    var inviteList = new ListView.DataSource({
+    this.inviteListDS = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
     this.state = {
       name: "",
       description: "",
-      inviteList: inviteList.cloneWithRows([]),
+      inviteList: [],
       showPeopleChooser: false
     }
   }
 
-  // componentDidMount() {
-  //   this.handleTapAddPeople();
-  // }
+  componentDidMount() {
+    this.handleTapAddPeople();
+  }
 
   handleTapAddPeople() {
     this.setState({
@@ -53,8 +53,9 @@ class PostGathering extends React.Component {
     });
   }
 
-  handlePeopleChooserDone() {
+  handlePeopleChooserDone(inviteList) {
     this.setState({
+      inviteList: inviteList,
       showPeopleChooser: false
     });
   }
@@ -77,23 +78,25 @@ class PostGathering extends React.Component {
     this.props.navigator.pop();
   }
 
-  render() {
-    var inviteList;
+  renderInviteList() {
     if (this.state.inviteList.length) {
-      inviteList = (
+      return (
         <ListView
-          dataSource={this.state.inviteList}
-          renderRow={(rowData) => <Text>{rowData}</Text>}
+          dataSource={this.inviteListDS.cloneWithRows(this.state.inviteList)}
+          renderRow={(contact) => <Text>{contact.label}</Text>}
           style={styles.inviteListContent}
         />
       );
     } else {
-      inviteList = (
+      return (
         <View style={[styles.input, styles.inviteList]}>
           <Text style={styles.placeholder}>Invite list</Text>
         </View>
       );
     }
+  }
+
+  render() {
     return (
       <View style={styles.screen}>
 
@@ -102,6 +105,7 @@ class PostGathering extends React.Component {
           visible={this.state.showPeopleChooser}
         >
           <PeopleChooser
+            initialChosenPeople={[...this.state.inviteList]}
             onCancel={this.handlePeopleChooserCancel.bind(this)}
             onDone={this.handlePeopleChooserDone.bind(this)}
           />
@@ -148,7 +152,7 @@ class PostGathering extends React.Component {
             Invite list
           </Text>
           <View style={styles.formGroup}>
-            {inviteList}
+            {this.renderInviteList()}
             <TouchableOpacity onPress={this.handleTapAddPeople.bind(this)} style={[styles.button, styles.center, { marginBottom: 5 }]}>
               <Text>+ Add people</Text>
             </TouchableOpacity>
