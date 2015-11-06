@@ -13,7 +13,7 @@ var {
   Provider
 } = require('react-redux/native');
 
-var Parse = require('parse').Parse;
+var Parse = require('parse/react-native');
 
 var config = require('./config');
 

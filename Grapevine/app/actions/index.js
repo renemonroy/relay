@@ -1,4 +1,4 @@
-var Parse = require('parse').Parse;
+var Parse = require('parse/react-native');
 var Contacts = require('react-native-contacts');
 var BookFace = require('../utility/BookFace');
 
@@ -99,43 +99,49 @@ exports.getCurrentUser = () => {
         return;
       }
 
-      var currentUser = User.current();
-      if (currentUser) {
-        console.log('Parse currentUser exists, update from BookFace')
-        currentUser.save(fbUser).then(() => {
-          dispatch(receiveCurrentUser(currentUser));
-        }, (error) => {
-          handleParseError(dispatch, error);
-        });
-      } else {
-        console.log('no Parse currentUser, query for user with facebookId', fbUser.facebookId);
-        var query = new Parse.Query(User);
-        query.equalTo('facebookId', fbUser.facebookId);
-        query.first().then((currentUser) => {
-          if (currentUser) {
-            console.log('found Parse user, issue session');
-            Parse.Cloud.run('fbAuth', {
-              facebookId: fbUser.facebookId,
-              accessToken: fbUser.accessToken
-            }).then((sessionToken) => {
-              console.log('fbAuth success', sessionToken)
-              return User.become(sessionToken);
-            }).then(() => {
-              console.log('user become sessionToken success, update with fb data', currentUser, fbUser);
-              return currentUser.save(fbUser).then((currentUser) => {
+      User.currentAsync().then((currentUser) => {
+
+        if (currentUser) {
+          console.log('Parse currentUser exists, update from BookFace')
+          currentUser.save(fbUser).then(() => {
+            dispatch(receiveCurrentUser(currentUser));
+          }, (error) => {
+            handleParseError(dispatch, error);
+          });
+        } else {
+          console.log('no Parse currentUser, query for user with facebookId', fbUser.facebookId);
+          var query = new Parse.Query(User);
+          query.equalTo('facebookId', fbUser.facebookId);
+          query.first().then((currentUser) => {
+            if (currentUser) {
+              console.log('found Parse user, issue session');
+              Parse.Cloud.run('fbAuth', {
+                facebookId: fbUser.facebookId,
+                accessToken: fbUser.accessToken
+              }).then((sessionToken) => {
+                console.log('fbAuth success', sessionToken)
+                return User.become(sessionToken);
+              }).then(() => {
+                console.log('user become sessionToken success, update with fb data', currentUser, fbUser);
+                return currentUser.save(fbUser).then((currentUser) => {
+                  dispatch(receiveCurrentUser(currentUser));
+                });
+              });
+            } else {
+              console.log('no Parse user found, sign up with fb data', fbUser);
+              return signUp(fbUser).then((currentUser) => {
                 dispatch(receiveCurrentUser(currentUser));
               });
-            });
-          } else {
-            console.log('no Parse user found, sign up with fb data', fbUser);
-            return signUp(fbUser).then((currentUser) => {
-              dispatch(receiveCurrentUser(currentUser));
-            });
-          }
-        }, (error) => {
-          handleParseError(dispatch, error);
-        });
-      }
+            }
+          }, (error) => {
+            handleParseError(dispatch, error);
+          });
+        }
+
+      }, (error) => {
+        handleParseError(dispatch, error);
+      });
+
     });
     dispatch(requestCurrentUser());
   };

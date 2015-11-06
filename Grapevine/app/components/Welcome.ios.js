@@ -36,7 +36,7 @@ class MyFeed extends React.Component {
       <View style={styles.myFeed}>
         {this.props.myFeed.map((gathering) => {
           return (
-            <TouchableOpacity style={styles.gathering} key={gathering.cid} onPress={this.handleSelectGathering(gathering)}>
+            <TouchableOpacity style={styles.gathering} key={gathering._localId} onPress={this.handleSelectGathering(gathering)}>
               <View style={styles.media}>
                 <Image
                   source={{uri: gathering.get('image')}}

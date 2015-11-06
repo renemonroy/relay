@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>LSApplicationQueriesSchemes</key>
-	<string>fbauth2</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -31,46 +29,39 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>95dad14db93395410090615e81830930ffa89f42</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>FacebookAppID</key>
 	<string>1166744266674657</string>
 	<key>FacebookDisplayName</key>
 	<string>Grapevine</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-	  <key>NSExceptionDomains</key>
-	  <dict>
-	    <key>facebook.com</key>
-	    <dict>
-	      <key>NSIncludesSubdomains</key> <true/>
-	      <key>NSExceptionRequiresForwardSecrecy</key> <false/>
-	    </dict>
-	    <key>fbcdn.net</key>
-	    <dict>
-	      <key>NSIncludesSubdomains</key> <true/>
-	      <key>NSExceptionRequiresForwardSecrecy</key>  <false/>
-	    </dict>
-	    <key>akamaihd.net</key>
-	    <dict>
-	      <key>NSIncludesSubdomains</key> <true/>
-	      <key>NSExceptionRequiresForwardSecrecy</key> <false/>
-	    </dict>
-	  </dict>
-	</dict>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-    <string>fbapi</string>
-    <string>fbapi20130214</string>
-    <string>fbapi20130410</string>
-    <string>fbapi20130702</string>
-    <string>fbapi20131010</string>
-    <string>fbapi20131219</string>
-    <string>fbapi20140410</string>
-    <string>fbapi20140116</string>
-    <string>fbapi20150313</string>
-    <string>fbapi20150629</string>
-    <string>fbauth</string>
-    <string>fbauth2</string>
-    <string>fb-messenger-api20140430</string>
+		<string>fbapi</string>
+		<string>fbapi20130214</string>
+		<string>fbapi20130410</string>
+		<string>fbapi20130702</string>
+		<string>fbapi20131010</string>
+		<string>fbapi20131219</string>
+		<string>fbapi20140410</string>
+		<string>fbapi20140116</string>
+		<string>fbapi20150313</string>
+		<string>fbapi20150629</string>
+		<string>fbauth</string>
+		<string>fbauth2</string>
+		<string>fb-messenger-api20140430</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

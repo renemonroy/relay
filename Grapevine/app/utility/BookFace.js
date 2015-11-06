@@ -13,8 +13,6 @@ var {
   FBSDKLoginManager,
 } = FBSDKLogin;
 
-var FBSDKGraphRequestManager = require('react-native-fbsdkcore/js-modules/FBSDKGraphRequestManager');
-
 function getCurrentUser(callback) {
   var getUser = new FBSDKGraphRequest((error, response) => {
     console.log('getUser', error, response);
@@ -36,9 +34,7 @@ function getCurrentUser(callback) {
     }
   });
 
-  // https://github.com/facebook/react-native-fbsdk/issues/20
-  // getUser.start();
-  FBSDKGraphRequestManager.batchRequests([getUser], function() {}, 60);
+  getUser.start();
 }
 
 module.exports = {

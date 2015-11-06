@@ -192,8 +192,8 @@ class PeopleChooser extends React.Component {
           <ListView
             dataSource={this.contactsDS.cloneWithRows(this.props.contacts.filter((contact) => {
               return (
-                (contact.givenName.toLowerCase().indexOf(this.state.search) >= 0) ||
-                  (contact.familyName.toLowerCase().indexOf(this.state.search) >= 0)
+                (contact.givenName && contact.givenName.toLowerCase().indexOf(this.state.search.toLowerCase()) >= 0) ||
+                  (contact.familyName && contact.familyName.toLowerCase().indexOf(this.state.search.toLowerCase()) >= 0)
               );
             }))}
             renderRow={this.renderContactRow.bind(this)}
