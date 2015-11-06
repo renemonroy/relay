@@ -8,8 +8,7 @@ var {
   Image,
   TouchableOpacity,
   TextInput,
-  ListView,
-  ScrollView
+  ListView
 } = React;
 
 var Swipeout = require('react-native-swipeout');
@@ -168,6 +167,7 @@ class PeopleChooser extends React.Component {
           dataSource={this.chosenPeopleDS.cloneWithRows(this.state.chosenPeople)}
           renderRow={this.renderChosenRow.bind(this)}
           automaticallyAdjustContentInsets={false}
+          keyboardShouldPersistTaps={true}
           style={styles.chosenPeopleList}
         />
       );
@@ -221,6 +221,7 @@ class PeopleChooser extends React.Component {
         dataSource={this.contactsDS.cloneWithRows(contactList)}
         renderRow={this.renderContactRow.bind(this)}
         automaticallyAdjustContentInsets={false}
+        keyboardShouldPersistTaps={true}
       />
     );
   }
@@ -250,6 +251,10 @@ class PeopleChooser extends React.Component {
         <View style={styles.contactList}>
           <TextInput
             placeholder="Enter a name, email, or phone number"
+            autoCapitalize={false}
+            autoCorrect={false}
+            clearButtonMode='always'
+            returnKeyType='done'
             onChangeText={(text) => this.setState({ search: text })}
             value={this.state.search}
             style={styles.textInput}
