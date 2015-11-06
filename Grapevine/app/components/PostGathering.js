@@ -81,17 +81,22 @@ class PostGathering extends React.Component {
   renderInviteList() {
     if (this.state.inviteList.length) {
       return (
-        <ListView
-          dataSource={this.inviteListDS.cloneWithRows(this.state.inviteList)}
-          renderRow={(contact) => <Text>{contact.label}</Text>}
-          style={styles.inviteListContent}
-        />
+        <View>
+          <ListView
+            dataSource={this.inviteListDS.cloneWithRows(this.state.inviteList)}
+            renderRow={(contact) => <Text>{contact.label}</Text>}
+            style={styles.inviteListContent}
+          />
+          <TouchableOpacity onPress={this.handleTapAddPeople.bind(this)} style={[styles.button, styles.center, { marginBottom: 5 }]}>
+            <Text>Edit</Text>
+          </TouchableOpacity>
+        </View>
       );
     } else {
       return (
-        <View style={[styles.input, styles.inviteList]}>
-          <Text style={styles.placeholder}>Invite list</Text>
-        </View>
+        <TouchableOpacity onPress={this.handleTapAddPeople.bind(this)} style={[styles.button, styles.center, { marginBottom: 5 }]}>
+          <Text>Add people</Text>
+        </TouchableOpacity>
       );
     }
   }
@@ -153,9 +158,6 @@ class PostGathering extends React.Component {
           </Text>
           <View style={styles.formGroup}>
             {this.renderInviteList()}
-            <TouchableOpacity onPress={this.handleTapAddPeople.bind(this)} style={[styles.button, styles.center, { marginBottom: 5 }]}>
-              <Text>+ Add people</Text>
-            </TouchableOpacity>
             <Text style={styles.subtext}>
               Who should know about it?
             </Text>
@@ -233,8 +235,8 @@ var styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderStyle: 'solid',
+    borderColor: colors.gray,
     borderBottomWidth: 1,
-    borderBottomColor: '#000',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'

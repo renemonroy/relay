@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 var React = require('react-native');
 var {
   StyleSheet,
@@ -9,6 +11,8 @@ var {
   ListView,
   ScrollView
 } = React;
+
+var Swipeout = require('react-native-swipeout');
 
 var { connect } = require('react-redux/native');
 
@@ -69,6 +73,7 @@ class PeopleChooser extends React.Component {
     if (isPhoneNumber(this.state.search)) {
       var phone = formatPhoneNumber(this.state.search);
       contact = {
+        id: phone,
         label: phone,
         phoneNumbers: [{
           label: 'mobile',
@@ -77,6 +82,7 @@ class PeopleChooser extends React.Component {
       };
     } else {
       contact = {
+        id: this.state.search,
         label: this.state.search,
         emailAddresses: [{
           label: 'home',
@@ -101,9 +107,18 @@ class PeopleChooser extends React.Component {
     this.setState({
       chosenPeople: [...this.state.chosenPeople, {
         ...contact,
+        id: contact.recordID,
         label: names.join(' ')
       }],
       search: ''
+    });
+  }
+
+  handleRemoveChosenPerson(contact) {
+    this.setState({
+      chosenPeople: _.reject(this.state.chosenPeople, (chosenPerson) => {
+        return chosenPerson.id === contact.id;
+      })
     });
   }
 
@@ -114,19 +129,31 @@ class PeopleChooser extends React.Component {
   contactMatchesSearch(contact) {
     var searchable = [contact.givenName, contact.familyName].join(' ').toLowerCase();
     var query = this.state.search.toLowerCase();
-    return searchable.indexOf(query) >= 0;
+    if (searchable.indexOf(query) < 0) {
+      return false;
+    } else {
+      // Don't show contacts that have already been added
+      return !_.findWhere(this.state.chosenPeople, {
+        id: contact.recordID
+      });
+    }
   }
 
   renderChosenRow(contact) {
     return (
-      <View style={styles.chosenPerson}>
-        <Text>{contact.label}</Text>
-      </View>
+      <Swipeout right={[{
+        text: 'Remove',
+        backgroundColor: colors.red,
+        onPress: () => this.handleRemoveChosenPerson(contact)
+      }]}>
+        <View style={styles.chosenPerson}>
+          <Text>{contact.label}</Text>
+        </View>
+      </Swipeout>
     );
   }
 
   renderContactRow(contact) {
-    console.log(contact);
     return (
       <TouchableOpacity onPress={() => this.handlePressContact(contact)} style={styles.contact}>
         <Text>{contact.givenName} {contact.familyName}</Text>
@@ -214,7 +241,7 @@ class PeopleChooser extends React.Component {
             </TouchableOpacity>
             <TouchableOpacity onPress={this.handlePressDone.bind(this)} style={styles.actionButton}>
               <Text>
-                Add {this.state.chosenPeople.length} {peopleString}
+                Confirm {this.state.chosenPeople.length} {peopleString}
               </Text>
             </TouchableOpacity>
           </View>
@@ -250,13 +277,14 @@ var styles = StyleSheet.create({
   chosenPeopleList: {
     flex: 1,
     borderStyle: 'solid',
-    borderColor: colors.offBlack,
-    borderTopWidth: 1
+    borderColor: colors.gray,
+    borderTopWidth: 1,
+    borderBottomWidth: 1
   },
   chosenPerson: {
     padding: 10,
     borderStyle: 'solid',
-    borderColor: colors.offBlack,
+    borderColor: colors.gray,
     borderBottomWidth: 1
   },
   actions: {
@@ -273,13 +301,13 @@ var styles = StyleSheet.create({
     flex: 0.7,
     borderTopWidth: 1,
     borderStyle: 'solid',
-    borderColor: colors.offBlack,
+    borderColor: colors.gray,
   },
   contact: {
     padding: 10,
     borderBottomWidth: 1,
     borderStyle: 'solid',
-    borderColor: colors.offBlack,
+    borderColor: colors.gray,
   }
 });
 

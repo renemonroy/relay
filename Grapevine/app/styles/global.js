@@ -6,7 +6,7 @@ var styles = {
   },
   element: {
     borderWidth: 0.5,
-    borderColor: colors.offBlack,
+    borderColor: colors.gray,
     padding: 5,
     marginBottom: 5
   },
