@@ -65,10 +65,12 @@ class PeopleChooser extends React.Component {
     var contact;
     if (isPhoneNumber(this.state.search)) {
       contact = {
+        label: formatPhoneNumber(this.state.search),
         phone: formatPhoneNumber(this.state.search)
       };
     } else {
       contact = {
+        label: this.state.search,
         email: this.state.search
       };
     }
@@ -79,31 +81,34 @@ class PeopleChooser extends React.Component {
   }
 
   handlePressContact(contact) {
+    var label = [];
+    if (contact.givenName) {
+      label.push(contact.givenName);
+    }
+    if (contact.familyName) {
+      label.push(contact.familyName);
+    }
     this.setState({
-      chosenPeople: [...this.state.chosenPeople, contact],
+      chosenPeople: [...this.state.chosenPeople, {
+        ...contact,
+        label: label.join(' ')
+      }],
       search: ''
     });
   }
 
+  contactMatchesSearch(contact) {
+    var searchable = [contact.givenName, contact.familyName].join(' ');
+    return (
+      (contact.givenName && contact.givenName.toLowerCase().indexOf(this.state.search.toLowerCase()) >= 0) ||
+        (contact.familyName && contact.familyName.toLowerCase().indexOf(this.state.search.toLowerCase()) >= 0)
+    );
+  }
+
   renderChosenRow(contact) {
-    var label;
-    if (contact.givenName) {
-      label = contact.givenName;
-      if (contact.familyName) {
-        label += ' ' + contact.familyName;
-      }
-    } else {
-      label = 'Enter name';
-      if (contact.phone) {
-        label += ' (' + contact.phone + ')';
-      }
-      if (contact.email) {
-        label += ' (' + contact.email + ')';
-      }
-    }
     return (
       <View style={styles.chosenPerson}>
-        <Text>{label}</Text>
+        <Text>{contact.label}</Text>
       </View>
     );
   }
@@ -111,17 +116,14 @@ class PeopleChooser extends React.Component {
   renderContactRow(contact) {
     return (
       <TouchableOpacity onPress={() => this.handlePressContact(contact)} style={styles.contact}>
-        <Text>
-          {contact.givenName} {contact.familyName}
-        </Text>
+        <Text>{contact.givenName} {contact.familyName}</Text>
       </TouchableOpacity>
     );
   }
 
-  render() {
-    var chosenPeople;
+  renderChosenPeople() {
     if (this.state.chosenPeople.length) {
-      chosenPeople = (
+      return (
         <ListView
           dataSource={this.chosenPeopleDS.cloneWithRows(this.state.chosenPeople)}
           renderRow={this.renderChosenRow.bind(this)}
@@ -130,7 +132,7 @@ class PeopleChooser extends React.Component {
         />
       );
     } else {
-      chosenPeople = (
+      return (
         <View style={styles.chosenPeopleList}>
           <View style={styles.chosenPerson}>
             <Text>Nobody added yet</Text>
@@ -138,13 +140,14 @@ class PeopleChooser extends React.Component {
         </View>
       );
     }
+  }
 
-    var promptAddCustom, buttonStyle;
-
+  renderPromptAddCustom() {
     if (isLikePhoneNumber(this.state.search)) {
-      buttonStyle = isPhoneNumber(this.state.search) ? styles.button : styles.buttonDisabled;
-      promptAddCustom = (
-        <TouchableOpacity onPress={this.handleAddCustom.bind(this)} style={buttonStyle}>
+      return (
+        <TouchableOpacity
+          onPress={this.handleAddCustom.bind(this)}
+          style={isPhoneNumber(this.state.search) ? styles.button : styles.buttonDisabled}>
           <Text>Add phone number</Text>
           <Text style={{fontWeight: 'bold'}}>
             {formatPhoneNumber(this.state.search)}
@@ -152,9 +155,10 @@ class PeopleChooser extends React.Component {
         </TouchableOpacity>
       );
     } else if (hasAtSign(this.state.search)) {
-      buttonStyle = isEmail(this.state.search) ? styles.button : styles.buttonDisabled;
-      promptAddCustom = (
-        <TouchableOpacity onPress={this.handleAddCustom.bind(this)} style={buttonStyle}>
+      return (
+        <TouchableOpacity
+          onPress={this.handleAddCustom.bind(this)}
+          style={isEmail(this.state.search) ? styles.button : styles.buttonDisabled}>
           <Text>Add email</Text>
           <Text style={{fontWeight: 'bold'}}>
             {this.state.search}
@@ -162,15 +166,27 @@ class PeopleChooser extends React.Component {
         </TouchableOpacity>
       );
     }
+  }
 
+  render() {
     var peopleString = this.state.chosenPeople.length === 1 ? 'person' : 'people';
+
+    var contactList;
+    if (/\w+/.test(this.state.search)) {
+      contactList = this.props.contacts.filter(this.contactMatchesSearch.bind(this));
+    } else {
+      contactList = [];
+    }
+
     return (
       <View style={styles.screen}>
 
         <View style={styles.chosenPeople}>
-          {chosenPeople}
+          {this.renderChosenPeople()}
           <View style={styles.actions}>
-            <TouchableOpacity onPress={this.props.onCancel} style={[styles.actionButton, styles.buttonAlternate]}>
+            <TouchableOpacity
+              onPress={this.props.onCancel}
+              style={[styles.actionButton, styles.buttonAlternate]}>
               <Text>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.props.onDone} style={styles.actionButton}>
@@ -188,14 +204,9 @@ class PeopleChooser extends React.Component {
             value={this.state.search}
             style={styles.textInput}
           />
-          {promptAddCustom}
+          {this.renderPromptAddCustom()}
           <ListView
-            dataSource={this.contactsDS.cloneWithRows(this.props.contacts.filter((contact) => {
-              return (
-                (contact.givenName && contact.givenName.toLowerCase().indexOf(this.state.search.toLowerCase()) >= 0) ||
-                  (contact.familyName && contact.familyName.toLowerCase().indexOf(this.state.search.toLowerCase()) >= 0)
-              );
-            }))}
+            dataSource={this.contactsDS.cloneWithRows(contactList)}
             renderRow={this.renderContactRow.bind(this)}
             automaticallyAdjustContentInsets={false}
           />
