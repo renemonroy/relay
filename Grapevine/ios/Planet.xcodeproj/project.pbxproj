@@ -50,12 +50,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* GrapevineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrapevineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* Planet.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Planet.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* GrapevineTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GrapevineTests.m; sourceTree = "<group>"; };
 		035CB1B86B90C50DD41993C2 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CBD0A065DDE69C1FB981B09 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Grapevine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grapevine.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Planet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Grapevine/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Grapevine/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -186,8 +186,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Grapevine.app */,
-				00E356EE1AD99517003FC87E /* GrapevineTests.xctest */,
+				13B07F961A680F5B00A75B9A /* Planet.app */,
+				00E356EE1AD99517003FC87E /* Planet.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -251,9 +251,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* GrapevineTests */ = {
+		00E356ED1AD99517003FC87E /* PlanetTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "GrapevineTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "PlanetTests" */;
 			buildPhases = (
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
@@ -264,14 +264,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = GrapevineTests;
+			name = PlanetTests;
 			productName = GrapevineTests;
-			productReference = 00E356EE1AD99517003FC87E /* GrapevineTests.xctest */;
+			productReference = 00E356EE1AD99517003FC87E /* Planet.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* Grapevine */ = {
+		13B07F861A680F5B00A75B9A /* Planet */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Grapevine" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Planet" */;
 			buildPhases = (
 				F57F396B2543C569289EF032 /* Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
@@ -285,9 +285,9 @@
 			);
 			dependencies = (
 			);
-			name = Grapevine;
+			name = Planet;
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* Grapevine.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Planet.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -305,7 +305,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Grapevine" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Planet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -328,8 +328,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* Grapevine */,
-				00E356ED1AD99517003FC87E /* GrapevineTests */,
+				13B07F861A680F5B00A75B9A /* Planet */,
+				00E356ED1AD99517003FC87E /* PlanetTests */,
 			);
 		};
 /* End PBXProject section */
@@ -456,7 +456,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* Grapevine */;
+			target = 13B07F861A680F5B00A75B9A /* Planet */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -487,8 +487,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Grapevine.app/Grapevine";
+				PRODUCT_NAME = Planet;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Planet.app/Planet";
 			};
 			name = Release;
 		};
@@ -509,8 +509,8 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.grapevine.Grapevine;
-				PRODUCT_NAME = Grapevine;
+				PRODUCT_BUNDLE_IDENTIFIER = org.planet.Planet;
+				PRODUCT_NAME = Planet;
 			};
 			name = Release;
 		};
@@ -613,8 +613,8 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.grapevine.Grapevine;
-				PRODUCT_NAME = Grapevine;
+				PRODUCT_BUNDLE_IDENTIFIER = org.planet.Planet;
+				PRODUCT_NAME = Planet;
 			};
 			name = Debug;
 		};
@@ -631,15 +631,15 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Grapevine.app/Grapevine";
+				PRODUCT_NAME = Planet;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Planet.app/Planet";
 			};
 			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "GrapevineTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "PlanetTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F71AD99517003FC87E /* Release */,
@@ -648,7 +648,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Grapevine" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Planet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F951A680F5B00A75B9A /* Release */,
@@ -657,7 +657,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Grapevine" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Planet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA211A601CBA00E9B192 /* Release */,

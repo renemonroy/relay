@@ -15,23 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Grapevine.app"
-               BlueprintName = "Grapevine"
-               ReferencedContainer = "container:Grapevine.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "GrapevineTests.xctest"
-               BlueprintName = "GrapevineTests"
-               ReferencedContainer = "container:Grapevine.xcodeproj">
+               BuildableName = "Planet.app"
+               BlueprintName = "Planet"
+               ReferencedContainer = "container:Planet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -42,24 +28,14 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "GrapevineTests.xctest"
-               BlueprintName = "GrapevineTests"
-               ReferencedContainer = "container:Grapevine.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Grapevine.app"
-            BlueprintName = "Grapevine"
-            ReferencedContainer = "container:Grapevine.xcodeproj">
+            BuildableName = "Planet.app"
+            BlueprintName = "Planet"
+            ReferencedContainer = "container:Planet.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -80,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Grapevine.app"
-            BlueprintName = "Grapevine"
-            ReferencedContainer = "container:Grapevine.xcodeproj">
+            BuildableName = "Planet.app"
+            BlueprintName = "Planet"
+            ReferencedContainer = "container:Planet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -99,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Grapevine.app"
-            BlueprintName = "Grapevine"
-            ReferencedContainer = "container:Grapevine.xcodeproj">
+            BuildableName = "Planet.app"
+            BlueprintName = "Planet"
+            ReferencedContainer = "container:Planet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
