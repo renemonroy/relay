@@ -37,9 +37,9 @@ class PostGathering extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.handleTapAddPeople();
-  }
+  // componentDidMount() {
+  //   this.handleTapAddPeople();
+  // }
 
   handleTapAddPeople() {
     this.setState({

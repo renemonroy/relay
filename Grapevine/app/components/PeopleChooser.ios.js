@@ -25,7 +25,7 @@ function isPhoneNumber(str) {
 }
 
 function isLikePhoneNumber(str) {
-  return /^[-\.\s\d]+$/.test(str);
+  return /^\d[-\.\s\d]+$/.test(str);
 }
 
 function formatPhoneNumber(str) {
@@ -98,11 +98,9 @@ class PeopleChooser extends React.Component {
   }
 
   contactMatchesSearch(contact) {
-    var searchable = [contact.givenName, contact.familyName].join(' ');
-    return (
-      (contact.givenName && contact.givenName.toLowerCase().indexOf(this.state.search.toLowerCase()) >= 0) ||
-        (contact.familyName && contact.familyName.toLowerCase().indexOf(this.state.search.toLowerCase()) >= 0)
-    );
+    var searchable = [contact.givenName, contact.familyName].join(' ').toLowerCase();
+    var query = this.state.search.toLowerCase();
+    return searchable.indexOf(query) >= 0;
   }
 
   renderChosenRow(contact) {
@@ -168,15 +166,25 @@ class PeopleChooser extends React.Component {
     }
   }
 
-  render() {
-    var peopleString = this.state.chosenPeople.length === 1 ? 'person' : 'people';
-
+  renderContactList() {
     var contactList;
     if (/\w+/.test(this.state.search)) {
       contactList = this.props.contacts.filter(this.contactMatchesSearch.bind(this));
     } else {
       contactList = [];
     }
+
+    return (
+      <ListView
+        dataSource={this.contactsDS.cloneWithRows(contactList)}
+        renderRow={this.renderContactRow.bind(this)}
+        automaticallyAdjustContentInsets={false}
+      />
+    );
+  }
+
+  render() {
+    var peopleString = this.state.chosenPeople.length === 1 ? 'person' : 'people';
 
     return (
       <View style={styles.screen}>
@@ -205,11 +213,7 @@ class PeopleChooser extends React.Component {
             style={styles.textInput}
           />
           {this.renderPromptAddCustom()}
-          <ListView
-            dataSource={this.contactsDS.cloneWithRows(contactList)}
-            renderRow={this.renderContactRow.bind(this)}
-            automaticallyAdjustContentInsets={false}
-          />
+          {this.renderContactList()}
         </View>
 
       </View>
