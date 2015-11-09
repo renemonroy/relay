@@ -10,6 +10,8 @@ var {
   FBSDKLoginButton
 } = FBSDKLogin;
 
+var globalStyles = require('../styles/global');
+
 class Login extends React.Component {
 
   handleLogin(error, response) {
@@ -27,9 +29,14 @@ class Login extends React.Component {
   render() {
     return (
       <View>
-        <Text style={styles.welcome}>
-          Planet
-        </Text>
+        <View style={styles.navigationBar}>
+          <View style={styles.navigationBarItem}></View>
+          <View style={styles.center}>
+            <Text style={styles.navigationBarHeading}>Planet</Text>
+            <Text style={styles.navigationBarSubheading}>Login</Text>
+          </View>
+          <View style={styles.navigationBarItem}></View>
+        </View>
         <FBSDKLoginButton
           readPermissions={['user_friends']}
           onLoginFinished={this.handleLogin.bind(this)}
@@ -42,11 +49,7 @@ class Login extends React.Component {
 }
 
 var styles = StyleSheet.create({
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  }
+  ...globalStyles
 });
 
 module.exports = Login;

@@ -1,3 +1,5 @@
+var Color = require('color');
+
 var colors = require('./colors');
 
 var styles = {
@@ -30,16 +32,16 @@ var styles = {
     color: '#C7C7C7'
   },
   button: {
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderBottomWidth: 3,
+    padding: 10,
+    flexDirection: 'row',
+    borderColor: colors.lightGray,
     borderStyle: 'solid',
-    backgroundColor: '#ffffff',
-    borderColor: colors.blue
+    borderWidth: 1,
+    justifyContent: 'center'
   },
   input: {
     height: 36,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.white,
     borderWidth: 1,
     borderColor: colors.gray,
     borderRadius: 2,
@@ -48,23 +50,60 @@ var styles = {
   },
   center: {
     alignItems: 'center'
+  },
+  navigationBar: {
+    backgroundColor: colors.lightGray,
+    padding: 10,
+    paddingTop: 20,
+    paddingBottom: 5,
+    borderColor: Color(colors.lightGray).darken(0.1).hexString(),
+    borderStyle: 'solid',
+    borderBottomWidth: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  navigationBarItem: {
+    width: 80,
+  },
+  navigationBarHeading: {
+    fontSize: 18,
+    alignSelf: 'center'
+  },
+  navigationBarSubheading: {
+    fontSize: 10,
+    color: colors.gray
+  },
+  list: {
+    alignItems: 'stretch',
+  },
+  media: {
+    backgroundColor: colors.white,
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    borderColor: colors.lightGray,
+    flexDirection: 'row'
+  },
+  mediaBody: {
+    padding: 10
+  },
+  mediaHeading: {
+    fontSize: 18
   }
 };
 
 Object.assign(styles, {
   buttonAlternate: {
     ...styles.button,
-    borderColor: colors.darkBlue
+    backgroundColor: colors.blue
   },
   buttonDisabled: {
     ...styles.button,
-    backgroundColor: colors.lightGray,
-    borderColor: colors.gray
+    backgroundColor: colors.gray
   },
   buttonPrimary: {
     ...styles.button,
-    backgroundColor: colors.lightGreen,
-    borderColor: colors.green
+    backgroundColor: colors.green
   },
   textInput: {
     ...styles.input,

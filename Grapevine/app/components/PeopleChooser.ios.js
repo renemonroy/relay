@@ -251,7 +251,7 @@ class PeopleChooser extends React.Component {
         <View style={styles.contactList}>
           <TextInput
             placeholder="Enter a name, email, or phone number"
-            autoCapitalize={false}
+            autoCapitalize='none'
             autoCorrect={false}
             clearButtonMode='always'
             returnKeyType='done'
@@ -274,7 +274,8 @@ var styles = StyleSheet.create({
   screen: {
     paddingTop: 20,
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: colors.white
   },
   chosenPeople: {
     flex: 0.3

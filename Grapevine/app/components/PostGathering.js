@@ -116,12 +116,16 @@ class PostGathering extends React.Component {
           />
         </Modal>
 
-        <View style={styles.header}>
-          <TouchableOpacity onPress={this.props.navigator.pop} style={styles.button}>
+        <View style={styles.navigationBar}>
+          <TouchableOpacity onPress={this.props.navigator.pop} style={styles.navigationBarItem}>
             <Text>&lt; Back</Text>
           </TouchableOpacity>
-          <Text style={styles.heading1}>Post a Gathering</Text>
+          <View style={styles.center}>
+            <Text style={styles.navigationBarHeading}>New Gathering</Text>
+          </View>
+          <View style={styles.navigationBarItem}></View>
         </View>
+
         <ScrollView
           contentInset={{top:0}}
           automaticallyAdjustContentInsets={false}
@@ -207,7 +211,7 @@ class PostGathering extends React.Component {
           </View>
           <View>
             <TouchableOpacity onPress={this.handleSubmit.bind(this)} style={styles.buttonPrimary}>
-              <Text>Blast off!</Text>
+              <Text style={{color: '#ffffff'}}>Blast off!</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -229,17 +233,6 @@ var styles = StyleSheet.create({
   heading2: {
     ...globalStyles.heading2,
     marginBottom: 10
-  },
-  header: {
-    flex: 0,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderStyle: 'solid',
-    borderColor: colors.gray,
-    borderBottomWidth: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
   },
   inputDescription: {
     height: 60

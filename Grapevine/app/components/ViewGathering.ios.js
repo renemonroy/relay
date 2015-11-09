@@ -16,12 +16,17 @@ class ViewGathering extends React.Component {
   render() {
     return (
       <View>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={this.props.navigator.pop} style={styles.button}>
+
+        <View style={styles.navigationBar}>
+          <TouchableOpacity onPress={this.props.navigator.pop} style={styles.navigationBarItem}>
             <Text>&lt; Back</Text>
           </TouchableOpacity>
-          <Text style={styles.heading1}>{this.props.gathering.get('name')}</Text>
+          <Text style={styles.navigationBarHeading}>
+            {this.props.gathering.get('name')}
+          </Text>
+          <View style={styles.navigationBarItem}></View>
         </View>
+
         <View style={styles.viewGathering}>
           <Image
             source={{uri: this.props.gathering.get('image')}}
@@ -39,23 +44,8 @@ class ViewGathering extends React.Component {
 
 var styles = StyleSheet.create({
   ...globalStyles,
-  header: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderStyle: 'solid',
-    borderBottomWidth: 1,
-    borderBottomColor: '#000',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
   viewGathering: {
-    paddingHorizontal: 30,
-    paddingVertical: 20
-  },
-  title: {
-    fontSize: 18,
-    textAlign: 'center'
+    padding: 20
   },
   description: {
     fontSize: 14,

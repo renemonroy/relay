@@ -6,6 +6,7 @@
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
+    "color": "^0.10.1",
     "parse": "^1.6.8",
     "react-native": "^0.13.0",
     "react-native-contacts": "^0.1.5",
