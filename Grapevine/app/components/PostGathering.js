@@ -151,8 +151,6 @@ class PostGathering extends React.Component {
         <ScrollView
           contentInset={{top:0}}
           automaticallyAdjustContentInsets={false}
-          contentContainerStyle={styles.scrollContainer}
-          style={{flex: 1}}x
         >
 
           <View style={styles.heading}>
@@ -244,14 +242,14 @@ class PostGathering extends React.Component {
             </View>
           </View>
 
-          <View style={{flex: 1, justifyContent: 'flex-end'}}>
-            <TouchableOpacity onPress={this.handleSubmit.bind(this)} style={[styles.buttonPrimary, styles.buttonBlock]}>
-              <Icon name='fontawesome|rocket' size={14} color={colors.white} style={styles.icon} />
-              <Text style={{color: colors.white}}>Blast off!</Text>
-            </TouchableOpacity>
-          </View>
-
         </ScrollView>
+
+        <View style={{justifyContent: 'flex-end'}}>
+          <TouchableOpacity onPress={this.handleSubmit.bind(this)} style={[styles.buttonPrimary, styles.buttonBlock]}>
+            <Icon name='fontawesome|rocket' size={14} color={colors.white} style={styles.icon} />
+            <Text style={{color: colors.white}}>Blast off!</Text>
+          </TouchableOpacity>
+        </View>
 
       </View>
     );

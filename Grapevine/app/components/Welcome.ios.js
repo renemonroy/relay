@@ -60,9 +60,9 @@ class Welcome extends React.Component {
     this.props.requestMyFeed();
   }
 
-  componentDidMount() {
-    this.handleTapNewGathering();
-  }
+  // componentDidMount() {
+  //   this.handleTapNewGathering();
+  // }
 
   handleTapNewGathering() {
     this.props.navigator.push({

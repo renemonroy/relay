@@ -19,7 +19,7 @@ var styles = {
     padding: 5
   },
   headingText: {
-    color: colors.gray
+    color: Color(colors.gray).darken(0.2).hexString()
   },
   subtext: {
     fontSize: 10,
