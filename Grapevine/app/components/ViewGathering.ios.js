@@ -36,6 +36,7 @@ class ViewGathering extends React.Component {
             {this.props.gathering.get('messages')[0].get('content')}
           </Text>
         </View>
+
       </View>
     );
   }

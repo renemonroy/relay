@@ -10,6 +10,8 @@ var { getCurrentUser } = require('../actions');
 
 var Scenes = require('./Scenes');
 
+var colors = require('../styles/colors');
+
 class App extends React.Component {
 
   componentWillMount() {
@@ -44,7 +46,8 @@ class App extends React.Component {
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: colors.offWhite
   }
 });
 

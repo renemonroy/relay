@@ -7,8 +7,7 @@ var styles = {
     flex: 1
   },
   element: {
-    borderWidth: 0.5,
-    borderColor: colors.gray,
+    backgroundColor: colors.offWhite,
     padding: 5,
     marginBottom: 5
   },
@@ -16,17 +15,15 @@ var styles = {
     width: 20,
     height: 20
   },
-  heading1: {
-    fontSize: 28
+  heading: {
+    padding: 5
   },
-  heading2: {
-    fontSize: 20
-  },
-  formGroup: {
-    marginBottom: 20,
+  headingText: {
+    color: colors.gray
   },
   subtext: {
     fontSize: 10,
+    color: colors.gray
   },
   placeholder: {
     color: '#C7C7C7'
@@ -34,19 +31,25 @@ var styles = {
   button: {
     padding: 10,
     flexDirection: 'row',
+    backgroundColor: colors.darkBlue,
     borderColor: colors.lightGray,
     borderStyle: 'solid',
     borderWidth: 1,
     justifyContent: 'center'
   },
+  buttonBlock: {
+    borderWidth: 0
+  },
+  inputContainer: {
+    borderColor: colors.lightGray,
+    borderStyle: 'solid',
+    borderTopWidth: 1,
+    borderBottomWidth: 1
+  },
   input: {
     height: 36,
     backgroundColor: colors.white,
-    borderWidth: 1,
-    borderColor: colors.gray,
-    borderRadius: 2,
-    padding: 5,
-    marginBottom: 5
+    padding: 5
   },
   center: {
     alignItems: 'center'
@@ -54,8 +57,7 @@ var styles = {
   navigationBar: {
     backgroundColor: colors.lightGray,
     padding: 10,
-    paddingTop: 20,
-    paddingBottom: 5,
+    paddingTop: 30,
     borderColor: Color(colors.lightGray).darken(0.1).hexString(),
     borderStyle: 'solid',
     borderBottomWidth: 2,
@@ -69,13 +71,6 @@ var styles = {
   navigationBarHeading: {
     fontSize: 18,
     alignSelf: 'center'
-  },
-  navigationBarSubheading: {
-    fontSize: 10,
-    color: colors.gray
-  },
-  list: {
-    alignItems: 'stretch',
   },
   media: {
     backgroundColor: colors.white,
@@ -95,7 +90,7 @@ var styles = {
 Object.assign(styles, {
   buttonAlternate: {
     ...styles.button,
-    backgroundColor: colors.blue
+    backgroundColor: colors.white
   },
   buttonDisabled: {
     ...styles.button,

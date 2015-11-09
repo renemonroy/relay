@@ -8,8 +8,12 @@ var {
   TextInput,
   ListView,
   ScrollView,
-  Modal
+  Modal,
+  StatusBarIOS
 } = React;
+var {
+  Icon
+} = require('react-native-icons');
 
 var { connect } = require('react-redux/native');
 
@@ -40,6 +44,14 @@ class PostGathering extends React.Component {
   // componentDidMount() {
   //   this.handleTapAddPeople();
   // }
+
+  componentWillMount() {
+    StatusBarIOS.setStyle('light-content');
+  }
+
+  componentWillUnmount() {
+    StatusBarIOS.setStyle('default');
+  }
 
   handleTapAddPeople() {
     this.setState({
@@ -78,24 +90,36 @@ class PostGathering extends React.Component {
     this.props.navigator.pop();
   }
 
+  renderContact(contact) {
+    return (
+      <View style={styles.media}>
+        <View style={styles.mediaBody}>
+          <Text>{contact.label}</Text>
+        </View>
+      </View>
+    );
+  }
+
   renderInviteList() {
     if (this.state.inviteList.length) {
       return (
         <View>
           <ListView
             dataSource={this.inviteListDS.cloneWithRows(this.state.inviteList)}
-            renderRow={(contact) => <Text>{contact.label}</Text>}
+            renderRow={this.renderContact.bind(this)}
             style={styles.inviteListContent}
           />
-          <TouchableOpacity onPress={this.handleTapAddPeople.bind(this)} style={[styles.button, styles.center, { marginBottom: 5 }]}>
-            <Text>Edit</Text>
+          <TouchableOpacity onPress={this.handleTapAddPeople.bind(this)} style={[styles.button, styles.buttonBlock]}>
+            <Icon name='fontawesome|edit' size={14} color={colors.white} style={styles.icon} />
+            <Text style={{color: colors.white}}>Edit</Text>
           </TouchableOpacity>
         </View>
       );
     } else {
       return (
-        <TouchableOpacity onPress={this.handleTapAddPeople.bind(this)} style={[styles.button, styles.center, { marginBottom: 5 }]}>
-          <Text>Add people</Text>
+        <TouchableOpacity onPress={this.handleTapAddPeople.bind(this)} style={[styles.button, styles.buttonBlock]}>
+          <Icon name='fontawesome|plus' size={14} color={colors.white} style={styles.icon} />
+          <Text style={{color: colors.white}}>Add people</Text>
         </TouchableOpacity>
       );
     }
@@ -103,7 +127,7 @@ class PostGathering extends React.Component {
 
   render() {
     return (
-      <View style={styles.screen}>
+      <View style={{flex: 1}}>
 
         <Modal
           animated={true}
@@ -118,11 +142,9 @@ class PostGathering extends React.Component {
 
         <View style={styles.navigationBar}>
           <TouchableOpacity onPress={this.props.navigator.pop} style={styles.navigationBarItem}>
-            <Text>&lt; Back</Text>
+            <Text style={{color: colors.white}}>&lt; Back</Text>
           </TouchableOpacity>
-          <View style={styles.center}>
-            <Text style={styles.navigationBarHeading}>New Gathering</Text>
-          </View>
+          <Text style={[styles.navigationBarHeading, { color: colors.white}]}>New Gathering</Text>
           <View style={styles.navigationBarItem}></View>
         </View>
 
@@ -130,45 +152,38 @@ class PostGathering extends React.Component {
           contentInset={{top:0}}
           automaticallyAdjustContentInsets={false}
           contentContainerStyle={styles.scrollContainer}
+          style={{flex: 1}}x
         >
-          <Text style={styles.heading2}>
-            The basics
-          </Text>
-          <View style={styles.formGroup}>
-            <TextInput
-              placeholder="Name"
-              onChangeText={(text) => this.setState({ name: text })}
-              value={this.state.name}
-              style={styles.textInput}
-            />
-            <Text style={styles.subtext}>
-              Just a simple way to refer to the gathering
-            </Text>
+
+          <View style={styles.heading}>
+            <Text style={styles.headingText}>Title</Text>
+            <Text style={styles.subtext}>Just a simple way to refer to the gathering</Text>
           </View>
           <View style={styles.formGroup}>
-            <TextInput
-              placeholder="Initial message"
-              onChangeText={(text) => this.setState({ description: text })}
-              value={this.state.description}
-              multiline={true}
-              style={[styles.textInput, styles.inputDescription]}
-            />
-            <Text style={styles.subtext}>
-              This will appear as the first message from you in the gathering's message stream, and will be included in any invite notifications (if you choose to send them)
-            </Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                placeholder="Title"
+                onChangeText={(text) => this.setState({ name: text })}
+                value={this.state.name}
+                style={styles.textInput}
+              />
+            </View>
           </View>
-          <Text style={styles.heading2}>
-            Invite list
-          </Text>
+
+          <View style={styles.heading}>
+            <Text style={styles.headingText}>Invite list</Text>
+            <Text style={styles.subtext}>Who should know about it?</Text>
+          </View>
           <View style={styles.formGroup}>
             {this.renderInviteList()}
-            <Text style={styles.subtext}>
-              Who should know about it?
-            </Text>
           </View>
-          <Text style={styles.heading2}>Time and place</Text>
+
+          <View style={styles.heading}>
+            <Text style={styles.headingText}>Time and place</Text>
+          </View>
+
           <View style={[styles.formGroup, styles.where]}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={[styles.buttonAlternate, { flex: 1 }]}>
               <View style={styles.center}>
                 <Image
                   source={{uri: 'https://i.imgur.com/q9Rjhks.png'}}
@@ -178,7 +193,7 @@ class PostGathering extends React.Component {
               </View>
             </TouchableOpacity>
             <Text>OR</Text>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={[styles.buttonAlternate, { flex: 1 }]}>
               <View style={styles.center}>
                 <Image
                   source={{uri: 'https://i.imgur.com/4KeW3Il.png'}}
@@ -188,8 +203,9 @@ class PostGathering extends React.Component {
               </View>
             </TouchableOpacity>
           </View>
+
           <View style={[styles.formGroup, styles.when]}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={[styles.buttonAlternate, { flex: 1 }]}>
               <View style={styles.center}>
                 <Image
                   source={{uri: 'https://i.imgur.com/Qd76nxw.png'}}
@@ -199,7 +215,7 @@ class PostGathering extends React.Component {
               </View>
             </TouchableOpacity>
             <Text>OR</Text>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={[styles.buttonAlternate, { flex: 1 }]}>
               <View style={styles.center}>
                 <Image
                   source={{uri: 'https://i.imgur.com/4KeW3Il.png'}}
@@ -209,11 +225,32 @@ class PostGathering extends React.Component {
               </View>
             </TouchableOpacity>
           </View>
-          <View>
-            <TouchableOpacity onPress={this.handleSubmit.bind(this)} style={styles.buttonPrimary}>
-              <Text style={{color: '#ffffff'}}>Blast off!</Text>
+
+          <View style={styles.heading}>
+            <Text style={styles.headingText}>Initial message</Text>
+            <Text style={styles.subtext}>
+              This will appear as the first message from you in the gathering's message stream, and will be included in any invite notifications (if you choose to send them)
+            </Text>
+          </View>
+          <View style={styles.formGroup}>
+            <View style={styles.inputContainer}>
+              <TextInput
+                placeholder="Initial message"
+                onChangeText={(text) => this.setState({ description: text })}
+                value={this.state.description}
+                multiline={true}
+                style={[styles.textInput, styles.initialMessage]}
+              />
+            </View>
+          </View>
+
+          <View style={{flex: 1, justifyContent: 'flex-end'}}>
+            <TouchableOpacity onPress={this.handleSubmit.bind(this)} style={[styles.buttonPrimary, styles.buttonBlock]}>
+              <Icon name='fontawesome|rocket' size={14} color={colors.white} style={styles.icon} />
+              <Text style={{color: colors.white}}>Blast off!</Text>
             </TouchableOpacity>
           </View>
+
         </ScrollView>
 
       </View>
@@ -224,31 +261,26 @@ class PostGathering extends React.Component {
 
 var styles = StyleSheet.create({
   ...globalStyles,
-  screen: {
-    flex: 1
+  navigationBar: {
+    ...globalStyles.navigationBar,
+    backgroundColor: colors.blue
   },
   scrollContainer: {
-    padding: 20
+    flex: 1
   },
-  heading2: {
-    ...globalStyles.heading2,
-    marginBottom: 10
-  },
-  inputDescription: {
-    height: 60
+  initialMessage: {
+    height: 100
   },
   inviteList: {
     justifyContent: 'center'
   },
   where: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    justifyContent: 'space-around'
   },
   when: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    justifyContent: 'space-around'
   }
 });
 

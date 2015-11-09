@@ -183,24 +183,28 @@ class PeopleChooser extends React.Component {
   }
 
   renderPromptAddCustom() {
+    var isValid;
+
     if (isLikePhoneNumber(this.state.search)) {
+      isValid = isPhoneNumber(this.state.search);
       return (
         <TouchableOpacity
           onPress={this.handleAddCustom.bind(this)}
-          style={isPhoneNumber(this.state.search) ? styles.button : styles.buttonDisabled}>
-          <Text>Add phone number</Text>
-          <Text style={{fontWeight: 'bold'}}>
+          style={[isValid ? styles.button : styles.buttonDisabled, styles.buttonBlock]}>
+          <Text style={{color: colors.offWhite, marginRight: 5}}>Add phone number</Text>
+          <Text style={{color: colors.offWhite, fontWeight: 'bold'}}>
             {formatPhoneNumber(this.state.search)}
           </Text>
         </TouchableOpacity>
       );
     } else if (hasAtSign(this.state.search)) {
+      isValid = isEmail(this.state.search);
       return (
         <TouchableOpacity
           onPress={this.handleAddCustom.bind(this)}
-          style={isEmail(this.state.search) ? styles.button : styles.buttonDisabled}>
-          <Text>Add email</Text>
-          <Text style={{fontWeight: 'bold'}}>
+          style={[isValid ? styles.button : styles.buttonDisabled, styles.buttonBlock]}>
+          <Text style={{color: colors.offWhite, marginRight: 5}}>Add email</Text>
+          <Text style={{color: colors.offWhite, fontWeight: 'bold'}}>
             {this.state.search}
           </Text>
         </TouchableOpacity>
@@ -241,7 +245,7 @@ class PeopleChooser extends React.Component {
               <Text>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.handlePressDone.bind(this)} style={styles.actionButton}>
-              <Text>
+              <Text style={{color: colors.offWhite}}>
                 Confirm {this.state.chosenPeople.length} {peopleString}
               </Text>
             </TouchableOpacity>

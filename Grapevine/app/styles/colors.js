@@ -17,6 +17,9 @@ module.exports = {
   offBlack: '#0f0f0f',
 
   gray: '#95999c',
-  lightGray: '#f1f1f1'
+  lightGray: '#f1f1f1',
+
+  offWhite: '#F7F7F7',
+  white: '#ffffff'
 
 };

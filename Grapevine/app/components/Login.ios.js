@@ -31,10 +31,7 @@ class Login extends React.Component {
       <View>
         <View style={styles.navigationBar}>
           <View style={styles.navigationBarItem}></View>
-          <View style={styles.center}>
-            <Text style={styles.navigationBarHeading}>Planet</Text>
-            <Text style={styles.navigationBarSubheading}>Login</Text>
-          </View>
+          <Text style={styles.navigationBarHeading}>Planet</Text>
           <View style={styles.navigationBarItem}></View>
         </View>
         <FBSDKLoginButton

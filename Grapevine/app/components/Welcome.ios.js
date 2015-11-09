@@ -33,7 +33,7 @@ class MyFeed extends React.Component {
 
   render() {
     return (
-      <View style={styles.list}>
+      <View>
         {this.props.myFeed.map((gathering) => {
           return (
             <TouchableOpacity style={styles.media} key={gathering._localId} onPress={this.handleSelectGathering(gathering)}>
@@ -60,9 +60,9 @@ class Welcome extends React.Component {
     this.props.requestMyFeed();
   }
 
-  // componentDidMount() {
-  //   this.handleTapNewGathering();
-  // }
+  componentDidMount() {
+    this.handleTapNewGathering();
+  }
 
   handleTapNewGathering() {
     this.props.navigator.push({
@@ -74,42 +74,41 @@ class Welcome extends React.Component {
     var body;
     if (this.props.myFeed.isFetching) {
       body = (
-        <View style={styles.welcome}>
-          <Image
-            source={{uri: this.props.currentUser.get('picture')}}
-            style={{width: 100, height: 100, marginBottom: 10}}
-          />
-          <Text style={styles.info}>
-            Welcome back, {this.props.currentUser.fullName()}
-          </Text>
-          <ActivityIndicatorIOS size='large' />
+        <View style={styles.splashContainer}>
+          <View style={styles.splash}>
+            <Image
+              source={{uri: this.props.currentUser.get('picture')}}
+              style={{width: 100, height: 100, marginBottom: 10}}
+            />
+            <Text style={styles.splashInfo}>
+              Welcome back, {this.props.currentUser.fullName()}
+            </Text>
+            <ActivityIndicatorIOS size='large' />
+          </View>
         </View>
       );
     } else {
       body = (
-        <MyFeed navigator={this.props.navigator} myFeed={this.props.myFeed.items} />
-      );
-    }
-
-    return (
-      <View>
-        <View style={styles.navigationBar}>
-          <TouchableOpacity style={styles.navigationBarItem}>
-            <Icon name='fontawesome|bars' size={20} color={colors.offBlack} style={styles.icon} />
-          </TouchableOpacity>
-          <View style={styles.center}>
-            <Text style={styles.navigationBarHeading}>Planet</Text>
-            <Text style={styles.navigationBarSubheading}>Home</Text>
-          </View>
-          <View style={styles.navigationBarItem}></View>
-        </View>
-        <View style={styles.body}>
+        <View>
           <TouchableOpacity onPress={this.handleTapNewGathering.bind(this)} style={styles.newGathering}>
             <Icon name='fontawesome|plus' size={14} color={colors.blue} style={styles.icon} />
             <Text style={{color: colors.blue}}>New Gathering</Text>
           </TouchableOpacity>
-          {body}
+          <MyFeed navigator={this.props.navigator} myFeed={this.props.myFeed.items} />
         </View>
+      );
+    }
+
+    return (
+      <View style={{flex: 1}}>
+        <View style={styles.navigationBar}>
+          <TouchableOpacity style={styles.navigationBarItem}>
+            <Icon name='fontawesome|bars' size={20} color={colors.offBlack} style={styles.icon} />
+          </TouchableOpacity>
+          <Text style={styles.navigationBarHeading}>Planet</Text>
+          <View style={styles.navigationBarItem}></View>
+        </View>
+        {body}
       </View>
     );
   }
@@ -118,20 +117,24 @@ class Welcome extends React.Component {
 
 var styles = StyleSheet.create({
   ...globalStyles,
-  body: {
-    flex: 1
+  splashContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  welcome: {
+  splash: {
     ...globalStyles.element,
     flex: 0,
     alignItems: 'center',
     alignSelf: 'center'
   },
-  info: {
+  splashInfo: {
     marginBottom: 10
   },
   newGathering: {
-    ...globalStyles.button,
+    ...globalStyles.buttonAlternate,
+    ...globalStyles.buttonBlock,
+    ...globalStyles.media,
     justifyContent: 'flex-start'
   }
 });
