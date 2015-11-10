@@ -7,6 +7,9 @@ var {
   TouchableOpacity,
   TextInput
 } = React;
+var {
+  Icon
+} = require('react-native-icons');
 
 var colors = require('../styles/colors');
 var globalStyles = require('../styles/global');
@@ -19,7 +22,8 @@ class ViewGathering extends React.Component {
 
         <View style={styles.navigationBar}>
           <TouchableOpacity onPress={this.props.navigator.pop} style={styles.navigationBarItem}>
-            <Text>&lt; Back</Text>
+            <Icon name='fontawesome|chevron-left' size={14} color={colors.offBlack} style={styles.icon} />
+            <Text style={{color: colors.offBlack}}>Back</Text>
           </TouchableOpacity>
           <Text style={styles.navigationBarHeading}>
             {this.props.gathering.get('name')}

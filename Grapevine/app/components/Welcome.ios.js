@@ -36,7 +36,7 @@ class MyFeed extends React.Component {
       <View>
         {this.props.myFeed.map((gathering) => {
           return (
-            <TouchableOpacity style={styles.media} key={gathering._localId} onPress={this.handleSelectGathering(gathering)}>
+            <TouchableOpacity style={styles.mediaItem} key={gathering._localId} onPress={this.handleSelectGathering(gathering)}>
               <Image
                 source={{uri: gathering.get('image')}}
                 style={{width: 80, height: 80}}
@@ -134,7 +134,7 @@ var styles = StyleSheet.create({
   newGathering: {
     ...globalStyles.buttonAlternate,
     ...globalStyles.buttonBlock,
-    ...globalStyles.media,
+    ...globalStyles.listItem,
     justifyContent: 'flex-start'
   }
 });

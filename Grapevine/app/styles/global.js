@@ -3,43 +3,50 @@ var Color = require('color');
 var colors = require('./colors');
 
 var styles = {
+
   container: {
     flex: 1
   },
+
   element: {
     backgroundColor: colors.offWhite,
     padding: 5,
     marginBottom: 5
   },
+
   icon: {
     width: 20,
     height: 20
   },
+
   heading: {
-    padding: 5
+    padding: 10
   },
   headingText: {
-    color: Color(colors.gray).darken(0.2).hexString()
+    fontSize: 20,
+    color: Color(colors.gray).darken(0.4).hexString()
   },
   subtext: {
     fontSize: 10,
     color: colors.gray
   },
+
   placeholder: {
     color: '#C7C7C7'
   },
+
   button: {
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     flexDirection: 'row',
     backgroundColor: colors.darkBlue,
-    borderColor: colors.lightGray,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   buttonBlock: {
     borderWidth: 0
   },
+
   inputContainer: {
     borderColor: colors.lightGray,
     borderStyle: 'solid',
@@ -49,11 +56,13 @@ var styles = {
   input: {
     height: 36,
     backgroundColor: colors.white,
-    padding: 5
+    padding: 10
   },
+
   center: {
     alignItems: 'center'
   },
+
   navigationBar: {
     backgroundColor: colors.lightGray,
     padding: 10,
@@ -67,18 +76,22 @@ var styles = {
   },
   navigationBarItem: {
     width: 80,
+    flexDirection: 'row'
   },
   navigationBarHeading: {
     fontSize: 18,
     alignSelf: 'center'
   },
-  media: {
+
+  listItem: {
     backgroundColor: colors.white,
     borderBottomWidth: 1,
     borderStyle: 'solid',
     borderColor: colors.lightGray,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    padding: 10
   },
+
   mediaBody: {
     padding: 10
   },
@@ -90,7 +103,10 @@ var styles = {
 Object.assign(styles, {
   buttonAlternate: {
     ...styles.button,
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
+    borderColor: colors.lightGray,
+    borderStyle: 'solid',
+    borderWidth: 1
   },
   buttonDisabled: {
     ...styles.button,
@@ -100,10 +116,22 @@ Object.assign(styles, {
     ...styles.button,
     backgroundColor: colors.green
   },
+
   textInput: {
     ...styles.input,
-    fontSize: 14
+    fontSize: 18
+  },
+
+  mediaItem: {
+    ...styles.listItem,
+    padding: 0
+  },
+
+  listItemHeading: {
+    ...styles.listItem,
+    backgroundColor: colors.lightGray
   }
+
 });
 
 module.exports = styles;

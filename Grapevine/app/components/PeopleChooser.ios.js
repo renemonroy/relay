@@ -145,7 +145,7 @@ class PeopleChooser extends React.Component {
         backgroundColor: colors.red,
         onPress: () => this.handleRemoveChosenPerson(contact)
       }]}>
-        <View style={styles.chosenPerson}>
+        <View style={styles.listItem}>
           <Text>{contact.label}</Text>
         </View>
       </Swipeout>
@@ -154,27 +154,33 @@ class PeopleChooser extends React.Component {
 
   renderContactRow(contact) {
     return (
-      <TouchableOpacity onPress={() => this.handlePressContact(contact)} style={styles.contact}>
+      <TouchableOpacity onPress={() => this.handlePressContact(contact)} style={styles.listItem}>
         <Text>{contact.givenName} {contact.familyName}</Text>
       </TouchableOpacity>
     );
   }
 
   renderChosenPeople() {
+    var peopleString = this.state.chosenPeople.length === 1 ? 'person' : 'people';
+
     if (this.state.chosenPeople.length) {
       return (
-        <ListView
-          dataSource={this.chosenPeopleDS.cloneWithRows(this.state.chosenPeople)}
-          renderRow={this.renderChosenRow.bind(this)}
-          automaticallyAdjustContentInsets={false}
-          keyboardShouldPersistTaps={true}
-          style={styles.chosenPeopleList}
-        />
+        <View style={styles.chosenPeopleList}>
+          <View style={styles.listItemHeading}>
+            <Text>{this.state.chosenPeople.length} {peopleString}</Text>
+          </View>
+          <ListView
+            dataSource={this.chosenPeopleDS.cloneWithRows(this.state.chosenPeople)}
+            renderRow={this.renderChosenRow.bind(this)}
+            automaticallyAdjustContentInsets={false}
+            keyboardShouldPersistTaps={true}
+          />
+        </View>
       );
     } else {
       return (
         <View style={styles.chosenPeopleList}>
-          <View style={styles.chosenPerson}>
+          <View style={styles.listItemHeading}>
             <Text>Nobody added yet</Text>
           </View>
         </View>
@@ -231,40 +237,39 @@ class PeopleChooser extends React.Component {
   }
 
   render() {
-    var peopleString = this.state.chosenPeople.length === 1 ? 'person' : 'people';
-
     return (
       <View style={styles.screen}>
 
         <View style={styles.chosenPeople}>
           {this.renderChosenPeople()}
-          <View style={styles.actions}>
-            <TouchableOpacity
-              onPress={this.props.onCancel}
-              style={[styles.actionButton, styles.buttonAlternate]}>
-              <Text>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.handlePressDone.bind(this)} style={styles.actionButton}>
-              <Text style={{color: colors.offWhite}}>
-                Confirm {this.state.chosenPeople.length} {peopleString}
-              </Text>
-            </TouchableOpacity>
-          </View>
         </View>
 
         <View style={styles.contactList}>
-          <TextInput
-            placeholder="Enter a name, email, or phone number"
-            autoCapitalize='none'
-            autoCorrect={false}
-            clearButtonMode='always'
-            returnKeyType='done'
-            onChangeText={(text) => this.setState({ search: text })}
-            value={this.state.search}
-            style={styles.textInput}
-          />
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Enter a name, email, or phone number"
+              autoCapitalize='none'
+              autoCorrect={false}
+              clearButtonMode='always'
+              returnKeyType='done'
+              onChangeText={(text) => this.setState({ search: text })}
+              value={this.state.search}
+              style={styles.textInput}
+            />
+          </View>
           {this.renderPromptAddCustom()}
           {this.renderContactList()}
+        </View>
+
+        <View style={styles.actions}>
+          <TouchableOpacity
+            onPress={this.props.onCancel}
+            style={[styles.actionButton, styles.buttonAlternate]}>
+            <Text>Cancel</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handlePressDone.bind(this)} style={styles.actionButton}>
+            <Text style={{color: colors.offWhite}}>Done</Text>
+          </TouchableOpacity>
         </View>
 
       </View>
@@ -285,39 +290,19 @@ var styles = StyleSheet.create({
     flex: 0.3
   },
   chosenPeopleList: {
-    flex: 1,
-    borderStyle: 'solid',
-    borderColor: colors.gray,
-    borderTopWidth: 1,
-    borderBottomWidth: 1
+    flex: 1
   },
-  chosenPerson: {
-    padding: 10,
-    borderStyle: 'solid',
-    borderColor: colors.gray,
-    borderBottomWidth: 1
+  contactList: {
+    flex: 0.7
   },
   actions: {
     flex: 0,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    padding: 10,
+    justifyContent: 'flex-end'
   },
   actionButton: {
     ...globalStyles.button,
     marginLeft: 10
-  },
-  contactList: {
-    flex: 0.7,
-    borderTopWidth: 1,
-    borderStyle: 'solid',
-    borderColor: colors.gray,
-  },
-  contact: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderStyle: 'solid',
-    borderColor: colors.gray,
   }
 });
 

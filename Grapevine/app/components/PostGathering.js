@@ -9,7 +9,7 @@ var {
   ListView,
   ScrollView,
   Modal,
-  StatusBarIOS
+  DeviceEventEmitter
 } = React;
 var {
   Icon
@@ -41,16 +41,13 @@ class PostGathering extends React.Component {
     }
   }
 
-  // componentDidMount() {
-  //   this.handleTapAddPeople();
-  // }
+  componentDidMount() {
+    // this.handleTapAddPeople();
+    // http://ollie.relph.me/blog/react-native-0-11-keyboard-display-events/
+    // https://medium.com/man-moon/writing-modern-react-native-ui-e317ff956f02
+    // DeviceEventEmitter.addListener('keyboardWillShow', (e) => {
 
-  componentWillMount() {
-    StatusBarIOS.setStyle('light-content');
-  }
-
-  componentWillUnmount() {
-    StatusBarIOS.setStyle('default');
+    // });
   }
 
   handleTapAddPeople() {
@@ -70,6 +67,18 @@ class PostGathering extends React.Component {
       inviteList: inviteList,
       showPeopleChooser: false
     });
+  }
+
+  // https://rnplay.org/apps/P774EQ
+  scrollIntoView(refName) {
+    setTimeout(() => {
+      var scrollResponder = this.refs.scrollView.getScrollResponder();
+      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+        React.findNodeHandle(this.refs[refName]),
+        110, // additionalOffset
+        true
+      );
+    }, 50);
   }
 
   handleSubmit() {
@@ -92,10 +101,8 @@ class PostGathering extends React.Component {
 
   renderContact(contact) {
     return (
-      <View style={styles.media}>
-        <View style={styles.mediaBody}>
-          <Text>{contact.label}</Text>
-        </View>
+      <View style={styles.listItem}>
+        <Text>{contact.label}</Text>
       </View>
     );
   }
@@ -142,37 +149,37 @@ class PostGathering extends React.Component {
 
         <View style={styles.navigationBar}>
           <TouchableOpacity onPress={this.props.navigator.pop} style={styles.navigationBarItem}>
-            <Text style={{color: colors.white}}>&lt; Back</Text>
+            <Icon name='fontawesome|chevron-left' size={14} color={colors.white} style={styles.icon} />
+            <Text style={{color: colors.white}}>Back</Text>
           </TouchableOpacity>
           <Text style={[styles.navigationBarHeading, { color: colors.white}]}>New Gathering</Text>
           <View style={styles.navigationBarItem}></View>
         </View>
 
         <ScrollView
+          ref='scrollView'
           contentInset={{top:0}}
           automaticallyAdjustContentInsets={false}
         >
 
           <View style={styles.heading}>
-            <Text style={styles.headingText}>Title</Text>
-            <Text style={styles.subtext}>Just a simple way to refer to the gathering</Text>
+            <Text style={styles.headingText}>What's up?</Text>
+            <Text style={styles.subtext}>Choose a simple title we can use to refer to your gathering</Text>
           </View>
-          <View style={styles.formGroup}>
-            <View style={styles.inputContainer}>
-              <TextInput
-                placeholder="Title"
-                onChangeText={(text) => this.setState({ name: text })}
-                value={this.state.name}
-                style={styles.textInput}
-              />
-            </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Title"
+              onChangeText={(text) => this.setState({ name: text })}
+              value={this.state.name}
+              style={styles.textInput}
+            />
           </View>
 
           <View style={styles.heading}>
             <Text style={styles.headingText}>Invite list</Text>
             <Text style={styles.subtext}>Who should know about it?</Text>
           </View>
-          <View style={styles.formGroup}>
+          <View>
             {this.renderInviteList()}
           </View>
 
@@ -180,7 +187,7 @@ class PostGathering extends React.Component {
             <Text style={styles.headingText}>Time and place</Text>
           </View>
 
-          <View style={[styles.formGroup, styles.where]}>
+          <View style={styles.where}>
             <TouchableOpacity style={[styles.buttonAlternate, { flex: 1 }]}>
               <View style={styles.center}>
                 <Image
@@ -230,24 +237,24 @@ class PostGathering extends React.Component {
               This will appear as the first message from you in the gathering's message stream, and will be included in any invite notifications (if you choose to send them)
             </Text>
           </View>
-          <View style={styles.formGroup}>
-            <View style={styles.inputContainer}>
-              <TextInput
-                placeholder="Initial message"
-                onChangeText={(text) => this.setState({ description: text })}
-                value={this.state.description}
-                multiline={true}
-                style={[styles.textInput, styles.initialMessage]}
-              />
-            </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              ref='initial'
+              placeholder="Initial message"
+              onChangeText={(text) => this.setState({ description: text })}
+              value={this.state.description}
+              multiline={true}
+              onFocus={this.scrollIntoView.bind(this, 'initial')}
+              style={[styles.textInput, styles.initialMessage]}
+            />
           </View>
 
         </ScrollView>
 
         <View style={{justifyContent: 'flex-end'}}>
           <TouchableOpacity onPress={this.handleSubmit.bind(this)} style={[styles.buttonPrimary, styles.buttonBlock]}>
-            <Icon name='fontawesome|rocket' size={14} color={colors.white} style={styles.icon} />
-            <Text style={{color: colors.white}}>Blast off!</Text>
+            <Icon name='fontawesome|rocket' size={20} color={colors.white} style={[styles.icon, { marginRight: 5 }]} />
+            <Text style={{color: colors.white, fontSize: 18}}>Blast off!</Text>
           </TouchableOpacity>
         </View>
 
