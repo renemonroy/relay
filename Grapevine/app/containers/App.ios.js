@@ -35,6 +35,7 @@ class App extends React.Component {
       <Navigator
         sceneStyle={styles.container}
         renderScene={this.renderScene.bind(this)}
+        configureScene={(route) => route.transition || Navigator.SceneConfigs.FloatFromRight}
         initialRoute={{
           component: Scenes.Auth
         }}

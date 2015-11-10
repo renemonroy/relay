@@ -1,12 +1,13 @@
 var _ = require('underscore');
 var React = require('react-native');
 var {
+  Navigator,
   ActivityIndicatorIOS,
   StyleSheet,
   Text,
   View,
   Image,
-  TouchableOpacity,
+  TouchableOpacity
 } = React;
 var {
   Icon
@@ -66,6 +67,7 @@ class Welcome extends React.Component {
 
   handleTapNewGathering() {
     this.props.navigator.push({
+      transition: Navigator.SceneConfigs.FloatFromBottom,
       component: PostGathering
     });
   }
@@ -89,26 +91,23 @@ class Welcome extends React.Component {
       );
     } else {
       body = (
-        <View>
-          <TouchableOpacity onPress={this.handleTapNewGathering.bind(this)} style={styles.newGathering}>
-            <Icon name='fontawesome|plus' size={14} color={colors.blue} style={styles.icon} />
-            <Text style={{color: colors.blue}}>New Gathering</Text>
-          </TouchableOpacity>
-          <MyFeed navigator={this.props.navigator} myFeed={this.props.myFeed.items} />
-        </View>
+        <MyFeed navigator={this.props.navigator} myFeed={this.props.myFeed.items} />
       );
     }
 
     return (
       <View style={{flex: 1}}>
         <View style={styles.navigationBar}>
-          <TouchableOpacity style={styles.navigationBarItem}>
-            <Icon name='fontawesome|bars' size={20} color={colors.offBlack} style={styles.icon} />
-          </TouchableOpacity>
+          <View style={styles.navigationBarItem}></View>
           <Text style={styles.navigationBarHeading}>Planet</Text>
           <View style={styles.navigationBarItem}></View>
         </View>
         {body}
+        <View style={styles.tabBarContainer}>
+          <TouchableOpacity onPress={this.handleTapNewGathering.bind(this)} style={styles.tabBar}>
+            <Icon name='fontawesome|plus-circle' size={60} color={colors.blue} style={styles.plusIcon} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -131,11 +130,17 @@ var styles = StyleSheet.create({
   splashInfo: {
     marginBottom: 10
   },
-  newGathering: {
-    ...globalStyles.buttonAlternate,
-    ...globalStyles.buttonBlock,
-    ...globalStyles.listItem,
-    justifyContent: 'flex-start'
+  tabBarContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  tabBar: {
+    padding: 3
+  },
+  plusIcon: {
+    width: 60,
+    height: 60
   }
 });
 

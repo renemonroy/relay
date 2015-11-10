@@ -149,8 +149,7 @@ class PostGathering extends React.Component {
 
         <View style={styles.navigationBar}>
           <TouchableOpacity onPress={this.props.navigator.pop} style={styles.navigationBarItem}>
-            <Icon name='fontawesome|chevron-left' size={14} color={colors.white} style={styles.icon} />
-            <Text style={{color: colors.white}}>Back</Text>
+            <Text style={{color: colors.white}}>Cancel</Text>
           </TouchableOpacity>
           <Text style={[styles.navigationBarHeading, { color: colors.white}]}>New Gathering</Text>
           <View style={styles.navigationBarItem}></View>
