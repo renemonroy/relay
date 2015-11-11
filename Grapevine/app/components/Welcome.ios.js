@@ -21,7 +21,7 @@ var globalStyles = require('../styles/global');
 
 class MyFeed extends React.Component {
 
-  handleSelectGathering(gathering) {
+  generateHandleTapGathering(gathering) {
     return () => {
       this.props.navigator.push({
         component: ViewGathering,
@@ -37,14 +37,21 @@ class MyFeed extends React.Component {
       <View>
         {this.props.myFeed.map((gathering) => {
           return (
-            <TouchableOpacity style={styles.mediaItem} key={gathering._localId} onPress={this.handleSelectGathering(gathering)}>
+            <TouchableOpacity key={gathering._localId} onPress={this.generateHandleTapGathering(gathering)} style={[styles.listItem, {padding: 0}]}>
               <Image
                 source={{uri: gathering.get('image')}}
-                style={{width: 80, height: 80}}
+                style={{width: 100, height: 100}}
               />
-              <View style={styles.mediaBody}>
+              <View style={[styles.mediaBody, {flex: 1}]}>
                 <Text style={styles.mediaHeading}>{gathering.get('name')}</Text>
-                <Text>Initiator: {gathering.get('initiator').get('firstName')}</Text>
+                <Text>{gathering.get('initiator').get('firstName')} initiated</Text>
+                <Text style={{color: colors.gray, fontStyle: 'italic'}}>2 going</Text>
+                <Text style={{color: colors.gray, fontStyle: 'italic'}}>1 might go</Text>
+              </View>
+              <View style={{flex: 0, paddingHorizontal: 20, alignItems: 'center', alignSelf: 'center'}}>
+                <Text style={{fontSize: 28}}>11</Text>
+                <Text>Nov</Text>
+                <Text style={{color: colors.gray}}>1pm</Text>
               </View>
             </TouchableOpacity>
           );
@@ -61,9 +68,9 @@ class Welcome extends React.Component {
     this.props.requestMyFeed();
   }
 
-  componentDidMount() {
-    this.handleTapNewGathering();
-  }
+  // componentDidMount() {
+  //   this.handleTapNewGathering();
+  // }
 
   handleTapUser() {
     console.log('manage profile');

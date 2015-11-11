@@ -26,7 +26,7 @@ var styles = {
     width: 64,
     height: 64
   },
-  iconButton: {
+  iconLabel: {
     marginRight: 4
   },
 
@@ -108,6 +108,7 @@ var styles = {
   },
 
   mediaBody: {
+    flex: 1,
     padding: 10
   },
   mediaHeading: {
@@ -160,11 +161,6 @@ Object.assign(styles, {
   textInput: {
     ...styles.input,
     fontSize: 18
-  },
-
-  mediaItem: {
-    ...styles.listItem,
-    padding: 0
   },
 
   listItemHeading: {

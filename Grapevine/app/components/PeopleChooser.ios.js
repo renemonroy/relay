@@ -175,7 +175,7 @@ class PeopleChooser extends React.Component {
         <TouchableOpacity
           onPress={this.handleAddCustom.bind(this)}
           style={[isValid ? styles.button : styles.buttonDisabled, styles.buttonBlock]}>
-          <Icon name='fontawesome|plus' size={16} color={colors.white} style={[styles.icon, styles.iconButton]} />
+          <Icon name='fontawesome|plus' size={16} color={colors.white} style={[styles.icon, styles.iconLabel]} />
           <Text style={{color: colors.offWhite, marginRight: 5}}>Add phone number</Text>
           <Text style={{color: colors.offWhite, fontWeight: 'bold'}}>
             {formatPhoneNumber(this.state.search)}
@@ -188,7 +188,7 @@ class PeopleChooser extends React.Component {
         <TouchableOpacity
           onPress={this.handleAddCustom.bind(this)}
           style={[isValid ? styles.button : styles.buttonDisabled, styles.buttonBlock]}>
-          <Icon name='fontawesome|plus' size={16} color={colors.white} style={[styles.icon, styles.iconButton]} />
+          <Icon name='fontawesome|plus' size={16} color={colors.white} style={[styles.icon, styles.iconLabel]} />
           <Text style={{color: colors.offWhite, marginRight: 5}}>Add email</Text>
           <Text style={{color: colors.offWhite, fontWeight: 'bold'}}>
             {this.state.search}

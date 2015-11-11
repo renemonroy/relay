@@ -170,7 +170,7 @@ class NewGathering extends React.Component {
             </View>
             <TouchableOpacity
               onPress={() => { this.setState({ showPeopleChooserHelp: true })}}
-              style={{alignSelf: 'center'}}
+              style={{padding: 10, alignSelf: 'center'}}
             >
               <Icon name='fontawesome|info-circle' size={16} color={colors.offBlack} style={styles.icon} />
             </TouchableOpacity>
