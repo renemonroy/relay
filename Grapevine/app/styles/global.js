@@ -15,8 +15,18 @@ var styles = {
   },
 
   icon: {
-    width: 20,
-    height: 20
+    width: 16,
+    height: 16
+  },
+
+  iconMedium: {
+    width: 32,
+    height: 32
+  },
+
+  iconLarge: {
+    width: 64,
+    height: 64
   },
 
   heading: {

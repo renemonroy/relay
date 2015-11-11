@@ -40,10 +40,6 @@ class PostGathering extends React.Component {
     }
   }
 
-  // componentDidMount() {
-  //   this.handleTapAddPeople();
-  // }
-
   // componentWillUpdate(nextProps, nextState) {
   //   console.log('componentDidUpdate', nextProps.keyboardSpace, this.props.keyboardSpace)
   //   if (nextProps.keyboardSpace !== this.props.keyboardSpace) {
@@ -240,7 +236,7 @@ class PostGathering extends React.Component {
 
         <View style={{justifyContent: 'flex-end'}}>
           <TouchableOpacity onPress={this.handleSubmit.bind(this)} style={[styles.buttonPrimary, styles.buttonBlock]}>
-            <Icon name='fontawesome|rocket' size={20} color={colors.white} style={[styles.icon, { marginRight: 5 }]} />
+            <Icon name='fontawesome|rocket' size={16} color={colors.white} style={[styles.icon, { marginRight: 5 }]} />
             <Text style={{color: colors.white, fontSize: 18}}>Publish</Text>
           </TouchableOpacity>
         </View>

@@ -61,15 +61,19 @@ class Welcome extends React.Component {
     this.props.requestMyFeed();
   }
 
-  // componentDidMount() {
-  //   this.handleTapNewGathering();
-  // }
+  handleTapUser() {
+    console.log('manage profile');
+  }
 
   handleTapNewGathering() {
     this.props.navigator.push({
       transition: Navigator.SceneConfigs.FloatFromBottom,
       component: PostGathering
     });
+  }
+
+  handleTapContacts() {
+    console.log('manage contacts');
   }
 
   render() {
@@ -103,9 +107,15 @@ class Welcome extends React.Component {
           <View style={styles.navigationBarItem}></View>
         </View>
         {body}
-        <View style={styles.tabBarContainer}>
-          <TouchableOpacity onPress={this.handleTapNewGathering.bind(this)} style={styles.tabBar}>
-            <Icon name='fontawesome|plus-circle' size={60} color={colors.blue} style={styles.plusIcon} />
+        <View style={styles.tabBar}>
+          <TouchableOpacity onPress={this.handleTapUser.bind(this)} style={styles.tabBarItem}>
+            <Icon name='fontawesome|user' size={32} color={colors.offBlack} style={styles.iconMedium} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleTapNewGathering.bind(this)} style={styles.tabBarItem}>
+            <Icon name='fontawesome|plus-circle' size={64} color={colors.blue} style={styles.iconLarge} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleTapContacts.bind(this)} style={styles.tabBarItem}>
+            <Icon name='fontawesome|users' size={32} color={colors.offBlack} style={styles.iconMedium} />
           </TouchableOpacity>
         </View>
       </View>
@@ -130,17 +140,20 @@ var styles = StyleSheet.create({
   splashInfo: {
     marginBottom: 10
   },
-  tabBarContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
+  tabBar: {
+    backgroundColor: colors.white,
+    borderColor: colors.lightGray,
+    borderTopWidth: 1,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: 'center'
   },
-  tabBar: {
+  tabBarItem: {
     padding: 3
-  },
-  plusIcon: {
-    width: 60,
-    height: 60
   }
 });
 
