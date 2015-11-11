@@ -10,14 +10,17 @@ var {
   Modal,
   ScrollView
 } = React;
+
 var {
   Icon
 } = require('react-native-icons');
 
+var Overlay = require('react-native-overlay');
+
 var { connect } = require('react-redux/native');
 
 var {
-  postGathering
+  createGathering
 } = require('../actions');
 
 var colors = require('../styles/colors');
@@ -25,18 +28,61 @@ var globalStyles = require('../styles/global');
 
 var PeopleChooser = require('./PeopleChooser');
 
-class PostGathering extends React.Component {
+class PeopleChooserHelpOverlay extends React.Component {
+
+  render() {
+    return (
+      <Overlay isVisible={this.props.isVisible}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+
+            <View style={styles.modalHeader}>
+              <Text style={styles.headingText}>You may add people to your gathering in a few different ways</Text>
+            </View>
+
+            <View style={styles.modalBody}>
+              <Text style={styles.paragraph}>
+                • If adding a registered Planet user, the gathering will simply appear in his or her feed
+              </Text>
+              <Text style={styles.paragraph}>
+                • Optionally, you can choose to have them receive an app notification as well
+              </Text>
+              <Text style={styles.paragraph}>
+                • People added by phone number will receive a text message with gathering details (preview)
+              </Text>
+              <Text style={styles.paragraph}>
+                • People added by email address will receive an email with gathering details (preview)
+              </Text>
+              <Text style={styles.paragraph}>
+                • Anyone added will be able to access a private web page with gathering details (preview)
+              </Text>
+            </View>
+
+            <TouchableOpacity onPress={this.props.onDone} style={styles.buttonAlternate}>
+              <Text>Got it!</Text>
+            </TouchableOpacity>
+
+          </View>
+        </View>
+      </Overlay>
+    );
+  }
+
+}
+
+PeopleChooserHelpOverlay.defaultProps = {
+  isVisible: false
+};
+
+class NewGathering extends React.Component {
 
   constructor() {
     super();
-    this.inviteListDS = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
     this.state = {
       name: "",
       description: "",
       inviteList: [],
-      showPeopleChooser: false
+      showPeopleChooserHelp: false
     }
   }
 
@@ -48,22 +94,9 @@ class PostGathering extends React.Component {
   //   }
   // }
 
-  handleTapAddPeople() {
+  handleChangePeople(inviteList) {
     this.setState({
-      showPeopleChooser: true
-    });
-  }
-
-  handlePeopleChooserCancel() {
-    this.setState({
-      showPeopleChooser: false
-    });
-  }
-
-  handlePeopleChooserDone(inviteList) {
-    this.setState({
-      inviteList: inviteList,
-      showPeopleChooser: false
+      inviteList: inviteList
     });
   }
 
@@ -75,7 +108,7 @@ class PostGathering extends React.Component {
       return;
     }
 
-    this.props.postGathering({
+    this.props.createGathering({
       initiator: this.props.currentUser,
       name: this.state.name,
       description: this.state.description
@@ -93,45 +126,14 @@ class PostGathering extends React.Component {
     );
   }
 
-  renderInviteList() {
-    if (this.state.inviteList.length) {
-      return (
-        <View>
-          <ListView
-            dataSource={this.inviteListDS.cloneWithRows(this.state.inviteList)}
-            renderRow={this.renderContact.bind(this)}
-            style={styles.inviteListContent}
-          />
-          <TouchableOpacity onPress={this.handleTapAddPeople.bind(this)} style={[styles.button, styles.buttonBlock]}>
-            <Icon name='fontawesome|edit' size={14} color={colors.white} style={styles.icon} />
-            <Text style={{color: colors.white}}>Edit</Text>
-          </TouchableOpacity>
-        </View>
-      );
-    } else {
-      return (
-        <TouchableOpacity onPress={this.handleTapAddPeople.bind(this)} style={[styles.button, styles.buttonBlock]}>
-          <Icon name='fontawesome|plus' size={14} color={colors.white} style={styles.icon} />
-          <Text style={{color: colors.white}}>Add people</Text>
-        </TouchableOpacity>
-      );
-    }
-  }
-
   render() {
     return (
       <View style={{flex: 1}}>
 
-        <Modal
-          animated={true}
-          visible={this.state.showPeopleChooser}
-        >
-          <PeopleChooser
-            initialChosenPeople={[...this.state.inviteList]}
-            onCancel={this.handlePeopleChooserCancel.bind(this)}
-            onDone={this.handlePeopleChooserDone.bind(this)}
-          />
-        </Modal>
+        <PeopleChooserHelpOverlay
+          isVisible={this.state.showPeopleChooserHelp}
+          onDone={() => { this.setState({ showPeopleChooserHelp: false })}}
+        />
 
         <View style={styles.navigationBar}>
           <TouchableOpacity onPress={this.props.navigator.pop} style={styles.navigationBarItem}>
@@ -145,6 +147,7 @@ class PostGathering extends React.Component {
           ref='scrollView'
           contentInset={{top: 0}}
           automaticallyAdjustContentInsets={false}
+          keyboardShouldPersistTaps={true}
         >
 
           <View style={styles.heading}>
@@ -160,13 +163,21 @@ class PostGathering extends React.Component {
             />
           </View>
 
-          <View style={styles.heading}>
-            <Text style={styles.headingText}>Invite list</Text>
-            <Text style={styles.subtext}>Who should know about it?</Text>
+          <View style={[styles.heading, styles.infoHeading]}>
+            <View style={{flex: 1}}>
+              <Text style={styles.headingText}>Who should know about it?</Text>
+              <Text style={styles.subtext}>You may add registered Planet users, address book contacts, phone numbers, and emails</Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => { this.setState({ showPeopleChooserHelp: true })}}
+              style={{alignSelf: 'center'}}
+            >
+              <Icon name='fontawesome|info-circle' size={16} color={colors.offBlack} style={styles.icon} />
+            </TouchableOpacity>
           </View>
-          <View>
-            {this.renderInviteList()}
-          </View>
+          <PeopleChooser
+            onChange={this.handleChangePeople.bind(this)}
+          />
 
           <View style={styles.heading}>
             <Text style={styles.headingText}>Time and place</Text>
@@ -253,11 +264,12 @@ var styles = StyleSheet.create({
     ...globalStyles.navigationBar,
     backgroundColor: colors.blue
   },
+  infoHeading: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   initialMessage: {
     height: 100
-  },
-  inviteList: {
-    justifyContent: 'center'
   },
   where: {
     flexDirection: 'row',
@@ -270,5 +282,5 @@ var styles = StyleSheet.create({
 });
 
 module.exports = connect(null, {
-  postGathering
-})(PostGathering);
+  createGathering
+})(NewGathering);

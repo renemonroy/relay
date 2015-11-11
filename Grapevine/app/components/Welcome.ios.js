@@ -13,7 +13,7 @@ var {
   Icon
 } = require('react-native-icons');
 
-var PostGathering = require('./PostGathering');
+var NewGathering = require('./NewGathering');
 var ViewGathering = require('./ViewGathering');
 
 var colors = require('../styles/colors');
@@ -61,6 +61,10 @@ class Welcome extends React.Component {
     this.props.requestMyFeed();
   }
 
+  componentDidMount() {
+    this.handleTapNewGathering();
+  }
+
   handleTapUser() {
     console.log('manage profile');
   }
@@ -68,7 +72,7 @@ class Welcome extends React.Component {
   handleTapNewGathering() {
     this.props.navigator.push({
       transition: Navigator.SceneConfigs.FloatFromBottom,
-      component: PostGathering
+      component: NewGathering
     });
   }
 

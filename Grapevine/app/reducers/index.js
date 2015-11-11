@@ -6,7 +6,7 @@ var {
   REQUEST_MY_FEED,
   RECEIVE_MY_FEED,
   RECEIVE_CONTACTS,
-  POST_GATHERING_SUCCESS
+  CREATE_GATHERING_SUCCESS
 } = require('../actions');
 
 function currentUser(state=null, action) {
@@ -34,7 +34,7 @@ function myFeed(state={
         isFetching: false,
         items: action.gatherings.slice(0)
       });
-    case POST_GATHERING_SUCCESS:
+    case CREATE_GATHERING_SUCCESS:
       return Object.assign({}, state, {
         items: [...state.items, action.gathering]
       });

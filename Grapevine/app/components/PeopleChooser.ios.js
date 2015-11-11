@@ -11,6 +11,10 @@ var {
   ListView
 } = React;
 
+var {
+  Icon
+} = require('react-native-icons');
+
 var Swipeout = require('react-native-swipeout');
 
 var { connect } = require('react-redux/native');
@@ -89,10 +93,12 @@ class PeopleChooser extends React.Component {
         }]
       };
     }
+    var chosenPeople = [...this.state.chosenPeople, contact];
     this.setState({
-      chosenPeople: [...this.state.chosenPeople, contact],
+      chosenPeople: chosenPeople,
       search: ''
     });
+    this.props.onChange(chosenPeople);
   }
 
   handlePressContact(contact) {
@@ -103,26 +109,26 @@ class PeopleChooser extends React.Component {
     if (contact.familyName) {
       names.push(contact.familyName);
     }
+    var chosenPeople = [...this.state.chosenPeople, {
+      ...contact,
+      id: contact.recordID,
+      label: names.join(' ')
+    }];
     this.setState({
-      chosenPeople: [...this.state.chosenPeople, {
-        ...contact,
-        id: contact.recordID,
-        label: names.join(' ')
-      }],
+      chosenPeople: chosenPeople,
       search: ''
     });
+    this.props.onChange(chosenPeople);
   }
 
   handleRemoveChosenPerson(contact) {
-    this.setState({
-      chosenPeople: _.reject(this.state.chosenPeople, (chosenPerson) => {
-        return chosenPerson.id === contact.id;
-      })
+    var chosenPeople = _.reject(this.state.chosenPeople, (chosenPerson) => {
+      return chosenPerson.id === contact.id;
     });
-  }
-
-  handlePressDone() {
-    this.props.onDone(this.state.chosenPeople);
+    this.setState({
+      chosenPeople: chosenPeople
+    });
+    this.props.onChange(chosenPeople);
   }
 
   contactMatchesSearch(contact) {
@@ -160,34 +166,6 @@ class PeopleChooser extends React.Component {
     );
   }
 
-  renderChosenPeople() {
-    var peopleString = this.state.chosenPeople.length === 1 ? 'person' : 'people';
-
-    if (this.state.chosenPeople.length) {
-      return (
-        <View style={styles.chosenPeopleList}>
-          <View style={styles.listItemHeading}>
-            <Text>{this.state.chosenPeople.length} {peopleString}</Text>
-          </View>
-          <ListView
-            dataSource={this.chosenPeopleDS.cloneWithRows(this.state.chosenPeople)}
-            renderRow={this.renderChosenRow.bind(this)}
-            automaticallyAdjustContentInsets={false}
-            keyboardShouldPersistTaps={true}
-          />
-        </View>
-      );
-    } else {
-      return (
-        <View style={styles.chosenPeopleList}>
-          <View style={styles.listItemHeading}>
-            <Text>Nobody added yet</Text>
-          </View>
-        </View>
-      );
-    }
-  }
-
   renderPromptAddCustom() {
     var isValid;
 
@@ -197,6 +175,7 @@ class PeopleChooser extends React.Component {
         <TouchableOpacity
           onPress={this.handleAddCustom.bind(this)}
           style={[isValid ? styles.button : styles.buttonDisabled, styles.buttonBlock]}>
+          <Icon name='fontawesome|plus' size={16} color={colors.white} style={[styles.icon, styles.iconButton]} />
           <Text style={{color: colors.offWhite, marginRight: 5}}>Add phone number</Text>
           <Text style={{color: colors.offWhite, fontWeight: 'bold'}}>
             {formatPhoneNumber(this.state.search)}
@@ -209,6 +188,7 @@ class PeopleChooser extends React.Component {
         <TouchableOpacity
           onPress={this.handleAddCustom.bind(this)}
           style={[isValid ? styles.button : styles.buttonDisabled, styles.buttonBlock]}>
+          <Icon name='fontawesome|plus' size={16} color={colors.white} style={[styles.icon, styles.iconButton]} />
           <Text style={{color: colors.offWhite, marginRight: 5}}>Add email</Text>
           <Text style={{color: colors.offWhite, fontWeight: 'bold'}}>
             {this.state.search}
@@ -238,39 +218,31 @@ class PeopleChooser extends React.Component {
 
   render() {
     return (
-      <View style={styles.screen}>
+      <View>
 
-        <View style={styles.chosenPeople}>
-          {this.renderChosenPeople()}
+        <ListView
+          dataSource={this.chosenPeopleDS.cloneWithRows(this.state.chosenPeople)}
+          renderRow={this.renderChosenRow.bind(this)}
+          automaticallyAdjustContentInsets={false}
+          keyboardShouldPersistTaps={true}
+        />
+
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Search by name, email, or phone number"
+            autoCapitalize='none'
+            autoCorrect={false}
+            clearButtonMode='always'
+            returnKeyType='done'
+            onChangeText={(text) => this.setState({ search: text })}
+            value={this.state.search}
+            style={styles.textInput}
+          />
         </View>
 
-        <View style={styles.contactList}>
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Enter a name, email, or phone number"
-              autoCapitalize='none'
-              autoCorrect={false}
-              clearButtonMode='always'
-              returnKeyType='done'
-              onChangeText={(text) => this.setState({ search: text })}
-              value={this.state.search}
-              style={styles.textInput}
-            />
-          </View>
-          {this.renderPromptAddCustom()}
-          {this.renderContactList()}
-        </View>
+        {this.renderPromptAddCustom()}
 
-        <View style={styles.actions}>
-          <TouchableOpacity
-            onPress={this.props.onCancel}
-            style={[styles.actionButton, styles.buttonAlternate]}>
-            <Text>Cancel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.handlePressDone.bind(this)} style={styles.actionButton}>
-            <Text style={{color: colors.offWhite}}>Done</Text>
-          </TouchableOpacity>
-        </View>
+        {this.renderContactList()}
 
       </View>
     );
@@ -278,32 +250,12 @@ class PeopleChooser extends React.Component {
 
 }
 
+PeopleChooser.defaultProps = {
+  initialChosenPeople: []
+};
+
 var styles = StyleSheet.create({
-  ...globalStyles,
-  screen: {
-    paddingTop: 20,
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: colors.white
-  },
-  chosenPeople: {
-    flex: 0.3
-  },
-  chosenPeopleList: {
-    flex: 1
-  },
-  contactList: {
-    flex: 0.7
-  },
-  actions: {
-    flex: 0,
-    flexDirection: 'row',
-    justifyContent: 'flex-end'
-  },
-  actionButton: {
-    ...globalStyles.button,
-    marginLeft: 10
-  }
+  ...globalStyles
 });
 
 module.exports = connect((state) => {

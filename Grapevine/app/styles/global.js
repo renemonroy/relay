@@ -18,15 +18,16 @@ var styles = {
     width: 16,
     height: 16
   },
-
   iconMedium: {
     width: 32,
     height: 32
   },
-
   iconLarge: {
     width: 64,
     height: 64
+  },
+  iconButton: {
+    marginRight: 4
   },
 
   heading: {
@@ -39,6 +40,10 @@ var styles = {
   subtext: {
     fontSize: 10,
     color: colors.gray
+  },
+
+  paragraph: {
+    lineHeight: 24
   },
 
   placeholder: {
@@ -107,6 +112,31 @@ var styles = {
   },
   mediaHeading: {
     fontSize: 18
+  },
+
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)'
+  },
+  modalContent: {
+    backgroundColor: colors.lightGray,
+    borderRadius: 5,
+    shadowColor: colors.black,
+    shadowOffset: {
+      width: 1,
+      height: 1
+    },
+    shadowOpacity: 0.4,
+    shadowRadius: 6,
+    padding: 20,
+    marginHorizontal: 20
+  },
+  modalHeader: {
+    marginBottom: 10
+  },
+  modalBody: {
+    marginBottom: 20
   }
 };
 

@@ -20,8 +20,8 @@ var RECEIVE_MY_FEED = exports.RECEIVE_MY_FEED = 'RECEIVE_MY_FEED';
 var REQUEST_CONTACTS = exports.REQUEST_CONTACTS = 'REQUEST_CONTACTS';
 var RECEIVE_CONTACTS = exports.RECEIVE_CONTACTS = 'RECEIVE_CONTACTS';
 
-var POST_GATHERING = exports.POST_GATHERING = 'POST_GATHERING';
-var POST_GATHERING_SUCCESS = exports.POST_GATHERING_SUCCESS = 'POST_GATHERING_SUCCESS';
+var CREATE_GATHERING = exports.CREATE_GATHERING = 'CREATE_GATHERING';
+var CREATE_GATHERING_SUCCESS = exports.CREATE_GATHERING_SUCCESS = 'CREATE_GATHERING_SUCCESS';
 
 function requestCurrentUser() {
   return {
@@ -61,15 +61,15 @@ function receiveContacts(contacts) {
     contacts: contacts
   };
 }
-function postGathering(data) {
+function createGathering(data) {
   return {
-    type: POST_GATHERING,
+    type: CREATE_GATHERING,
     data: data
   };
 }
-function postGatheringSuccess(gathering) {
+function createGatheringSuccess(gathering) {
   return {
-    type: POST_GATHERING_SUCCESS,
+    type: CREATE_GATHERING_SUCCESS,
     gathering: gathering
   };
 }
@@ -177,11 +177,11 @@ exports.requestContacts = () => {
   }
 }
 
-exports.postGathering = (data) => {
+exports.createGathering = (data) => {
   return dispatch => {
-    dispatch(postGathering(data));
+    dispatch(createGathering(data));
     setTimeout(function() {
-      dispatch(postGatheringSuccess(new Gathering(data)));
+      dispatch(createGatheringSuccess(new Gathering(data)));
     }, 100);
   }
 }
