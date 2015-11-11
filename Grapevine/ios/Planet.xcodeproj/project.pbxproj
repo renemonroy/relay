@@ -509,7 +509,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.planet.Planet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.planet.Planet;
 				PRODUCT_NAME = Planet;
 			};
 			name = Release;
@@ -613,7 +613,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.planet.Planet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.planet.Planet;
 				PRODUCT_NAME = Planet;
 			};
 			name = Debug;

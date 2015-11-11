@@ -7,9 +7,8 @@ var {
   TouchableOpacity,
   TextInput,
   ListView,
-  ScrollView,
   Modal,
-  DeviceEventEmitter
+  ScrollView
 } = React;
 var {
   Icon
@@ -41,14 +40,17 @@ class PostGathering extends React.Component {
     }
   }
 
-  componentDidMount() {
-    // this.handleTapAddPeople();
-    // http://ollie.relph.me/blog/react-native-0-11-keyboard-display-events/
-    // https://medium.com/man-moon/writing-modern-react-native-ui-e317ff956f02
-    // DeviceEventEmitter.addListener('keyboardWillShow', (e) => {
+  // componentDidMount() {
+  //   this.handleTapAddPeople();
+  // }
 
-    // });
-  }
+  // componentWillUpdate(nextProps, nextState) {
+  //   console.log('componentDidUpdate', nextProps.keyboardSpace, this.props.keyboardSpace)
+  //   if (nextProps.keyboardSpace !== this.props.keyboardSpace) {
+  //     var scrollResponder = this.refs.scrollView.getScrollResponder();
+  //     scrollResponder.scrollResponderScrollTo(0, nextProps.keyboardSpace);
+  //   }
+  // }
 
   handleTapAddPeople() {
     this.setState({
@@ -67,18 +69,6 @@ class PostGathering extends React.Component {
       inviteList: inviteList,
       showPeopleChooser: false
     });
-  }
-
-  // https://rnplay.org/apps/P774EQ
-  scrollIntoView(refName) {
-    setTimeout(() => {
-      var scrollResponder = this.refs.scrollView.getScrollResponder();
-      scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-        React.findNodeHandle(this.refs[refName]),
-        110, // additionalOffset
-        true
-      );
-    }, 50);
   }
 
   handleSubmit() {
@@ -151,13 +141,13 @@ class PostGathering extends React.Component {
           <TouchableOpacity onPress={this.props.navigator.pop} style={styles.navigationBarItem}>
             <Text style={{color: colors.white}}>Cancel</Text>
           </TouchableOpacity>
-          <Text style={[styles.navigationBarHeading, { color: colors.white}]}>New Gathering</Text>
+          <Text style={[styles.navigationBarHeading, {color: colors.white}]}>New Gathering</Text>
           <View style={styles.navigationBarItem}></View>
         </View>
 
         <ScrollView
           ref='scrollView'
-          contentInset={{top:0}}
+          contentInset={{top: 0}}
           automaticallyAdjustContentInsets={false}
         >
 
@@ -238,12 +228,10 @@ class PostGathering extends React.Component {
           </View>
           <View style={styles.inputContainer}>
             <TextInput
-              ref='initial'
               placeholder="Initial message"
               onChangeText={(text) => this.setState({ description: text })}
               value={this.state.description}
               multiline={true}
-              onFocus={this.scrollIntoView.bind(this, 'initial')}
               style={[styles.textInput, styles.initialMessage]}
             />
           </View>
@@ -253,7 +241,7 @@ class PostGathering extends React.Component {
         <View style={{justifyContent: 'flex-end'}}>
           <TouchableOpacity onPress={this.handleSubmit.bind(this)} style={[styles.buttonPrimary, styles.buttonBlock]}>
             <Icon name='fontawesome|rocket' size={20} color={colors.white} style={[styles.icon, { marginRight: 5 }]} />
-            <Text style={{color: colors.white, fontSize: 18}}>Blast off!</Text>
+            <Text style={{color: colors.white, fontSize: 18}}>Publish</Text>
           </TouchableOpacity>
         </View>
 
@@ -268,9 +256,6 @@ var styles = StyleSheet.create({
   navigationBar: {
     ...globalStyles.navigationBar,
     backgroundColor: colors.blue
-  },
-  scrollContainer: {
-    flex: 1
   },
   initialMessage: {
     height: 100
