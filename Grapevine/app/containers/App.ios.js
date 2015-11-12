@@ -1,6 +1,5 @@
 var React = require('react-native');
 var {
-  StyleSheet,
   Navigator,
 } = React;
 
@@ -33,7 +32,7 @@ class App extends React.Component {
   render() {
     return (
       <Navigator
-        sceneStyle={styles.container}
+        sceneStyle={{flex: 1, backgroundColor: colors.offWhite}}
         renderScene={this.renderScene.bind(this)}
         configureScene={(route) => route.transition || Navigator.SceneConfigs.FloatFromRight}
         initialRoute={{
@@ -44,13 +43,6 @@ class App extends React.Component {
   }
 
 }
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.offWhite
-  }
-});
 
 function mapStateToProps(state) {
   return {

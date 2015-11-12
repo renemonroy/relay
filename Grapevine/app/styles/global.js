@@ -3,17 +3,6 @@ var Color = require('color');
 var colors = require('./colors');
 
 var styles = {
-
-  container: {
-    flex: 1
-  },
-
-  element: {
-    backgroundColor: colors.offWhite,
-    padding: 5,
-    marginBottom: 5
-  },
-
   icon: {
     width: 16,
     height: 16
@@ -147,7 +136,9 @@ Object.assign(styles, {
     backgroundColor: colors.white,
     borderColor: colors.lightGray,
     borderStyle: 'solid',
-    borderWidth: 1
+    borderWidth: 1,
+    paddingVertical: 9,
+    paddingHorizontal: 19,
   },
   buttonDisabled: {
     ...styles.button,

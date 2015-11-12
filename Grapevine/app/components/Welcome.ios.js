@@ -97,7 +97,7 @@ class Welcome extends React.Component {
               source={{uri: this.props.currentUser.get('picture')}}
               style={{width: 100, height: 100, marginBottom: 10}}
             />
-            <Text style={styles.splashInfo}>
+            <Text style={{marginBottom: 10}}>
               Welcome back, {this.props.currentUser.fullName()}
             </Text>
             <ActivityIndicatorIOS size='large' />
@@ -143,13 +143,11 @@ var styles = StyleSheet.create({
     alignItems: 'center'
   },
   splash: {
-    ...globalStyles.element,
+    backgroundColor: colors.offWhite,
+    padding: 5,
     flex: 0,
     alignItems: 'center',
     alignSelf: 'center'
-  },
-  splashInfo: {
-    marginBottom: 10
   },
   tabBar: {
     backgroundColor: colors.white,
