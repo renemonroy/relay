@@ -25,6 +25,7 @@ var {
 } = require('react-redux/native');
 
 var {
+  requestContacts,
   createGathering
 } = require('../actions');
 
@@ -142,6 +143,10 @@ class NewGathering extends React.Component {
       showLocationPicker: false,
       showDatePicker: false
     }
+  }
+
+  componentWillMount() {
+    this.props.requestContacts();
   }
 
   // componentWillUpdate(nextProps, nextState) {
@@ -290,6 +295,7 @@ class NewGathering extends React.Component {
           ref='scrollView'
           contentInset={{top: 0}}
           automaticallyAdjustContentInsets={false}
+          keyboardDismissMode='on-drag'
           keyboardShouldPersistTaps={true}
         >
 
@@ -298,7 +304,9 @@ class NewGathering extends React.Component {
               <TextInput
                 placeholder="What's up?"
                 placeholderTextColor={colors.gray}
+                returnKeyType='next'
                 onChangeText={(text) => this.setState({ title: text })}
+                onSubmitEditing={() => this.refs.peopleChooser.focus()}
                 value={this.state.title}
                 style={styles.input}
               />
@@ -308,6 +316,8 @@ class NewGathering extends React.Component {
 
           <View style={styles.formGroup}>
             <PeopleChooser
+              ref='peopleChooser'
+              contacts={this.props.contacts}
               onChange={this.handleChangePeople.bind(this)}
             />
             <View style={{flexDirection: 'row'}}>
@@ -394,6 +404,11 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = connect(null, {
+module.exports = connect((state) => {
+  return {
+    contacts: state.contacts
+  };
+}, {
+  requestContacts,
   createGathering
 })(NewGathering);

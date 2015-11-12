@@ -166,6 +166,9 @@ class LocationPicker extends React.Component {
         />
         <TextInput
           placeholder='Search for a location'
+          autoFocus={true}
+          autoCorrect={false}
+          autoCapitalize='none'
           returnKeyType='search'
           clearButtonMode='always'
           onChangeText={this.handleChangeQuery.bind(this)}

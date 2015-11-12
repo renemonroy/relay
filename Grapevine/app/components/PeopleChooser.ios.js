@@ -17,12 +17,6 @@ var {
 
 var Swipeout = require('react-native-swipeout');
 
-var { connect } = require('react-redux/native');
-
-var {
-  requestContacts
-} = require('../actions');
-
 var colors = require('../styles/colors');
 var globalStyles = require('../styles/global');
 
@@ -68,7 +62,10 @@ class PeopleChooser extends React.Component {
     this.setState({
       chosenPeople: [...this.props.initialChosenPeople]
     });
-    this.props.requestContacts();
+  }
+
+  focus() {
+    this.refs.search.focus();
   }
 
   handleAddCustom() {
@@ -229,6 +226,7 @@ class PeopleChooser extends React.Component {
 
         <View style={styles.inputContainer}>
           <TextInput
+            ref='search'
             placeholder="Who should know about it?"
             placeholderTextColor={colors.gray}
             autoCapitalize='none'
@@ -236,6 +234,7 @@ class PeopleChooser extends React.Component {
             clearButtonMode='always'
             returnKeyType='done'
             onChangeText={(text) => this.setState({ search: text })}
+            onSubmitEditing={this.props.onSubmitEditing}
             value={this.state.search}
             style={styles.input}
           />
@@ -259,10 +258,4 @@ var styles = StyleSheet.create({
   ...globalStyles
 });
 
-module.exports = connect((state) => {
-  return {
-    contacts: state.contacts
-  };
-}, {
-  requestContacts
-})(PeopleChooser);
+module.exports = PeopleChooser;
