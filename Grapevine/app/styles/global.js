@@ -51,6 +51,9 @@ var styles = {
     borderWidth: 0
   },
 
+  formGroup: {
+    marginBottom: 10
+  },
   inputContainer: {
     borderColor: colors.lightGray,
     borderStyle: 'solid',
@@ -60,7 +63,8 @@ var styles = {
   input: {
     height: 36,
     backgroundColor: colors.white,
-    padding: 10
+    padding: 10,
+    fontSize: 14
   },
 
   center: {
@@ -110,7 +114,7 @@ var styles = {
     backgroundColor: 'rgba(0, 0, 0, 0.4)'
   },
   modalContent: {
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.offWhite,
     borderRadius: 5,
     shadowColor: colors.black,
     shadowOffset: {
@@ -147,11 +151,6 @@ Object.assign(styles, {
   buttonPrimary: {
     ...styles.button,
     backgroundColor: colors.green
-  },
-
-  textInput: {
-    ...styles.input,
-    fontSize: 18
   },
 
   listItemHeading: {

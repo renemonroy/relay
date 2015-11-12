@@ -68,9 +68,9 @@ class Welcome extends React.Component {
     this.props.requestMyFeed();
   }
 
-  // componentDidMount() {
-  //   this.handleTapNewGathering();
-  // }
+  componentDidMount() {
+    this.handleTapNewGathering();
+  }
 
   handleTapUser() {
     console.log('manage profile');

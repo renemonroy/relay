@@ -229,14 +229,15 @@ class PeopleChooser extends React.Component {
 
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Search by name, email, or phone number"
+            placeholder="Who should know about it?"
+            placeholderTextColor={colors.gray}
             autoCapitalize='none'
             autoCorrect={false}
             clearButtonMode='always'
             returnKeyType='done'
             onChangeText={(text) => this.setState({ search: text })}
             value={this.state.search}
-            style={styles.textInput}
+            style={styles.input}
           />
         </View>
 
