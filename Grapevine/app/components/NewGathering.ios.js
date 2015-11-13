@@ -25,17 +25,17 @@ var {
 } = require('react-redux/native');
 
 var {
-  requestContacts,
+  requestPhoneContacts,
   createGathering
 } = require('../actions');
 
 var colors = require('../styles/colors');
 var globalStyles = require('../styles/global');
 
-var PeopleChooser = require('./PeopleChooser');
+var ContactsChooser = require('./ContactsChooser');
 var LocationPicker = require('./LocationPicker');
 
-class PeopleChooserHelpOverlay extends React.Component {
+class ContactsChooserHelpOverlay extends React.Component {
 
   render() {
     return (
@@ -77,7 +77,7 @@ class PeopleChooserHelpOverlay extends React.Component {
 
 }
 
-PeopleChooserHelpOverlay.defaultProps = {
+ContactsChooserHelpOverlay.defaultProps = {
   isVisible: false
 };
 
@@ -139,14 +139,14 @@ class NewGathering extends React.Component {
       inviteList: [],
       location: null,
       date: null,
-      showPeopleChooserHelp: false,
+      showContactsChooserHelp: false,
       showLocationPicker: false,
       showDatePicker: false
     }
   }
 
   componentWillMount() {
-    this.props.requestContacts();
+    this.props.requestPhoneContacts();
   }
 
   // componentWillUpdate(nextProps, nextState) {
@@ -157,7 +157,7 @@ class NewGathering extends React.Component {
   //   }
   // }
 
-  handleChangePeople(inviteList) {
+  handleChangeContacts(inviteList) {
     this.setState({
       inviteList: inviteList
     });
@@ -253,9 +253,9 @@ class NewGathering extends React.Component {
     return (
       <View style={{flex: 1}}>
 
-        <PeopleChooserHelpOverlay
-          isVisible={this.state.showPeopleChooserHelp}
-          onDone={() => { this.setState({ showPeopleChooserHelp: false })}}
+        <ContactsChooserHelpOverlay
+          isVisible={this.state.showContactsChooserHelp}
+          onDone={() => { this.setState({ showContactsChooserHelp: false })}}
         />
 
         <Modal
@@ -306,7 +306,7 @@ class NewGathering extends React.Component {
                 placeholderTextColor={colors.gray}
                 returnKeyType='next'
                 onChangeText={(text) => this.setState({ title: text })}
-                onSubmitEditing={() => this.refs.peopleChooser.focus()}
+                onSubmitEditing={() => this.refs.contactsChooser.focus()}
                 value={this.state.title}
                 style={styles.input}
               />
@@ -315,17 +315,17 @@ class NewGathering extends React.Component {
           </View>
 
           <View style={styles.formGroup}>
-            <PeopleChooser
-              ref='peopleChooser'
-              contacts={this.props.contacts}
-              onChange={this.handleChangePeople.bind(this)}
+            <ContactsChooser
+              ref='contactsChooser'
+              phoneContacts={this.props.phoneContacts}
+              onChange={this.handleChangeContacts.bind(this)}
             />
             <View style={{flexDirection: 'row'}}>
               <Text style={[styles.subtext, {flex: 0.9}]}>
                 Search for other Planet users, address book contacts, phone numbers, and email addresses
               </Text>
               <TouchableOpacity
-                onPress={() => { this.setState({ showPeopleChooserHelp: true })}}
+                onPress={() => { this.setState({ showContactsChooserHelp: true })}}
                 style={{flex: .1, padding: 5}}
               >
                 <View style={{padding: 5, borderRadius: 2, borderWidth: 1, borderColor: colors.lightGray, backgroundColor: colors.white, alignItems: 'center', alignSelf: 'center'}}>
@@ -406,9 +406,9 @@ var styles = StyleSheet.create({
 
 module.exports = connect((state) => {
   return {
-    contacts: state.contacts
+    phoneContacts: state.phoneContacts
   };
 }, {
-  requestContacts,
+  requestPhoneContacts,
   createGathering
 })(NewGathering);

@@ -5,7 +5,7 @@ var {
   LOG_OUT,
   REQUEST_MY_FEED,
   RECEIVE_MY_FEED,
-  RECEIVE_CONTACTS,
+  RECEIVE_PHONE_CONTACTS,
   CREATE_GATHERING_SUCCESS
 } = require('../actions');
 
@@ -43,10 +43,10 @@ function myFeed(state={
   }
 }
 
-function contacts(state=[], action) {
+function phoneContacts(state=[], action) {
   switch (action.type) {
-    case RECEIVE_CONTACTS:
-      return action.contacts;
+    case RECEIVE_PHONE_CONTACTS:
+      return action.phoneContacts;
     default:
       return state;
   }
@@ -55,7 +55,7 @@ function contacts(state=[], action) {
 var rootReducer = combineReducers({
   currentUser: currentUser,
   myFeed: myFeed,
-  contacts: contacts
+  phoneContacts: phoneContacts
 });
 
 module.exports = rootReducer;

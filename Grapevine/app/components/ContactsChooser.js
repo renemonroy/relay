@@ -42,25 +42,25 @@ function hasAtSign(str) {
   return str.indexOf('@') >= 0;
 }
 
-class PeopleChooser extends React.Component {
+class ContactsChooser extends React.Component {
 
   constructor() {
     super();
-    this.chosenPeopleDS = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
+    this.chosenContactsDS = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1.id !== r2.id
     });
-    this.contactsDS = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
+    this.searchResultsDS = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1.id !== r2.id
     });
     this.state = {
-      chosenPeople: [],
+      chosenContacts: [],
       search: ''
     };
   }
 
   componentWillMount() {
     this.setState({
-      chosenPeople: [...this.props.initialChosenPeople]
+      chosenContacts: [...this.props.initialChosenContacts]
     });
   }
 
@@ -75,69 +75,63 @@ class PeopleChooser extends React.Component {
       contact = {
         id: phone,
         label: phone,
-        phoneNumbers: [{
-          label: 'mobile',
-          number: phone
-        }]
+        phoneNumber: phone
       };
     } else {
       contact = {
         id: this.state.search,
         label: this.state.search,
-        emailAddresses: [{
-          label: 'home',
-          email: this.state.search
-        }]
+        emailAddress: this.state.search
       };
     }
-    var chosenPeople = [...this.state.chosenPeople, contact];
+    var chosenContacts = [...this.state.chosenContacts, contact];
     this.setState({
-      chosenPeople: chosenPeople,
+      chosenContacts: chosenContacts,
       search: ''
     });
-    this.props.onChange(chosenPeople);
+    this.props.onChange(chosenContacts);
   }
 
   handlePressContact(contact) {
-    var names = [];
-    if (contact.givenName) {
-      names.push(contact.givenName);
-    }
-    if (contact.familyName) {
-      names.push(contact.familyName);
-    }
-    var chosenPeople = [...this.state.chosenPeople, {
-      ...contact,
-      id: contact.recordID,
-      label: names.join(' ')
-    }];
+    var chosenContacts = [...this.state.chosenContacts, contact];
     this.setState({
-      chosenPeople: chosenPeople,
+      chosenContacts: chosenContacts,
       search: ''
     });
-    this.props.onChange(chosenPeople);
+    this.props.onChange(chosenContacts);
   }
 
   handleRemoveChosenPerson(contact) {
-    var chosenPeople = _.reject(this.state.chosenPeople, (chosenPerson) => {
+    var chosenContacts = _.reject(this.state.chosenContacts, (chosenPerson) => {
       return chosenPerson.id === contact.id;
     });
     this.setState({
-      chosenPeople: chosenPeople
+      chosenContacts: chosenContacts
     });
-    this.props.onChange(chosenPeople);
+    this.props.onChange(chosenContacts);
   }
 
-  contactMatchesSearch(contact) {
-    var searchable = [contact.givenName, contact.familyName].join(' ').toLowerCase();
-    var query = this.state.search.toLowerCase();
-    if (searchable.indexOf(query) < 0) {
-      return false;
-    } else {
-      // Don't show contacts that have already been added
-      return !_.findWhere(this.state.chosenPeople, {
-        id: contact.recordID
-      });
+  renderContactInfo(contact) {
+    if (contact.phoneNumber) {
+      return (
+        <View>
+          <View style={{flexDirection: 'row'}}>
+            <Icon name='fontawesome|mobile' size={16} color={colors.offBlack} style={[styles.icon, styles.iconLabel]} />
+            <Text>{contact.label}</Text>
+          </View>
+          <Text style={{fontSize: 12, fontStyle: 'italic', color: colors.gray}}>{formatPhoneNumber(contact.phoneNumber)}</Text>
+        </View>
+      );
+    } else if (contact.emailAddress) {
+      return (
+        <View>
+          <View style={{flexDirection: 'row'}}>
+            <Icon name='fontawesome|envelope' size={16} color={colors.offBlack} style={[styles.icon, styles.iconLabel]} />
+            <Text>{contact.label}</Text>
+          </View>
+          <Text style={{fontSize: 12, fontStyle: 'italic', color: colors.gray}}>{contact.emailAddress}</Text>
+        </View>
+      );
     }
   }
 
@@ -149,16 +143,17 @@ class PeopleChooser extends React.Component {
         onPress: () => this.handleRemoveChosenPerson(contact)
       }]}>
         <View style={styles.listItem}>
-          <Text>{contact.label}</Text>
+          {this.renderContactInfo(contact)}
         </View>
       </Swipeout>
     );
   }
 
-  renderContactRow(contact) {
+  renderSearchResultRow(contact) {
+    console.log('render', contact);
     return (
       <TouchableOpacity onPress={() => this.handlePressContact(contact)} style={styles.listItem}>
-        <Text>{contact.givenName} {contact.familyName}</Text>
+        {this.renderContactInfo(contact)}
       </TouchableOpacity>
     );
   }
@@ -195,18 +190,83 @@ class PeopleChooser extends React.Component {
     }
   }
 
-  renderContactList() {
-    var contactList;
+  renderSearchResults() {
+    var label, contactId, alreadyChosen, bareNumber;
+    var searchResults = [];
+    var query = this.state.search;
+
     if (/\w+/.test(this.state.search)) {
-      contactList = this.props.contacts.filter(this.contactMatchesSearch.bind(this));
-    } else {
-      contactList = [];
+
+      this.props.phoneContacts.forEach((phoneContact) => {
+
+        // If no way to contact the phoneContact, move on
+        if (!phoneContact.phoneNumbers.length && !phoneContact.emailAddresses.length) {
+          return;
+        }
+
+        // Compare search query with contact name details
+        var names = [];
+        if (phoneContact.givenName) {
+          names.push(phoneContact.givenName);
+        }
+        if (phoneContact.familyName) {
+          names.push(phoneContact.familyName);
+        }
+        // If search query doesn't appear in contact's names, move on
+        label = names.join(' ');
+        if (label.toLowerCase().indexOf(query.toLowerCase()) < 0) {
+          return;
+        }
+
+        // Produce search results for all ways of contacting this person
+
+        // By phone number
+        phoneContact.phoneNumbers.forEach((phoneNumber) => {
+          bareNumber = phoneNumber.number.replace(/[\(\)\-\s\._]+/g, '');
+          contactId = phoneContact.recordID + '-' + bareNumber;
+
+          // Skip contacts that have already been chosen
+          alreadyChosen = _.findWhere(this.state.chosenContacts, {
+            id: contactId
+          });
+          if (alreadyChosen) {
+            return;
+          }
+
+          searchResults.push({
+            id: contactId,
+            label: label,
+            phoneNumber: bareNumber
+          });
+        });
+
+        // By email
+        phoneContact.emailAddresses.forEach((emailAddress) => {
+          contactId = phoneContact.recordID + '-' + emailAddress.email;
+
+          // Skip contacts that have already been chosen
+          alreadyChosen = _.findWhere(this.state.chosenContacts, {
+            id: contactId
+          });
+          if (alreadyChosen) {
+            return;
+          }
+
+          searchResults.push({
+            id: contactId,
+            label: label,
+            emailAddress: emailAddress.email
+          });
+        });
+
+      });
+
     }
 
     return (
       <ListView
-        dataSource={this.contactsDS.cloneWithRows(contactList)}
-        renderRow={this.renderContactRow.bind(this)}
+        dataSource={this.searchResultsDS.cloneWithRows(searchResults)}
+        renderRow={this.renderSearchResultRow.bind(this)}
         automaticallyAdjustContentInsets={false}
         keyboardShouldPersistTaps={true}
       />
@@ -218,7 +278,7 @@ class PeopleChooser extends React.Component {
       <View>
 
         <ListView
-          dataSource={this.chosenPeopleDS.cloneWithRows(this.state.chosenPeople)}
+          dataSource={this.chosenContactsDS.cloneWithRows(this.state.chosenContacts)}
           renderRow={this.renderChosenRow.bind(this)}
           automaticallyAdjustContentInsets={false}
           keyboardShouldPersistTaps={true}
@@ -242,7 +302,7 @@ class PeopleChooser extends React.Component {
 
         {this.renderPromptAddCustom()}
 
-        {this.renderContactList()}
+        {this.renderSearchResults()}
 
       </View>
     );
@@ -250,12 +310,12 @@ class PeopleChooser extends React.Component {
 
 }
 
-PeopleChooser.defaultProps = {
-  initialChosenPeople: []
+ContactsChooser.defaultProps = {
+  initialChosenContacts: []
 };
 
 var styles = StyleSheet.create({
   ...globalStyles
 });
 
-module.exports = PeopleChooser;
+module.exports = ContactsChooser;

@@ -18,8 +18,8 @@ var LOG_OUT = exports.LOG_OUT = 'LOG_OUT';
 var REQUEST_MY_FEED = exports.REQUEST_MY_FEED = 'REQUEST_MY_FEED';
 var RECEIVE_MY_FEED = exports.RECEIVE_MY_FEED = 'RECEIVE_MY_FEED';
 
-var REQUEST_CONTACTS = exports.REQUEST_CONTACTS = 'REQUEST_CONTACTS';
-var RECEIVE_CONTACTS = exports.RECEIVE_CONTACTS = 'RECEIVE_CONTACTS';
+var REQUEST_PHONE_CONTACTS = exports.REQUEST_PHONE_CONTACTS = 'REQUEST_PHONE_CONTACTS';
+var RECEIVE_PHONE_CONTACTS = exports.RECEIVE_PHONE_CONTACTS = 'RECEIVE_PHONE_CONTACTS';
 
 var CREATE_GATHERING = exports.CREATE_GATHERING = 'CREATE_GATHERING';
 var CREATE_GATHERING_SUCCESS = exports.CREATE_GATHERING_SUCCESS = 'CREATE_GATHERING_SUCCESS';
@@ -51,15 +51,15 @@ function receiveMyFeed(gatherings) {
     gatherings: gatherings
   };
 }
-function requestContacts() {
+function requestPhoneContacts() {
   return {
-    type: REQUEST_CONTACTS
+    type: REQUEST_PHONE_CONTACTS
   };
 }
-function receiveContacts(contacts) {
+function receivePhoneContacts(phoneContacts) {
   return {
-    type: RECEIVE_CONTACTS,
-    contacts: contacts
+    type: RECEIVE_PHONE_CONTACTS,
+    phoneContacts: phoneContacts
   };
 }
 function createGathering(data) {
@@ -165,14 +165,14 @@ exports.requestMyFeed = () => {
   }
 }
 
-exports.requestContacts = () => {
+exports.requestPhoneContacts = () => {
   return dispatch => {
-    dispatch(requestContacts());
-    Contacts.getAll((error, contacts) => {
+    dispatch(requestPhoneContacts());
+    Contacts.getAll((error, phoneContacts) => {
       if (error) {
-        console.log('requestContacts error', error);
+        console.log('requestPhoneContacts error', error);
       } else {
-        dispatch(receiveContacts(contacts));
+        dispatch(receivePhoneContacts(phoneContacts));
       }
     })
   }
