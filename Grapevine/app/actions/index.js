@@ -90,10 +90,43 @@ function handleParseError(dispatch, error) {
   }
 }
 
+function createParseSessionFromFBUser(dispatch, fbUser) {
+  var query = new Parse.Query(User);
+  query.equalTo('facebookId', fbUser.facebookId);
+  query.first().then((currentUser) => {
+    if (currentUser) {
+      console.log('found Parse user, issue session');
+      Parse.Cloud.run('fbAuth', {
+        facebookId: fbUser.facebookId,
+        accessToken: fbUser.accessToken
+      }).then((sessionToken) => {
+        console.log('fbAuth success', sessionToken)
+        return User.become(sessionToken);
+      }).then(() => {
+        console.log('user become sessionToken success, update with fb data', currentUser, fbUser);
+        return currentUser.save(fbUser).then((currentUser) => {
+          dispatch(receiveCurrentUser(currentUser));
+        });
+      });
+    } else {
+      console.log('no Parse user found, sign up with fb data', fbUser);
+      return signUp(fbUser).then((currentUser) => {
+        dispatch(receiveCurrentUser(currentUser));
+      });
+    }
+  }, (error) => {
+    console.log('query for user by facebookId error', error)
+    handleParseError(dispatch, error);
+  });
+}
+
 exports.getCurrentUser = () => {
+
   return dispatch => {
+
     console.log('getCurrentUser, query BookFace');
     BookFace.getCurrentUser((error, fbUser) => {
+
       if (!fbUser) {
         console.log('no fbUser');
         User.logOut();
@@ -108,44 +141,24 @@ exports.getCurrentUser = () => {
             dispatch(receiveCurrentUser(currentUser));
           }, (error) => {
             handleParseError(dispatch, error);
+            createParseSessionFromFBUser(dispatch, fbUser);
           });
         } else {
-          console.log('no Parse currentUser, query for user with facebookId', fbUser.facebookId);
-          var query = new Parse.Query(User);
-          query.equalTo('facebookId', fbUser.facebookId);
-          query.first().then((currentUser) => {
-            if (currentUser) {
-              console.log('found Parse user, issue session');
-              Parse.Cloud.run('fbAuth', {
-                facebookId: fbUser.facebookId,
-                accessToken: fbUser.accessToken
-              }).then((sessionToken) => {
-                console.log('fbAuth success', sessionToken)
-                return User.become(sessionToken);
-              }).then(() => {
-                console.log('user become sessionToken success, update with fb data', currentUser, fbUser);
-                return currentUser.save(fbUser).then((currentUser) => {
-                  dispatch(receiveCurrentUser(currentUser));
-                });
-              });
-            } else {
-              console.log('no Parse user found, sign up with fb data', fbUser);
-              return signUp(fbUser).then((currentUser) => {
-                dispatch(receiveCurrentUser(currentUser));
-              });
-            }
-          }, (error) => {
-            handleParseError(dispatch, error);
-          });
+          console.log('no Parse currentUser, query for user by facebookId', fbUser.facebookId);
+          createParseSessionFromFBUser(dispatch, fbUser);
         }
 
       }, (error) => {
+        console.log('User.currentAsync error', error);
         handleParseError(dispatch, error);
       });
 
     });
+
     dispatch(requestCurrentUser());
+
   };
+
 }
 
 exports.logout = () => {
@@ -157,10 +170,10 @@ exports.logout = () => {
 }
 
 exports.requestMyFeed = () => {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(requestMyFeed());
     var query = new Parse.Query(Gathering);
-    query.equalTo('initiator', User.current());
+    query.equalTo('initiator', getState().currentUser);
     query.find().then((gatherings) => {
       console.log('query my feed success', gatherings);
       dispatch(receiveMyFeed([...fixtures.myFeed, ...gatherings]));

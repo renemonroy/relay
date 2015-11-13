@@ -15,8 +15,10 @@ var {
 
 function getCurrentUser(callback) {
   var getUser = new FBSDKGraphRequest((error, response) => {
-    console.log('getUser', error, response);
-    if (!error) {
+    if (error) {
+      console.log('BookFace.getCurrentUser error', error);
+    } else {
+      console.log('BookFace.getCurrentUser success', response);
       FBSDKAccessToken.getCurrentAccessToken((accessToken) => {
         callback(null, {
           accessToken: accessToken.tokenString,
