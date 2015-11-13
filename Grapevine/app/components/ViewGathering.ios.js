@@ -66,7 +66,7 @@ class ViewGathering extends React.Component {
             annotations={[{
               latitude: gathering.get('location').latitude,
               longitude: gathering.get('location').longitude,
-              title: gathering.get('locationDetails').title
+              title: gathering.get('locationDetails').name
             }]}
             region={{
               latitude: gathering.get('location').latitude - 0.001,
@@ -77,8 +77,8 @@ class ViewGathering extends React.Component {
             style={{flex: 1}}
           />
           <View style={styles.mapOverlay}>
-            <Text style={{color: colors.offWhite}}>{gathering.get('locationDetails').title}</Text>
             <Text style={{color: colors.offWhite}}>{gathering.get('locationDetails').name}</Text>
+            <Text style={{color: colors.offWhite}}>{gathering.get('locationDetails').title}</Text>
           </View>
         </View>
 

@@ -125,14 +125,8 @@ class Welcome extends React.Component {
         </View>
         {body}
         <View style={styles.tabBar}>
-          <TouchableOpacity onPress={this.handleTapUser.bind(this)} style={styles.tabBarItem}>
-            <Icon name='fontawesome|user' size={32} color={colors.offBlack} style={styles.iconMedium} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.handleTapNewGathering.bind(this)} style={styles.tabBarItem}>
+          <TouchableOpacity onPress={this.handleTapNewGathering.bind(this)}>
             <Icon name='fontawesome|plus-circle' size={64} color={colors.blue} style={styles.iconLarge} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this.handleTapContacts.bind(this)} style={styles.tabBarItem}>
-            <Icon name='fontawesome|users' size={32} color={colors.offBlack} style={styles.iconMedium} />
           </TouchableOpacity>
         </View>
       </View>
@@ -156,19 +150,13 @@ var styles = StyleSheet.create({
     alignSelf: 'center'
   },
   tabBar: {
-    backgroundColor: colors.white,
-    borderColor: colors.lightGray,
-    borderTopWidth: 1,
     position: 'absolute',
-    bottom: 0,
+    bottom: 10,
     left: 0,
     right: 0,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center'
-  },
-  tabBarItem: {
-    padding: 3
   }
 });
 
