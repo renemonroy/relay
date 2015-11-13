@@ -200,6 +200,13 @@ class NewGathering extends React.Component {
       return;
     }
 
+    var messages = [];
+    if (this.state.initialMessage) {
+      messages.push({
+        from: this.props.currentUser,
+        content: this.state.initialMessage
+      });
+    }
     this.props.createGathering({
       initiator: this.props.currentUser,
       title: this.state.title,
@@ -207,10 +214,7 @@ class NewGathering extends React.Component {
       location: this.state.location.coordinates,
       locationDetails: _.pick(this.state.location, 'name', 'title'),
       date: this.state.date,
-      messages: [{
-        from: this.props.currentUser,
-        content: this.state.initialMessage
-      }]
+      messages: messages
     });
     // [todo] navigate to created gathering on CREATE_GATHERING_SUCCESS
     // https://gist.github.com/mschipperheyn/4f5158fe4de48ea6b8d5
@@ -323,6 +327,7 @@ class NewGathering extends React.Component {
           <View style={styles.formGroup}>
             <ContactsChooser
               ref='contactsChooser'
+              initialChosenContacts={this.state.inviteList}
               phoneContacts={this.props.phoneContacts}
               onChange={this.handleChangeContacts.bind(this)}
             />

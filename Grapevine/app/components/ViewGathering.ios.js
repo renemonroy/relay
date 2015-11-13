@@ -1,3 +1,4 @@
+var _ = require('underscore');
 var moment = require('moment');
 
 var React = require('react-native');
@@ -13,6 +14,10 @@ var {
 var {
   Icon
 } = require('react-native-icons');
+
+var {
+  User
+} = require('../models');
 
 var colors = require('../styles/colors');
 var globalStyles = require('../styles/global');
@@ -120,9 +125,20 @@ class ViewGathering extends React.Component {
           source={{uri: gathering.get('image') || 'https://i.imgur.com/YCq1ofL.png'}}
           style={{width: 150, height: 150}}
         />
-        <Text style={styles.description}>
-          {gathering.get('messages')[0].content}
-        </Text>
+        {gathering.get('messages').map((message, i) => {
+          var from;
+          if (message.from instanceof User) {
+            from = message.from.get('firstName');
+          } else {
+            from = message.from + ' via ' + message.via;
+          }
+          return (
+            <View key={i}>
+              <Text>{from}</Text>
+              <Text>{message.body}</Text>
+            </View>
+          );
+        })}
 
       </View>
     );
@@ -164,10 +180,6 @@ var styles = StyleSheet.create({
   },
   tabButtonText: {
     fontSize: 12
-  },
-  description: {
-    fontSize: 14,
-    marginBottom: 10
   }
 });
 
