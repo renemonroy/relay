@@ -1,4 +1,6 @@
 var _ = require('underscore');
+var moment = require('moment');
+
 var React = require('react-native');
 var {
   Navigator,
@@ -36,22 +38,24 @@ class MyFeed extends React.Component {
     return (
       <View>
         {this.props.myFeed.map((gathering) => {
+          var momentDate = moment(gathering.get('date'));
+
           return (
-            <TouchableOpacity key={gathering._localId} onPress={this.generateHandleTapGathering(gathering)} style={[styles.listItem, {padding: 0}]}>
+            <TouchableOpacity key={gathering.id || gathering._localId} onPress={this.generateHandleTapGathering(gathering)} style={[styles.listItem, {padding: 0}]}>
               <Image
-                source={{uri: gathering.get('image')}}
+                source={{uri: gathering.get('image') || 'https://i.imgur.com/YCq1ofL.png'}}
                 style={{width: 100, height: 100}}
               />
               <View style={[styles.mediaBody, {flex: 1}]}>
-                <Text style={styles.mediaHeading}>{gathering.get('name')}</Text>
+                <Text style={styles.mediaHeading}>{gathering.get('title')}</Text>
                 <Text>{gathering.get('initiator').get('firstName')} initiated</Text>
                 <Text style={{color: colors.gray, fontStyle: 'italic'}}>2 going</Text>
                 <Text style={{color: colors.gray, fontStyle: 'italic'}}>1 might go</Text>
               </View>
               <View style={{flex: 0, paddingHorizontal: 20, alignItems: 'center', alignSelf: 'center'}}>
-                <Text style={{fontSize: 28}}>11</Text>
-                <Text>Nov</Text>
-                <Text style={{color: colors.gray}}>1pm</Text>
+                <Text style={{fontSize: 28}}>{momentDate.format('D')}</Text>
+                <Text>{momentDate.format('MMM')}</Text>
+                <Text style={{color: colors.gray}}>{momentDate.format('h:mma')}</Text>
               </View>
             </TouchableOpacity>
           );
@@ -68,9 +72,9 @@ class Welcome extends React.Component {
     this.props.requestMyFeed();
   }
 
-  componentDidMount() {
-    this.handleTapNewGathering();
-  }
+  // componentDidMount() {
+  //   this.handleTapNewGathering();
+  // }
 
   handleTapUser() {
     console.log('manage profile');
@@ -113,7 +117,9 @@ class Welcome extends React.Component {
     return (
       <View style={{flex: 1}}>
         <View style={styles.navigationBar}>
-          <View style={styles.navigationBarItem}></View>
+          <TouchableOpacity onPress={this.props.onLogout} style={styles.navigationBarItem}>
+            <Text>Log out</Text>
+          </TouchableOpacity>
           <Text style={styles.navigationBarHeading}>Planet</Text>
           <View style={styles.navigationBarItem}></View>
         </View>

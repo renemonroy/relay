@@ -82,7 +82,7 @@ class LocationPicker extends React.Component {
       } else {
         this.setState({
           isSearching: false,
-          searchResults: response.slice(0, 6)
+          searchResults: response
         });
       }
     });
@@ -189,7 +189,11 @@ class LocationPicker extends React.Component {
               <Text>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
-              this.props.onDone(this.state.selectedResult);
+              this.props.onDone({
+                coordinates: this.state.selectedResult.location,
+                name: this.state.selectedResult.name,
+                title: this.state.selectedResult.title
+              });
             }} style={styles.button}>
               <Text style={{color: colors.offWhite}}>Done</Text>
             </TouchableOpacity>

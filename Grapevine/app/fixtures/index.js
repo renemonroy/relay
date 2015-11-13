@@ -16,32 +16,40 @@ var assets = {
 
 module.exports = {
   myFeed: [new Gathering({
-    name: "Lunch w/ Godin",
+    title: "Lunch w/ Godin",
     image: assets.godin,
     initiator: new User({
       firstName: "Misha",
       photo: assets.me
     }),
-    location1: "61 Delancey St #1",
-    location2: "New York, NY 10002",
-    latitude: 40.7191026,
-    longitude: -73.9930287,
-    messages: [new Parse.Object({
+    location: new Parse.GeoPoint({
+      latitude: 40.7191026,
+      longitude: -73.9930287
+    }),
+    locationDetails: {
+      name: "61 Delancey St #1",
+      title: "New York, NY 10002"
+    },
+    messages: [{
       content: "Checkin in, catchin up"
-    })]
+    }]
   }), new Gathering({
-    name: "Improv Drinks",
+    title: "Improv Drinks",
     image: assets.improv,
     initiator: new User({
       firstName: "Misha",
       photo: assets.me
     }),
-    location1: "117 Macdougal St",
-    location2: "New York, NY 10012",
-    latitude: 40.730219,
-    longitude: -74.0027623,
-    messages: [new Parse.Object({
+    location: new Parse.GeoPoint({
+      latitude: 40.730219,
+      longitude: -74.0027623
+    }),
+    locationDetails: {
+      name: "117 Macdougal St",
+      title: "New York, NY 10012"
+    },
+    messages: [{
       content: "Yooo friends! Let's get together outside of class and have drinking involved"
-    })]
+    }]
   })]
 };

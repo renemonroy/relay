@@ -159,9 +159,14 @@ exports.logout = () => {
 exports.requestMyFeed = () => {
   return dispatch => {
     dispatch(requestMyFeed());
-    setTimeout(function() {
-      dispatch(receiveMyFeed(fixtures.myFeed));
-    }, 1000);
+    var query = new Parse.Query(Gathering);
+    query.equalTo('initiator', User.current());
+    query.find().then((gatherings) => {
+      console.log('query my feed success', gatherings);
+      dispatch(receiveMyFeed([...fixtures.myFeed, ...gatherings]));
+    }, (error) => {
+      console.log('query my feed error', error);
+    });
   }
 }
 
@@ -180,9 +185,17 @@ exports.requestPhoneContacts = () => {
 
 exports.createGathering = (data) => {
   return dispatch => {
+    console.log('createGathering', data);
+    var gathering = new Gathering({
+      ...data,
+      location: new Parse.GeoPoint(data.location)
+    });
     dispatch(createGathering(data));
-    setTimeout(function() {
-      dispatch(createGatheringSuccess(new Gathering(data)));
-    }, 100);
+    gathering.save().then((response) => {
+      console.log('gathering save response', response);
+      dispatch(createGatheringSuccess(gathering));
+    }, (error) => {
+      console.log('gathering save error', error);
+    });
   }
 }

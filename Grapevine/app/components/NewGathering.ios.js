@@ -1,3 +1,4 @@
+var _ = require('underscore');
 var moment = require('moment');
 
 var React = require('react-native');
@@ -135,10 +136,10 @@ class NewGathering extends React.Component {
     super(props);
     this.state = {
       title: "",
-      initialMessage: "",
       inviteList: [],
       location: null,
       date: null,
+      initialMessage: "",
       showContactsChooserHelp: false,
       showLocationPicker: false,
       showDatePicker: false
@@ -203,8 +204,13 @@ class NewGathering extends React.Component {
       initiator: this.props.currentUser,
       title: this.state.title,
       inviteList: this.state.inviteList,
-      location: this.state.location,
-      date: this.state.date
+      location: this.state.location.coordinates,
+      locationDetails: _.pick(this.state.location, 'name', 'title'),
+      date: this.state.date,
+      messages: [{
+        from: this.props.currentUser,
+        content: this.state.initialMessage
+      }]
     });
     // [todo] navigate to created gathering on CREATE_GATHERING_SUCCESS
     // https://gist.github.com/mschipperheyn/4f5158fe4de48ea6b8d5

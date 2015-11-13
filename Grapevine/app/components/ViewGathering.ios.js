@@ -1,3 +1,5 @@
+var moment = require('moment');
+
 var React = require('react-native');
 var {
   StyleSheet,
@@ -33,6 +35,8 @@ class ViewGathering extends React.Component {
   }
 
   render() {
+    var gathering = this.props.gathering;
+
     var rsvpButtonStyle = (rsvp) => {
       return (this.state.rsvp === rsvp) ? styles.button : styles.buttonAlternate;
     }
@@ -52,7 +56,7 @@ class ViewGathering extends React.Component {
             <Text style={{color: colors.offBlack}}>Back</Text>
           </TouchableOpacity>
           <Text style={styles.navigationBarHeading}>
-            {this.props.gathering.get('name')}
+            {gathering.get('title')}
           </Text>
           <View style={styles.navigationBarItem}></View>
         </View>
@@ -60,28 +64,28 @@ class ViewGathering extends React.Component {
         <View style={styles.map}>
           <MapView
             annotations={[{
-              latitude: this.props.gathering.get('latitude'),
-              longitude: this.props.gathering.get('longitude'),
-              title: 'Cocoron'
+              latitude: gathering.get('location').latitude,
+              longitude: gathering.get('location').longitude,
+              title: gathering.get('locationDetails').title
             }]}
             region={{
-              latitude: this.props.gathering.get('latitude') - 0.001,
-              longitude: this.props.gathering.get('longitude'),
+              latitude: gathering.get('location').latitude - 0.001,
+              longitude: gathering.get('location').longitude,
               latitudeDelta: 0.01,
               longitudeDelta: 0.01
             }}
             style={{flex: 1}}
           />
           <View style={styles.mapOverlay}>
-            <Text style={{color: colors.offWhite}}>{this.props.gathering.get('location1')}</Text>
-            <Text style={{color: colors.offWhite}}>{this.props.gathering.get('location2')}</Text>
+            <Text style={{color: colors.offWhite}}>{gathering.get('locationDetails').title}</Text>
+            <Text style={{color: colors.offWhite}}>{gathering.get('locationDetails').name}</Text>
           </View>
         </View>
 
         <View style={{flexDirection: 'row'}}>
           <View style={styles.detailsItem}>
-            <Text>Wed, November 11, 2015</Text>
-            <Text>1pm</Text>
+            <Text>{moment(gathering.get('date')).format('ddd, MMM Do YYYY')}</Text>
+            <Text>{moment(gathering.get('date')).format('h:mma')}</Text>
           </View>
           <View style={[styles.detailsItem, styles.detailsItemLast]}>
             <TouchableOpacity>
@@ -113,11 +117,11 @@ class ViewGathering extends React.Component {
         </View>
 
         <Image
-          source={{uri: this.props.gathering.get('image')}}
+          source={{uri: gathering.get('image') || 'https://i.imgur.com/YCq1ofL.png'}}
           style={{width: 150, height: 150}}
         />
         <Text style={styles.description}>
-          {this.props.gathering.get('messages')[0].get('content')}
+          {gathering.get('messages')[0].content}
         </Text>
 
       </View>
