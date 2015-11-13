@@ -1,6 +1,7 @@
 var Buffer = require('buffer').Buffer;
 var _ = require('underscore');
 var crypto = require('crypto');
+var twilio = require('twilio');
 
 Parse.Cloud.define('fbAuth', function(request, response) {
   var facebookId = request.params.facebookId;
@@ -60,5 +61,23 @@ Parse.Cloud.define('mutualFriends', function(request, response) {
       }
     });
 
+  });
+});
+
+Parse.Cloud.define('shareGathering', function(request, response) {
+  Parse.Config.get().then(function(config) {
+    var client = twilio(config.get('twilioSid'), config.get('twilioAuthToken'));
+
+    client.sendSms({
+      to: '+17608463179',
+      from: config.get('twilioPhoneNumber'),
+      body: 'hello!'
+    }, function(error, responseData) {
+      if (error) {
+        response.error(error);
+      } else {
+        response.success(responseData);
+      }
+    });
   });
 });

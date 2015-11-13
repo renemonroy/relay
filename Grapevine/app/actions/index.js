@@ -1,4 +1,5 @@
 var Parse = require('parse/react-native');
+
 var Contacts = require('react-native-contacts');
 var BookFace = require('../utility/BookFace');
 
