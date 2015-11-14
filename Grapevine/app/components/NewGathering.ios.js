@@ -214,6 +214,7 @@ class NewGathering extends React.Component {
       location: this.state.location.coordinates,
       locationDetails: _.pick(this.state.location, 'name', 'title'),
       date: this.state.date,
+      timezoneOffset: this.state.date.getTimezoneOffset(),
       messages: messages
     });
     // [todo] navigate to created gathering on CREATE_GATHERING_SUCCESS

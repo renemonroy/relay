@@ -3,8 +3,6 @@ var Parse = require('parse/react-native');
 var Contacts = require('react-native-contacts');
 var BookFace = require('../utility/BookFace');
 
-var fixtures = require('../fixtures');
-
 var {
   User,
   Gathering,
@@ -176,7 +174,7 @@ exports.requestMyFeed = () => {
     query.equalTo('initiator', getState().currentUser);
     query.find().then((gatherings) => {
       console.log('query my feed success', gatherings);
-      dispatch(receiveMyFeed([...fixtures.myFeed, ...gatherings]));
+      dispatch(receiveMyFeed(gatherings));
     }, (error) => {
       console.log('query my feed error', error);
     });
