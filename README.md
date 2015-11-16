@@ -35,15 +35,16 @@ PARSE_JAVASCRIPT_KEY_DEV='<PARSE_JAVASCRIPT_KEY_DEV>'
 **Parse Cloud**
 
     $ cd parse
-    $ parse default relay-dev
-    $ parse deploy
+    $ parse deploy relay-dev
 
 **Express app**
 
     $ cd web
     $ npm start
-    $ # new bash session
+
     $ ngrok 5000
+
+    $ cd parse
     $ parse configure hooks -b https://<tunnel>.ngrok.com webhooks.json
 
 ### Deployment
@@ -58,8 +59,7 @@ PARSE_JAVASCRIPT_KEY_DEV='<PARSE_JAVASCRIPT_KEY_DEV>'
 **Parse Cloud**
 
     $ cd parse
-    $ parse default relay
-    $ parse deploy
+    $ parse deploy relay
 
 **Express app**
 
