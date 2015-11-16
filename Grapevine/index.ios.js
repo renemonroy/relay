@@ -22,6 +22,8 @@ Parse.initialize(
   config.PARSE_JAVASCRIPT_KEY
 );
 
+console.log(config);
+
 var configureStore = require('./app/store/configureStore');
 var store = configureStore();
 

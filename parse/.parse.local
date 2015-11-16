@@ -1,13 +1,13 @@
 {
   "applications": {
-    "Relay": {
+    "relay": {
       "applicationId": "snBWRAcBlIYPwBfZaYgXrHHxyJF3TgbUwmwDTCAK"
     },
-    "Relay Dev": {
+    "relay-dev": {
       "applicationId": "8hgW2obdhNDqQ2Hs3KxgTWtYu3M4OyVT0aYh7V5b"
     },
     "_default": {
-      "link": "Relay"
+      "link": "relay"
     }
   }
 }
