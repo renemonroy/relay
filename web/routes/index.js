@@ -73,8 +73,13 @@ function gatheringAfterSave(request, response) {
 }
 
 function gatheringAfterDelete(request, response) {
-  console.log('gathering deleted, delete related data');
-  response.end();
+  var query = new Parse.Query(SMSSession);
+  query.equalTo('gathering', Parse.Object.fromJSON(request.body.object));
+  query.find().then(function(smsSessions) {
+    console.log('found smsSessions for gathering to destroy', smsSessions);
+    Parse.Object.destroyAll(smsSessions);
+    response.end();
+  });
 }
 
 function smsIncoming(request, response) {
