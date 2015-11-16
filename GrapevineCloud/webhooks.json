@@ -1,0 +1,20 @@
+{
+  "hooks": [
+    {
+      "op": "post",
+      "trigger": {
+        "className": "Gathering",
+        "triggerName": "afterSave",
+        "url": "/gatherings/after-save"
+      }
+    },
+    {
+      "op": "post",
+      "trigger": {
+        "className": "Gathering",
+        "triggerName": "afterDelete",
+        "url": "/gatherings/after-delete"
+      }
+    }
+  ]
+}

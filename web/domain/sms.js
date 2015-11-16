@@ -1,7 +1,8 @@
 var twilio = require('twilio');
 var moment = require('moment');
+var Parse = require('parse/node');
 
-var models = require('cloud/models');
+var models = require('../models');
 
 var Gathering = models.Gathering;
 var SMSSession = models.SMSSession;
@@ -13,12 +14,12 @@ function shareGatheringMessage2(gathering) {
   return "Your friend " + gathering.get('initiator').get('firstName') + " just wanted to let you know about a gathering he thought you might be interested in.";
 }
 function shareGatheringMessage3(gathering) {
-  var momentDate = moment(gathering.get('date')).subtract(gathering.get('timezoneOffset'), 'minutes');
+  var momentDate = moment(gathering.get('date')).utcOffset(gathering.get('timezoneOffset'));
   return gathering.get('title') + '\n' + gathering.get('locationDetails').name + '\n' + momentDate.format('ddd, MMM Do YYYY') + '\n' + momentDate.format('h:mma');
 }
 
 function shareGathering(gathering, contact) {
-  Parse.Config.get().then(function(config) {
+  return Parse.Config.get().then(function(config) {
 
     var client = twilio(
       config.get('twilioSid'),
@@ -26,26 +27,26 @@ function shareGathering(gathering, contact) {
     );
 
     console.log('client.sendMessage ' + contact.phoneNumber);
-    client.sendSms({
+    return client.sendMessage({
       // For now, assume phone numbers never include country code,
       // just handle that when talking to Twilio
       to: '+1' + contact.phoneNumber,
       from: config.get('twilioPhoneNumber'),
       body: shareGatheringMessage1(gathering)
-    }, function() {
+    }).then(function() {
 
-      client.sendSms({
+      return client.sendMessage({
         to: '+1' + contact.phoneNumber,
         from: config.get('twilioPhoneNumber'),
         body: shareGatheringMessage2(gathering)
-      }, function() {
+      });
 
-        client.sendSms({
-          to: '+1' + contact.phoneNumber,
-          from: config.get('twilioPhoneNumber'),
-          body: shareGatheringMessage3(gathering)
-        });
+    }).then(function() {
 
+      return client.sendMessage({
+        to: '+1' + contact.phoneNumber,
+        from: config.get('twilioPhoneNumber'),
+        body: shareGatheringMessage3(gathering)
       });
 
     });
