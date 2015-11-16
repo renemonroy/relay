@@ -8,10 +8,17 @@ winston.cli();
 
 var Parse = require('parse/node');
 
-Parse.initialize(
-  process.env.PARSE_APPLICATION_ID,
-  process.env.PARSE_JAVASCRIPT_KEY
-);
+if (process.env.NODE_ENV === 'production') {
+  Parse.initialize(
+    process.env.PARSE_APPLICATION_ID,
+    process.env.PARSE_JAVASCRIPT_KEY
+  );
+} else {
+  Parse.initialize(
+    process.env.PARSE_APPLICATION_ID_DEV,
+    process.env.PARSE_JAVASCRIPT_KEY_DEV
+  );
+}
 
 Parse.Config.get().then(function(parseConfig) {
 
@@ -20,13 +27,6 @@ Parse.Config.get().then(function(parseConfig) {
     TWILIO_SID: parseConfig.get('twilioSid'),
     TWILIO_PHONE_NUMBER: parseConfig.get('twilioPhoneNumber')
   });
-
-  if (process.env.NODE_ENV !== 'production') {
-    Object.assign(process.env, {
-      TWILIO_PHONE_NUMBER: parseConfig.get('devTwilioPhoneNumber'),
-      TWILIO_SID: parseConfig.get('devTwilioSid')
-    });
-  }
 
   if (process.env.TWILIO_ENV === 'test') {
     Object.assign(process.env, {
