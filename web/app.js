@@ -1,16 +1,14 @@
+var winston = require('winston');
 var express = require('express');
 var bodyParser = require('body-parser');
-var Parse = require('parse/node');
-
-var config = require('./config');
-
-var sms = require('./domain/sms');
-var routes = require('./routes');
-
-Parse.initialize(config.PARSE_APPLICATION_ID, config.PARSE_JAVASCRIPT_KEY);
 
 var app = express();
 
+var config = require('./config');
+
+var routes = require('./routes');
+
+app.set('config', config);
 app.set('port', (process.env.PORT || 5000));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -32,5 +30,5 @@ app.post('/gatherings/after-delete', routes.gatheringAfterDelete);
 app.post('/sms', routes.smsIncoming);
 
 app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
+  winston.info('Node app is running on port', app.get('port'));
 });

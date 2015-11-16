@@ -2,6 +2,7 @@ var twilio = require('twilio');
 var moment = require('moment');
 var Parse = require('parse/node');
 
+var config = require('../config');
 var models = require('../models');
 
 var Gathering = models.Gathering;
@@ -19,36 +20,32 @@ function shareGatheringMessage3(gathering) {
 }
 
 function shareGathering(gathering, contact) {
-  return Parse.Config.get().then(function(config) {
+  var client = twilio(
+    config.TWILIO_SID,
+    config.TWILIO_AUTH_TOKEN
+  );
 
-    var client = twilio(
-      config.get('twilioSid'),
-      config.get('twilioAuthToken')
-    );
+  console.log('client.sendMessage ' + contact.phoneNumber);
+  return client.sendMessage({
+    // For now, assume phone numbers never include country code,
+    // just handle that when talking to Twilio
+    to: '+1' + contact.phoneNumber,
+    from: config.TWILIO_PHONE_NUMBER,
+    body: shareGatheringMessage1(gathering)
+  }).then(function() {
 
-    console.log('client.sendMessage ' + contact.phoneNumber);
     return client.sendMessage({
-      // For now, assume phone numbers never include country code,
-      // just handle that when talking to Twilio
       to: '+1' + contact.phoneNumber,
-      from: config.get('twilioPhoneNumber'),
-      body: shareGatheringMessage1(gathering)
-    }).then(function() {
+      from: config.TWILIO_PHONE_NUMBER,
+      body: shareGatheringMessage2(gathering)
+    });
 
-      return client.sendMessage({
-        to: '+1' + contact.phoneNumber,
-        from: config.get('twilioPhoneNumber'),
-        body: shareGatheringMessage2(gathering)
-      });
+  }).then(function() {
 
-    }).then(function() {
-
-      return client.sendMessage({
-        to: '+1' + contact.phoneNumber,
-        from: config.get('twilioPhoneNumber'),
-        body: shareGatheringMessage3(gathering)
-      });
-
+    return client.sendMessage({
+      to: '+1' + contact.phoneNumber,
+      from: config.TWILIO_PHONE_NUMBER,
+      body: shareGatheringMessage3(gathering)
     });
 
   });
