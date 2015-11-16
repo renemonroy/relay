@@ -2,7 +2,6 @@ var twilio = require('twilio');
 var moment = require('moment');
 var Parse = require('parse/node');
 
-var config = require('../config');
 var models = require('../models');
 
 var Gathering = models.Gathering;
@@ -21,8 +20,8 @@ function shareGatheringMessage3(gathering) {
 
 function shareGathering(gathering, contact) {
   var client = twilio(
-    config.TWILIO_SID,
-    config.TWILIO_AUTH_TOKEN
+    process.env.TWILIO_SID,
+    process.env.TWILIO_AUTH_TOKEN
   );
 
   console.log('client.sendMessage ' + contact.phoneNumber);
@@ -30,13 +29,13 @@ function shareGathering(gathering, contact) {
     // For now, assume phone numbers never include country code,
     // just handle that when talking to Twilio
     to: '+1' + contact.phoneNumber,
-    from: config.TWILIO_PHONE_NUMBER,
+    from: process.env.TWILIO_PHONE_NUMBER,
     body: shareGatheringMessage1(gathering)
   }).then(function() {
 
     return client.sendMessage({
       to: '+1' + contact.phoneNumber,
-      from: config.TWILIO_PHONE_NUMBER,
+      from: process.env.TWILIO_PHONE_NUMBER,
       body: shareGatheringMessage2(gathering)
     });
 
@@ -44,7 +43,7 @@ function shareGathering(gathering, contact) {
 
     return client.sendMessage({
       to: '+1' + contact.phoneNumber,
-      from: config.TWILIO_PHONE_NUMBER,
+      from: process.env.TWILIO_PHONE_NUMBER,
       body: shareGatheringMessage3(gathering)
     });
 

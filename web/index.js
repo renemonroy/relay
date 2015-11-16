@@ -1,3 +1,5 @@
+require('dotenv').load();
+
 var winston = require('winston');
 
 // Use #cli to colorize
@@ -6,30 +8,28 @@ winston.cli();
 
 var Parse = require('parse/node');
 
-var config = require('./config');
-
 Parse.initialize(
-  config.PARSE_APPLICATION_ID,
-  config.PARSE_JAVASCRIPT_KEY
+  process.env.PARSE_APPLICATION_ID,
+  process.env.PARSE_JAVASCRIPT_KEY
 );
 
 Parse.Config.get().then(function(parseConfig) {
 
-  Object.assign(config, {
+  Object.assign(process.env, {
     TWILIO_AUTH_TOKEN: parseConfig.get('twilioAuthToken'),
     TWILIO_SID: parseConfig.get('twilioSid'),
     TWILIO_PHONE_NUMBER: parseConfig.get('twilioPhoneNumber')
   });
 
   if (process.env.NODE_ENV !== 'production') {
-    Object.assign(config, {
+    Object.assign(process.env, {
       TWILIO_PHONE_NUMBER: parseConfig.get('devTwilioPhoneNumber'),
       TWILIO_SID: parseConfig.get('devTwilioSid')
     });
   }
 
   if (process.env.TWILIO_ENV === 'test') {
-    Object.assign(config, {
+    Object.assign(process.env, {
       TWILIO_AUTH_TOKEN: parseConfig.get('testTwilioAuthToken'),
       TWILIO_SID: parseConfig.get('testTwilioSid'),
       TWILIO_PHONE_NUMBER: parseConfig.get('testTwilioPhoneNumber')
@@ -37,7 +37,7 @@ Parse.Config.get().then(function(parseConfig) {
   }
 
   winston.info(
-    JSON.stringify(config, null, 2)
+    JSON.stringify(process.env, null, 2)
   );
 
   require('./app');

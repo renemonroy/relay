@@ -4,11 +4,8 @@ var bodyParser = require('body-parser');
 
 var app = express();
 
-var config = require('./config');
-
 var routes = require('./routes');
 
-app.set('config', config);
 app.set('port', (process.env.PORT || 5000));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
