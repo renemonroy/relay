@@ -8,6 +8,9 @@
   },
   "author": "Misha Ponizil",
   "private": true,
+  "engines": {
+    "node": "4.2.2"
+  },
   "dependencies": {
     "body-parser": "^1.14.1",
     "ejs": "^2.3.4",
