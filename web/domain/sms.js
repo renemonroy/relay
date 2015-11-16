@@ -14,7 +14,7 @@ function shareGatheringMessage2(gathering) {
   return "Your friend " + gathering.get('initiator').get('firstName') + " just wanted to let you know about a gathering he thought you might be interested in.";
 }
 function shareGatheringMessage3(gathering) {
-  var momentDate = moment(gathering.get('date')).utcOffset(gathering.get('timezoneOffset'));
+  var momentDate = moment(gathering.get('date')).utcOffset(-gathering.get('timezoneOffset'));
   return gathering.get('title') + '\n' + gathering.get('locationDetails').name + '\n' + momentDate.format('ddd, MMM Do YYYY') + '\n' + momentDate.format('h:mma');
 }
 
